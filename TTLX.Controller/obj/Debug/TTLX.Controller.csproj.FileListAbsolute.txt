@@ -1,0 +1,11 @@
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\obj\Debug\TTLX.Controller.csprojAssemblyReference.cache
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\obj\Debug\TTLX.Controller.csproj.CoreCompileInputs.cache
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\bin\Debug\TTLX.Controller.dll
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\bin\Debug\TTLX.Controller.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\bin\Debug\Newtonsoft.Json.dll
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\bin\Debug\TTLX.Common.dll
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\bin\Debug\TTLX.Common.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\bin\Debug\Newtonsoft.Json.xml
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\obj\Debug\TTLX.Controller.csproj.CopyComplete
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\obj\Debug\TTLX.Controller.dll
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Controller\obj\Debug\TTLX.Controller.pdb

@@ -1,0 +1,6 @@
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\bin\Debug\TTLX.Common.dll
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\bin\Debug\TTLX.Common.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.csproj.CoreCompileInputs.cache
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.dll
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.csprojAssemblyReference.cache
