@@ -10,7 +10,6 @@ namespace TTLX.MockTestPaper_V2
 {
     static class Program
     {
-        public int a =;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
