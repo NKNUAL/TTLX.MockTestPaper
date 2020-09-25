@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLX.DataBase", "TTLX.DataBase\TTLX.DataBase.csproj", "{10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +36,14 @@ Global
 		{6D81E250-BFA0-4BA6-BF54-20BB8FF19335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D81E250-BFA0-4BA6-BF54-20BB8FF19335}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D81E250-BFA0-4BA6-BF54-20BB8FF19335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

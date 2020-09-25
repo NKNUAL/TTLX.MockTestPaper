@@ -30,11 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEditRecord));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblCount = new System.Windows.Forms.Label();
+            this.cbRules = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dgRecord = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgRecord)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -47,11 +51,38 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.lblCount);
+            this.splitContainer1.Panel1.Controls.Add(this.cbRules);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
-            this.splitContainer1.Size = new System.Drawing.Size(1077, 604);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.dgRecord);
+            this.splitContainer1.Size = new System.Drawing.Size(1029, 604);
             this.splitContainer1.SplitterDistance = 56;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.Font = new System.Drawing.Font("宋体", 12F);
+            this.lblCount.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblCount.Location = new System.Drawing.Point(886, 20);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(80, 16);
+            this.lblCount.TabIndex = 2;
+            this.lblCount.Text = "共5条记录";
+            // 
+            // cbRules
+            // 
+            this.cbRules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRules.Font = new System.Drawing.Font("宋体", 12F);
+            this.cbRules.FormattingEnabled = true;
+            this.cbRules.Location = new System.Drawing.Point(115, 17);
+            this.cbRules.Name = "cbRules";
+            this.cbRules.Size = new System.Drawing.Size(355, 24);
+            this.cbRules.TabIndex = 1;
+            this.cbRules.SelectedIndexChanged += new System.EventHandler(this.cbRules_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -63,29 +94,34 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "出题规则：";
             // 
-            // comboBox1
+            // dgRecord
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("宋体", 12F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(115, 17);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(355, 24);
-            this.comboBox1.TabIndex = 1;
+            this.dgRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgRecord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgRecord.Location = new System.Drawing.Point(0, 0);
+            this.dgRecord.Name = "dgRecord";
+            this.dgRecord.RowTemplate.Height = 23;
+            this.dgRecord.Size = new System.Drawing.Size(1029, 544);
+            this.dgRecord.TabIndex = 0;
+            this.dgRecord.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgRecord_CellContentClick);
             // 
             // FrmEditRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 604);
+            this.ClientSize = new System.Drawing.Size(1029, 604);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmEditRecord";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "模拟试卷出题记录";
+            this.Load += new System.EventHandler(this.FrmEditRecord_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgRecord)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -94,6 +130,8 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbRules;
+        private System.Windows.Forms.DataGridView dgRecord;
+        private System.Windows.Forms.Label lblCount;
     }
 }

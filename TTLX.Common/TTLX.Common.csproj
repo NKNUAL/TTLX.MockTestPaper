@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,12 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expand\ExpandCls.cs" />
+    <Compile Include="FileHelper.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="LogTool.cs" />
     <Compile Include="Model\QuetionSerializeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuetionSerialize.cs" />
+    <Compile Include="QuestionsType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

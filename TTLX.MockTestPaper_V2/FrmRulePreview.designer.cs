@@ -149,6 +149,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmRulePreview";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "规则预览";
             this.Load += new System.EventHandler(this.FrmRulePreview_Load);
             this.ResumeLayout(false);

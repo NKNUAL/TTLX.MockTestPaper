@@ -44,5 +44,33 @@ namespace TTLX.Common
         /// 当前专业名称
         /// </summary>
         public string CurrentSpecialtyName { get; set; }
+
+
+        public string QueTypeConvertToString(int type)
+        {
+            switch (type)
+            {
+                case (int)QuestionsType.Danxuan:
+                    return "单选题";
+                case (int)QuestionsType.Duoxuan:
+                    return "多选题";
+                case (int)QuestionsType.Panduan:
+                    return "判断题";
+                case (int)QuestionsType.Windows:
+                    return "Windows题";
+                case (int)QuestionsType.Wangluo:
+                    return "网络题";
+                case (int)QuestionsType.Word:
+                    return "Word题";
+                case (int)QuestionsType.Excel:
+                    return "Excel题";
+                case (int)QuestionsType.PowerPoint:
+                    return "Ppt题";
+                case (int)QuestionsType.Access:
+                    return "Access题";
+                default:
+                    return "C语言题";
+            }
+        }
     }
 }

@@ -31,6 +31,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPapers));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnEditRecord = new System.Windows.Forms.Button();
+            this.btnShowPaper = new System.Windows.Forms.Button();
             this.btnAddRule = new System.Windows.Forms.Button();
             this.btnQuestion = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -38,7 +40,6 @@
             this.ruleTree = new System.Windows.Forms.TreeView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgPapers = new System.Windows.Forms.DataGridView();
-            this.btnShowPaper = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -63,6 +64,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
+            this.splitContainer1.Panel1.Controls.Add(this.btnEditRecord);
             this.splitContainer1.Panel1.Controls.Add(this.btnShowPaper);
             this.splitContainer1.Panel1.Controls.Add(this.btnAddRule);
             this.splitContainer1.Panel1.Controls.Add(this.btnQuestion);
@@ -73,6 +75,37 @@
             this.splitContainer1.Size = new System.Drawing.Size(1113, 620);
             this.splitContainer1.SplitterDistance = 49;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // btnEditRecord
+            // 
+            this.btnEditRecord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditRecord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(158)))), ((int)(((byte)(216)))));
+            this.btnEditRecord.FlatAppearance.BorderSize = 0;
+            this.btnEditRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditRecord.Font = new System.Drawing.Font("宋体", 12F);
+            this.btnEditRecord.ForeColor = System.Drawing.Color.White;
+            this.btnEditRecord.Location = new System.Drawing.Point(118, 10);
+            this.btnEditRecord.Name = "btnEditRecord";
+            this.btnEditRecord.Size = new System.Drawing.Size(121, 31);
+            this.btnEditRecord.TabIndex = 14;
+            this.btnEditRecord.Text = "查看异常记录";
+            this.btnEditRecord.UseVisualStyleBackColor = false;
+            this.btnEditRecord.Click += new System.EventHandler(this.btnEditRecord_Click);
+            // 
+            // btnShowPaper
+            // 
+            this.btnShowPaper.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(158)))), ((int)(((byte)(216)))));
+            this.btnShowPaper.FlatAppearance.BorderSize = 0;
+            this.btnShowPaper.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShowPaper.Font = new System.Drawing.Font("宋体", 12F);
+            this.btnShowPaper.ForeColor = System.Drawing.Color.White;
+            this.btnShowPaper.Location = new System.Drawing.Point(12, 10);
+            this.btnShowPaper.Name = "btnShowPaper";
+            this.btnShowPaper.Size = new System.Drawing.Size(88, 31);
+            this.btnShowPaper.TabIndex = 13;
+            this.btnShowPaper.Text = "查看试卷";
+            this.btnShowPaper.UseVisualStyleBackColor = false;
+            this.btnShowPaper.Click += new System.EventHandler(this.btnShowPaper_Click);
             // 
             // btnAddRule
             // 
@@ -175,21 +208,6 @@
             this.dgPapers.Size = new System.Drawing.Size(732, 547);
             this.dgPapers.TabIndex = 0;
             // 
-            // btnShowPaper
-            // 
-            this.btnShowPaper.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(158)))), ((int)(((byte)(216)))));
-            this.btnShowPaper.FlatAppearance.BorderSize = 0;
-            this.btnShowPaper.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShowPaper.Font = new System.Drawing.Font("宋体", 12F);
-            this.btnShowPaper.ForeColor = System.Drawing.Color.White;
-            this.btnShowPaper.Location = new System.Drawing.Point(12, 10);
-            this.btnShowPaper.Name = "btnShowPaper";
-            this.btnShowPaper.Size = new System.Drawing.Size(88, 31);
-            this.btnShowPaper.TabIndex = 13;
-            this.btnShowPaper.Text = "查看试卷";
-            this.btnShowPaper.UseVisualStyleBackColor = false;
-            this.btnShowPaper.Click += new System.EventHandler(this.btnShowPaper_Click);
-            // 
             // FrmPapers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -198,6 +216,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmPapers";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "我的模拟试卷";
             this.Load += new System.EventHandler(this.FrmPapers_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -226,5 +245,6 @@
         private System.Windows.Forms.TreeView ruleTree;
         private System.Windows.Forms.DataGridView dgPapers;
         private System.Windows.Forms.Button btnShowPaper;
+        private System.Windows.Forms.Button btnEditRecord;
     }
 }

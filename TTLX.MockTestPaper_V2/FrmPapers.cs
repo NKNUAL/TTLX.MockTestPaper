@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTLX.Common;
 using TTLX.Controller;
+using TTLX.Controller.Model;
 using TTLX.Controller.ResposeModel;
 
 namespace TTLX.MockTestPaper_V2
@@ -39,11 +40,13 @@ namespace TTLX.MockTestPaper_V2
         }
 
 
+        List<QuestionRule> rules;
+
         private void BindRules(IAsyncResult asyncResult)
         {
             var func = asyncResult.AsyncState as FuncRules;
 
-            var rules = func.EndInvoke(out string message, asyncResult);
+            rules = func.EndInvoke(out string message, asyncResult);
 
             if (rules == null)
             {
@@ -254,6 +257,19 @@ namespace TTLX.MockTestPaper_V2
             {
                 FrmQuestion frmQuestion = new FrmQuestion(rule);
                 frmQuestion.ShowDialog();
+            }
+
+
+        }
+
+        private void btnEditRecord_Click(object sender, EventArgs e)
+        {
+            if (rules != null)
+            {
+
+                FrmEditRecord frmEditRecord = new FrmEditRecord(rules);
+
+                frmEditRecord.ShowDialog();
             }
 
 

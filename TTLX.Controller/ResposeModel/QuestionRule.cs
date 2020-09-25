@@ -12,6 +12,11 @@ namespace TTLX.Controller.ResposeModel
         public string RuleDesc { get; set; }
         public string SpecialtyId { get; set; }
         public List<SubRule> CourseRules { get; set; }
+
+        public override string ToString()
+        {
+            return RuleName;
+        }
     }
 
     public class SubRule
@@ -20,7 +25,6 @@ namespace TTLX.Controller.ResposeModel
         public string Name { get; set; }
         public int QueCount { get; set; }
         public List<SubRule> KnowRules { get; set; }
-
         public override string ToString()
         {
             return Name + $"（{QueCount}）";

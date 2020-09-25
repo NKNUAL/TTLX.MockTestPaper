@@ -291,6 +291,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmAddRule";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "添加出题规则";
             this.Load += new System.EventHandler(this.FrmAddRule_Load);
             this.groupBox1.ResumeLayout(false);
