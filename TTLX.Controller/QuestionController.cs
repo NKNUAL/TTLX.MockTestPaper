@@ -45,7 +45,7 @@ namespace TTLX.Controller
                 var query = from a in db.PaperRecord
                             join b in db.PaperQuestionRelation on a.PGuid equals b.PGuid
                             join c in db.QuestionInfo on b.QGuid equals c.QGuid
-                            orderby a.PaperEditDate
+                            orderby a.PaperEditDate descending
                             select new
                             {
                                 a.IsNormal,
@@ -228,6 +228,48 @@ namespace TTLX.Controller
 
             }
             return true;
+        }
+
+        /// <summary>
+        /// 删除正常记录
+        /// </summary>
+        /// <param name="pGuid"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteNormalRecord(string pGuid)
+        {
+            using (DbSqlite db = DbSqlite.Instance)
+            {
+                try
+                {
+                    var paper = db.PaperRecord.FirstOrDefault(q => q.PGuid == pGuid);
+                    if (paper != null)
+                    {
+                        db.PaperRecord.Remove(paper);
+                        await db.SaveChangesAsync();
+
+                        var relations = db.PaperQuestionRelation.Where(q => q.PGuid == pGuid).ToList();
+
+                        foreach (var item in relations)
+                        {
+                            var que = db.QuestionInfo.FirstOrDefault(q => q.QGuid == item.QGuid);
+
+                            db.PaperQuestionRelation.Remove(item);
+
+                            db.QuestionInfo.Remove(que);
+                        }
+
+                        await db.SaveChangesAsync();
+
+
+                    }
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
 
     }

@@ -37,7 +37,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbRuleDesc = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.lblRuleName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ruleTree = new System.Windows.Forms.TreeView();
@@ -47,9 +46,10 @@
             this.colQueType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colQueContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEdit = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbPaperName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnQuestion = new System.Windows.Forms.Button();
+            this.lblRuleName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -81,11 +81,11 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.tbPaperName);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.btnQuestion);
-            this.splitContainer1.Size = new System.Drawing.Size(1746, 718);
-            this.splitContainer1.SplitterDistance = 658;
+            this.splitContainer1.Size = new System.Drawing.Size(1746, 739);
+            this.splitContainer1.SplitterDistance = 679;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -101,7 +101,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dgvQuestions);
-            this.splitContainer2.Size = new System.Drawing.Size(1746, 658);
+            this.splitContainer2.Size = new System.Drawing.Size(1746, 679);
             this.splitContainer2.SplitterDistance = 450;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -119,20 +119,20 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer3.Size = new System.Drawing.Size(450, 658);
-            this.splitContainer3.SplitterDistance = 171;
+            this.splitContainer3.Size = new System.Drawing.Size(450, 679);
+            this.splitContainer3.SplitterDistance = 176;
             this.splitContainer3.TabIndex = 0;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblRuleName);
             this.groupBox1.Controls.Add(this.tbRuleDesc);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.lblRuleName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(450, 171);
+            this.groupBox1.Size = new System.Drawing.Size(450, 176);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "规则信息";
@@ -143,7 +143,7 @@
             this.tbRuleDesc.Location = new System.Drawing.Point(103, 59);
             this.tbRuleDesc.Name = "tbRuleDesc";
             this.tbRuleDesc.ReadOnly = true;
-            this.tbRuleDesc.Size = new System.Drawing.Size(238, 108);
+            this.tbRuleDesc.Size = new System.Drawing.Size(341, 108);
             this.tbRuleDesc.TabIndex = 5;
             this.tbRuleDesc.Text = "";
             // 
@@ -156,16 +156,6 @@
             this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 4;
             this.label5.Text = "规则描述：";
-            // 
-            // lblRuleName
-            // 
-            this.lblRuleName.AutoSize = true;
-            this.lblRuleName.Font = new System.Drawing.Font("宋体", 12F);
-            this.lblRuleName.Location = new System.Drawing.Point(100, 26);
-            this.lblRuleName.Name = "lblRuleName";
-            this.lblRuleName.Size = new System.Drawing.Size(72, 16);
-            this.lblRuleName.TabIndex = 1;
-            this.lblRuleName.Text = "测试规则";
             // 
             // label1
             // 
@@ -183,7 +173,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(450, 483);
+            this.groupBox2.Size = new System.Drawing.Size(450, 499);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "出题规则";
@@ -194,7 +184,7 @@
             this.ruleTree.Font = new System.Drawing.Font("宋体", 12F);
             this.ruleTree.Location = new System.Drawing.Point(3, 17);
             this.ruleTree.Name = "ruleTree";
-            this.ruleTree.Size = new System.Drawing.Size(444, 463);
+            this.ruleTree.Size = new System.Drawing.Size(444, 479);
             this.ruleTree.TabIndex = 0;
             this.ruleTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ruleTree_AfterSelect);
             // 
@@ -234,7 +224,7 @@
             this.dgvQuestions.RowHeadersWidth = 40;
             this.dgvQuestions.RowTemplate.Height = 32;
             this.dgvQuestions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvQuestions.Size = new System.Drawing.Size(1292, 658);
+            this.dgvQuestions.Size = new System.Drawing.Size(1292, 679);
             this.dgvQuestions.TabIndex = 7;
             this.dgvQuestions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvQuestions_CellContentClick);
             // 
@@ -272,14 +262,14 @@
             this.colEdit.Name = "colEdit";
             this.colEdit.ReadOnly = true;
             // 
-            // textBox1
+            // tbPaperName
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F);
-            this.textBox1.Location = new System.Drawing.Point(1274, 11);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(301, 26);
-            this.textBox1.TabIndex = 14;
+            this.tbPaperName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbPaperName.Font = new System.Drawing.Font("宋体", 12F);
+            this.tbPaperName.Location = new System.Drawing.Point(1274, 11);
+            this.tbPaperName.Name = "tbPaperName";
+            this.tbPaperName.Size = new System.Drawing.Size(301, 26);
+            this.tbPaperName.TabIndex = 14;
             // 
             // label2
             // 
@@ -306,12 +296,23 @@
             this.btnQuestion.TabIndex = 12;
             this.btnQuestion.Text = "生成模拟试卷";
             this.btnQuestion.UseVisualStyleBackColor = false;
+            this.btnQuestion.Click += new System.EventHandler(this.btnQuestion_Click);
+            // 
+            // lblRuleName
+            // 
+            this.lblRuleName.AutoSize = true;
+            this.lblRuleName.Font = new System.Drawing.Font("宋体", 12F);
+            this.lblRuleName.Location = new System.Drawing.Point(100, 26);
+            this.lblRuleName.Name = "lblRuleName";
+            this.lblRuleName.Size = new System.Drawing.Size(72, 16);
+            this.lblRuleName.TabIndex = 6;
+            this.lblRuleName.Text = "测试规则";
             // 
             // FrmQuestion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1746, 718);
+            this.ClientSize = new System.Drawing.Size(1746, 739);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmQuestion";
@@ -348,17 +349,17 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RichTextBox tbRuleDesc;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label lblRuleName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TreeView ruleTree;
         private System.Windows.Forms.Button btnQuestion;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbPaperName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCourse;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKnow;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQueType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colQueContent;
         private System.Windows.Forms.DataGridViewLinkColumn colEdit;
+        private System.Windows.Forms.Label lblRuleName;
     }
 }

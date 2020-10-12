@@ -74,7 +74,13 @@ namespace TTLX.Controller
         /// <returns></returns>
         public List<QuestionRule> GetAllRules(string userId, out string message)
         {
+
             message = string.Empty;
+
+            var rules = CacheController.Instance(Global.Instance.CurrentSpecialtyID.ToString()).GetRules();
+
+            if (rules != null)
+                return rules;
 
             var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/rules/{userId}"));
 
@@ -83,7 +89,8 @@ namespace TTLX.Controller
                 var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
                 if (resultData.success)
                 {
-                    var rules = JsonConvert.DeserializeObject<List<QuestionRule>>(resultData.data.ToString());
+                    rules = JsonConvert.DeserializeObject<List<QuestionRule>>(resultData.data.ToString());
+                    CacheController.Instance(Global.Instance.CurrentSpecialtyID.ToString()).SetRules(rules);
                     return rules;
                 }
                 else
@@ -225,6 +232,37 @@ namespace TTLX.Controller
             return false;
         }
 
+        /// <summary>
+        /// 检查重复题目
+        /// </summary>
+        /// <param name="checkModel"></param>
+        /// <param name="queContent"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public bool CheckRepeatQuestions(QuestionCheckModel checkModel, out string queContent, out string message)
+        {
+            queContent = string.Empty;
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/get/similarity", checkModel));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    queContent = resultData.data?.ToString();
+                    return resultData.success;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return resultData.success;
+                }
+            }
+            message = "网络连接错误";
+            return false;
+        }
 
         /// <summary>
         /// 添加规则
@@ -256,6 +294,167 @@ namespace TTLX.Controller
             return false;
         }
 
+        /// <summary>
+        /// 删除规则
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="ruleNo"></param>
+        /// <returns></returns>
+        public bool DelRule(string userId, string ruleNo, out bool success, out string message)
+        {
+            success = false;
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("delete", $"/api/mock/del/rule/{userId}/{ruleNo}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    success = true;
+                    return resultData.success;
+                }
+                else
+                {
+                    success = false;
+                    message = resultData.message;
+                    return resultData.success;
+                }
+            }
+            message = "网络连接错误";
+            return false;
+        }
+
+        /// <summary>
+        /// 修改规则
+        /// </summary>
+        /// <returns></returns>
+        public bool EditRule(string userId, QuestionRule rule, out bool success, out string message)
+        {
+            success = false;
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/edit/rule/{userId}", rule));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    success = true;
+                    return resultData.success;
+                }
+                else
+                {
+                    success = false;
+                    message = resultData.message;
+                    return resultData.success;
+                }
+            }
+            message = "网络连接错误";
+            return false;
+        }
+
+        /// <summary>
+        /// 修改试题
+        /// </summary>
+        /// <param name="specialtyId"></param>
+        /// <param name="queModel"></param>
+        /// <returns></returns>
+        public bool EditQuestion(string specialtyId, QuestionsInfoModel queModel, out bool success, out string message)
+        {
+            success = false;
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/edit/question/{specialtyId}", queModel));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    success = true;
+                    return resultData.success;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return resultData.success;
+                }
+            }
+            message = "网络连接错误";
+            return false;
+        }
+
+        /// <summary>
+        /// 获取试卷题目
+        /// </summary>
+        /// <param name="paperId"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public List<MockPaperCourseTreeModel> GetPaperDetails(int paperId, out string message)
+        {
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/paperdetail/{paperId}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    var ques = JsonConvert.DeserializeObject<List<MockPaperCourseTreeModel>>(resultData.data.ToString());
+                    return ques;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return null;
+                }
+            }
+            message = "网络连接错误";
+            return null;
+        }
+
+        /// <summary>
+        /// 获取专业基础规则
+        /// </summary>
+        /// <param name="specialtyId"></param>
+        /// <returns></returns>
+        public BaseRule GetBaseRule(string specialtyId, out string message)
+        {
+            message = string.Empty;
+
+            var baseRule = CacheController.Instance(specialtyId).GetBaseRule();
+
+            if (baseRule != null)
+                return baseRule;
+
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/baserule/{specialtyId}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    var rule = JsonConvert.DeserializeObject<BaseRule>(resultData.data.ToString());
+
+                    CacheController.Instance(specialtyId).SetBaseRule(rule);
+
+                    return rule;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return null;
+                }
+            }
+            message = "网络连接错误";
+            return null;
+
+        }
+
         private HttpItem GetHttpItem(string method, string url, object data = null)
         {
             HttpItem item = new HttpItem
@@ -270,7 +469,9 @@ namespace TTLX.Controller
             {
                 item.ContentType = "application/json";
                 if (data != null)
+                {
                     item.Postdata = JsonConvert.SerializeObject(data);
+                }
             }
             return item;
         }

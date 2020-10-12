@@ -54,9 +54,9 @@
             this.txtAnswerJiexi = new System.Windows.Forms.TextBox();
             this.txtOptionD = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblD = new System.Windows.Forms.Label();
             this.txtOptionC = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblC = new System.Windows.Forms.Label();
             this.txtOptionB = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtOptionA = new System.Windows.Forms.TextBox();
@@ -102,9 +102,9 @@
             this.panel1.Controls.Add(this.txtAnswerJiexi);
             this.panel1.Controls.Add(this.txtOptionD);
             this.panel1.Controls.Add(this.label15);
-            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.lblD);
             this.panel1.Controls.Add(this.txtOptionC);
-            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.lblC);
             this.panel1.Controls.Add(this.txtOptionB);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.txtOptionA);
@@ -378,15 +378,15 @@
             this.label15.TabIndex = 192;
             this.label15.Text = "试题难度：";
             // 
-            // label8
+            // lblD
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 12F);
-            this.label8.Location = new System.Drawing.Point(25, 501);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(64, 16);
-            this.label8.TabIndex = 192;
-            this.label8.Text = "选项D：";
+            this.lblD.AutoSize = true;
+            this.lblD.Font = new System.Drawing.Font("宋体", 12F);
+            this.lblD.Location = new System.Drawing.Point(25, 501);
+            this.lblD.Name = "lblD";
+            this.lblD.Size = new System.Drawing.Size(64, 16);
+            this.lblD.TabIndex = 192;
+            this.lblD.Text = "选项D：";
             // 
             // txtOptionC
             // 
@@ -396,15 +396,15 @@
             this.txtOptionC.Size = new System.Drawing.Size(862, 26);
             this.txtOptionC.TabIndex = 3;
             // 
-            // label7
+            // lblC
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 12F);
-            this.label7.Location = new System.Drawing.Point(25, 463);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 16);
-            this.label7.TabIndex = 191;
-            this.label7.Text = "选项C：";
+            this.lblC.AutoSize = true;
+            this.lblC.Font = new System.Drawing.Font("宋体", 12F);
+            this.lblC.Location = new System.Drawing.Point(25, 463);
+            this.lblC.Name = "lblC";
+            this.lblC.Size = new System.Drawing.Size(64, 16);
+            this.lblC.TabIndex = 191;
+            this.lblC.Text = "选项C：";
             // 
             // txtOptionB
             // 
@@ -614,9 +614,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtAnswerJiexi;
         private System.Windows.Forms.TextBox txtOptionD;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblD;
         private System.Windows.Forms.TextBox txtOptionC;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblC;
         private System.Windows.Forms.TextBox txtOptionB;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtOptionA;

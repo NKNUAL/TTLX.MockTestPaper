@@ -45,7 +45,6 @@ namespace TTLX.Common
         /// </summary>
         public string CurrentSpecialtyName { get; set; }
 
-
         public string QueTypeConvertToString(int type)
         {
             switch (type)

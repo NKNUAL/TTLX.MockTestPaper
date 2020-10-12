@@ -113,6 +113,7 @@
             // 
             this.listBox_rules.Font = new System.Drawing.Font("宋体", 12F);
             this.listBox_rules.FormattingEnabled = true;
+            this.listBox_rules.HorizontalScrollbar = true;
             this.listBox_rules.ItemHeight = 16;
             this.listBox_rules.Location = new System.Drawing.Point(659, 76);
             this.listBox_rules.Name = "listBox_rules";
@@ -152,6 +153,7 @@
             // 
             this.listBox_pre.Font = new System.Drawing.Font("宋体", 12F);
             this.listBox_pre.FormattingEnabled = true;
+            this.listBox_pre.HorizontalScrollbar = true;
             this.listBox_pre.ItemHeight = 16;
             this.listBox_pre.Location = new System.Drawing.Point(23, 76);
             this.listBox_pre.Name = "listBox_pre";

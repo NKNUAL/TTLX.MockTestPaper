@@ -20,15 +20,22 @@ namespace TTLX.MockTestPaper_V2
 
         public FrmQuestionImg(byte[] imgBytes) : this()
         {
-            this.imgBytes = imgBytes;
+            if (imgBytes == null || imgBytes.Length == 0)
+                this.imgBytes = null;
+            else
+            {
+                this.imgBytes = imgBytes;
+            }
         }
 
         public byte[] imgBytes { get; set; }
 
         private void btnChoosePic_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "(.图片文件)|*.png;*/jpg";
+            OpenFileDialog openFile = new OpenFileDialog
+            {
+                Filter = "(.图片文件)|*.png;*/jpg"
+            };
             if (openFile.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -55,6 +62,16 @@ namespace TTLX.MockTestPaper_V2
             if (imgBytes != null)
             {
                 picBox.Image = FileHelper.Instance.Byte2Image(imgBytes);
+            }
+        }
+
+        private void btnDelImg_Click(object sender, EventArgs e)
+        {
+            imgBytes = null;
+            if (picBox.Image != null)
+            {
+                picBox.Image.Dispose();
+                picBox.Image = null;
             }
         }
     }

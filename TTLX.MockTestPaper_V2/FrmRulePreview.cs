@@ -35,31 +35,30 @@ namespace TTLX.MockTestPaper_V2
             lblSpecialty.Text = specialtyName;
             lblRuleName.Text = ruleName;
             tbRuleDesc.Text = ruleDesc;
+            ruleTree.ItemHeight = 30;
             LoadRuleTree();
         }
 
         private void LoadRuleTree()
         {
-            TreeNode rootNode = new TreeNode() { Text = $"{specialtyName}模拟试卷出题规则" };
-            ruleTree.Nodes.Add(rootNode);
 
-            if (rule == null || rule.CourseRules == null || rule.CourseRules.Count == 0)
-                return;
+            //if (rule == null || rule.CourseRules == null || rule.CourseRules.Count == 0)
+            //    return;
 
-            foreach (var course in rule.CourseRules.OrderBy(c => c.No))
-            {
-                TreeNode ccNode = new TreeNode() { Text = course.ToString(), Tag = course };
-                rootNode.Nodes.Add(ccNode);
+            //foreach (var course in rule.CourseRules.OrderBy(c => c.No))
+            //{
+            //    TreeNode ccNode = new TreeNode() { Text = course.ToString(), Tag = course };
+            //    ruleTree.Nodes.Add(ccNode);
 
-                if (course.KnowRules != null)
-                {
-                    foreach (var know in course.KnowRules.OrderBy(k => k.No))
-                    {
-                        TreeNode knowNode = new TreeNode() { Text = know.ToString(), Tag = know };
-                        ccNode.Nodes.Add(knowNode);
-                    }
-                }
-            }
+            //    if (course.KnowRules != null)
+            //    {
+            //        foreach (var know in course.KnowRules.OrderBy(k => k.No))
+            //        {
+            //            TreeNode knowNode = new TreeNode() { Text = know.ToString(), Tag = know };
+            //            ccNode.Nodes.Add(knowNode);
+            //        }
+            //    }
+            //}
         }
 
         private void btnClose_Click(object sender, EventArgs e)

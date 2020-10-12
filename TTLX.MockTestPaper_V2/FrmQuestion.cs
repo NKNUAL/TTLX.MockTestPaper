@@ -28,6 +28,8 @@ namespace TTLX.MockTestPaper_V2
 
         private string _p_guid;
 
+        private EditMode _editMode;
+
         public FrmQuestion(QuestionRule rule) : this()
         {
             this._rule = rule;
@@ -39,30 +41,65 @@ namespace TTLX.MockTestPaper_V2
                 UserName = Global.Instance.UserName,
             };
             _p_guid = Guid.NewGuid().GetGuid();
+
+            _editMode = EditMode.Create;
         }
+
 
         public FrmQuestion(QuestionRule rule, PutQuestionModel putQuestion, string pGuid) : this()
         {
             this._rule = rule;
             this._putQuestion = putQuestion;
             _p_guid = pGuid;
+            _editMode = EditMode.Create;
         }
+
+
+        public FrmQuestion(string paperName, QuestionRule rule, PutQuestionModel putQuestion) : this()
+        {
+            this._rule = rule;
+            this._putQuestion = putQuestion;
+            this.tbPaperName.Text = paperName;
+            _editMode = EditMode.Edit;
+        }
+
+
 
         private void FrmQuestion2_Load(object sender, EventArgs e)
         {
-            this.lblRuleName.Text = _rule.RuleName;
-            this.tbRuleDesc.Text = _rule.RuleDesc;
+            this.Text = $"模拟试卷出题-{Global.Instance.CurrentSpecialtyName}";
 
+            lblRuleName.Text = _rule.RuleName;
+            tbRuleDesc.Text = _rule.RuleDesc;
+
+            if (_editMode == EditMode.Edit)
+            {
+                btnQuestion.Enabled = false;//如果是编辑模式，则不需要保存试卷
+                tbPaperName.Enabled = false;
+            }
+            ruleTree.ItemHeight = 30;
             LoadRuleTree();
-
             Task.Factory.StartNew(ExeSaveRecord);
         }
 
+        /// <summary>
+        /// 保存题目到Sqlite
+        /// </summary>
         private void ExeSaveRecord()
         {
-            QuestionController.Instance.SavePaper(_p_guid, _rule.RuleNo);
+            if (!string.IsNullOrEmpty(_p_guid))
+                QuestionController.Instance.SavePaper(_p_guid, _rule.RuleNo);
         }
 
+        private void ExeDelRecord()
+        {
+            if (!string.IsNullOrEmpty(_p_guid))
+                _ = QuestionController.Instance.DeleteNormalRecord(_p_guid);
+        }
+
+        /// <summary>
+        /// 加载规则树
+        /// </summary>
         private void LoadRuleTree()
         {
             if (_rule == null || _rule.CourseRules == null || _rule.CourseRules.Count == 0)
@@ -72,7 +109,7 @@ namespace TTLX.MockTestPaper_V2
 
             foreach (var course in _rule.CourseRules.OrderBy(c => c.No))
             {
-                TreeNode ccNode = new TreeNode() { Text = course.ToString(), Tag = course };
+                TreeNode ccNode = new TreeNode() { Text = course.ToString(), Tag = course, Name = course.No };
                 ruleTree.Nodes.Add(ccNode);
 
                 if (course.KnowRules != null)
@@ -81,7 +118,7 @@ namespace TTLX.MockTestPaper_V2
                     int hadFinishCount = 0;
                     foreach (var know in course.KnowRules.OrderBy(k => k.No))
                     {
-                        TreeNode knowNode = new TreeNode() { Tag = know };
+                        TreeNode knowNode = new TreeNode() { Tag = know, Name = course.No + "_" + know.No };
                         ccNode.Nodes.Add(knowNode);
 
                         var ques = GetQuestionModel(course.No, know.No);
@@ -121,7 +158,11 @@ namespace TTLX.MockTestPaper_V2
             }
         }
 
-
+        /// <summary>
+        /// 加载知识点下的试题
+        /// </summary>
+        /// <param name="courseRule"></param>
+        /// <param name="knowRule"></param>
         private void InitDgPaper(SubRule courseRule, SubRule knowRule)
         {
             var ques = GetQuestionModel(courseRule.No, knowRule.No);
@@ -153,6 +194,12 @@ namespace TTLX.MockTestPaper_V2
             }
         }
 
+        /// <summary>
+        /// 从缓存获取题目
+        /// </summary>
+        /// <param name="courseNo"></param>
+        /// <param name="knowNo"></param>
+        /// <returns></returns>
         private List<QuestionsInfoModel> GetQuestionModel(string courseNo, string knowNo)
         {
             var putCourse = _putQuestion.Courses.Find(c => c.CourseNo == courseNo);
@@ -166,6 +213,12 @@ namespace TTLX.MockTestPaper_V2
             return putKnow.Questions ?? new List<QuestionsInfoModel>();
         }
 
+        /// <summary>
+        /// 保存题目到缓存
+        /// </summary>
+        /// <param name="courseNo"></param>
+        /// <param name="knowNo"></param>
+        /// <param name="que"></param>
         public void SetQuestionModel(string courseNo, string knowNo, QuestionsInfoModel que)
         {
             var putCourse = _putQuestion.Courses.Find(c => c.CourseNo == courseNo);
@@ -191,12 +244,11 @@ namespace TTLX.MockTestPaper_V2
             putKnow.Questions.Add(que);
         }
 
-
         private void dgvQuestions_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex == 4)
             {
-                FrmCreateQuestion frmCreateQuestion = null;
+                FrmCreateQuestion frmCreateQuestion;
 
                 var courseRule = dgvQuestions.Rows[e.RowIndex].Cells[0].Tag as SubRule;
                 var knowRule = dgvQuestions.Rows[e.RowIndex].Cells[1].Tag as SubRule;
@@ -204,7 +256,7 @@ namespace TTLX.MockTestPaper_V2
                 if (dgvQuestions.Rows[e.RowIndex].Tag is QuestionsInfoModel)//编辑题目
                 {
                     var que = dgvQuestions.Rows[e.RowIndex].Tag as QuestionsInfoModel;
-                    frmCreateQuestion = new FrmCreateQuestion(que, courseRule, knowRule, _p_guid);
+                    frmCreateQuestion = new FrmCreateQuestion(que, courseRule, knowRule, _p_guid, _editMode);
                     if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
                     {
                         LoadRuleTree();
@@ -213,7 +265,7 @@ namespace TTLX.MockTestPaper_V2
                 }
                 else//增加题目
                 {
-                    frmCreateQuestion = new FrmCreateQuestion(courseRule, knowRule, _p_guid);
+                    frmCreateQuestion = new FrmCreateQuestion(courseRule, knowRule, _p_guid, _editMode);
                     if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
                     {
                         SetQuestionModel(courseRule.No, knowRule.No, frmCreateQuestion._question);
@@ -225,5 +277,81 @@ namespace TTLX.MockTestPaper_V2
 
             }
         }
+
+        /// <summary>
+        /// 检查题目是否出完
+        /// </summary>
+        /// <returns></returns>
+        private Tuple<string, string> CheckQuestion()
+        {
+            foreach (var course in _rule.CourseRules.OrderBy(c => c.No))
+            {
+
+                if (course.KnowRules != null)
+                {
+
+                    foreach (var know in course.KnowRules.OrderBy(k => k.No))
+                    {
+                        var ques = GetQuestionModel(course.No, know.No);
+
+                        if (ques.Count != know.QueCount)
+                            return new Tuple<string, string>(course.No, know.No);
+
+                    }
+
+                }
+            }
+            return null;
+        }
+
+        private void btnQuestion_Click(object sender, EventArgs e)
+        {
+
+            var checkResult = CheckQuestion();
+
+            if (checkResult != null)
+            {
+                var treeNodes = ruleTree.Nodes.Find(checkResult.Item1 + "_" + checkResult.Item2, true);
+
+                if (treeNodes != null && treeNodes.Length > 0)
+                {
+                    ruleTree.SelectedNode = treeNodes[0];
+
+                    MessageBox.Show("您还有题目未出完，请先出完题目再提交模拟试卷！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(tbPaperName.Text))
+                {
+                    MessageBox.Show("请您输入模拟试卷名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tbPaperName.Focus();
+                    return;
+                }
+
+                _putQuestion.PaperName = tbPaperName.Text;
+                if (WebApiController.Instance.CreatePaper(_putQuestion, out string message))
+                {
+                    MessageBox.Show("模拟试卷创建成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Task.Factory.StartNew(ExeDelRecord);
+
+                    DialogResult = DialogResult.OK;
+
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("模拟试卷创建失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+
+        }
+
+
     }
 }

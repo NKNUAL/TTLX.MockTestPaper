@@ -32,6 +32,7 @@
             this.picBox = new System.Windows.Forms.PictureBox();
             this.btnConfirm = new System.Windows.Forms.Button();
             this.btnChoosePic = new System.Windows.Forms.Button();
+            this.btnDelImg = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,6 +41,7 @@
             this.picBox.Location = new System.Drawing.Point(12, 12);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(300, 300);
+            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picBox.TabIndex = 0;
             this.picBox.TabStop = false;
             // 
@@ -73,11 +75,28 @@
             this.btnChoosePic.UseVisualStyleBackColor = false;
             this.btnChoosePic.Click += new System.EventHandler(this.btnChoosePic_Click);
             // 
+            // btnDelImg
+            // 
+            this.btnDelImg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelImg.BackColor = System.Drawing.Color.Red;
+            this.btnDelImg.FlatAppearance.BorderSize = 0;
+            this.btnDelImg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelImg.Font = new System.Drawing.Font("宋体", 12F);
+            this.btnDelImg.ForeColor = System.Drawing.Color.White;
+            this.btnDelImg.Location = new System.Drawing.Point(104, 319);
+            this.btnDelImg.Name = "btnDelImg";
+            this.btnDelImg.Size = new System.Drawing.Size(84, 31);
+            this.btnDelImg.TabIndex = 28;
+            this.btnDelImg.Text = "删除规则";
+            this.btnDelImg.UseVisualStyleBackColor = false;
+            this.btnDelImg.Click += new System.EventHandler(this.btnDelImg_Click);
+            // 
             // FrmQuestionImg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(324, 362);
+            this.Controls.Add(this.btnDelImg);
             this.Controls.Add(this.btnChoosePic);
             this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.picBox);
@@ -96,5 +115,6 @@
         private System.Windows.Forms.PictureBox picBox;
         private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.Button btnChoosePic;
+        private System.Windows.Forms.Button btnDelImg;
     }
 }

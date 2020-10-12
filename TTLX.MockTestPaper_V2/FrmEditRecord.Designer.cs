@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEditRecord));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblCount = new System.Windows.Forms.Label();
@@ -100,6 +101,14 @@
             this.dgRecord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgRecord.Location = new System.Drawing.Point(0, 0);
             this.dgRecord.Name = "dgRecord";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgRecord.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgRecord.RowTemplate.Height = 23;
             this.dgRecord.Size = new System.Drawing.Size(1029, 544);
             this.dgRecord.TabIndex = 0;

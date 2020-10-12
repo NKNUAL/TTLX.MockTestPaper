@@ -64,6 +64,8 @@ namespace TTLX.MockTestPaper_V2
 
                 if (know != null)
                     course.KnowRules.Remove(know);
+
+                course.QueCount = course.KnowRules.Sum(k => k.QueCount);
             }
         }
 

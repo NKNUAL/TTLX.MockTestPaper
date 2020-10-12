@@ -70,6 +70,8 @@
     <Compile Include="Model\RuleSimpleModel.cs" />
     <Compile Include="QuestionController.cs" />
     <Compile Include="RequestModel\LoginModel.cs" />
+    <Compile Include="RequestModel\QuestionCheckModel.cs" />
+    <Compile Include="ResposeModel\BaseRule.cs" />
     <Compile Include="ResposeModel\HttpResultModel.cs" />
     <Compile Include="ResposeModel\KVModel.cs" />
     <Compile Include="ResposeModel\MockPaperInfo.cs" />

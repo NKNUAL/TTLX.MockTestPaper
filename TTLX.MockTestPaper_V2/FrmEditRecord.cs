@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTLX.Common;
@@ -32,6 +33,8 @@ namespace TTLX.MockTestPaper_V2
 
         private void FrmEditRecord_Load(object sender, EventArgs e)
         {
+            cbRules.ItemHeight = 30;
+
             cbRules.Items.AddRange(_rules.ToArray());
 
             GetPaperRecord(null);
@@ -99,6 +102,8 @@ namespace TTLX.MockTestPaper_V2
                     dgRecord.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
                     dgRecord.RowTemplate.Height = 30;
                     dgRecord.AllowUserToAddRows = false;
+                    dgRecord.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dgRecord.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 }
                 #endregion
 
@@ -118,6 +123,7 @@ namespace TTLX.MockTestPaper_V2
                          que.DicQuestions.Sum(q => q.Value.Values.Sum(a => a.Count(s => s.QueType == 3)));
 
                     dgRecord.Rows[index].Cells[5].Value = "继续出题";
+                    dgRecord.Rows[index].Cells[5].Style.ForeColor = Color.Blue;
 
                 }
             };
@@ -131,20 +137,52 @@ namespace TTLX.MockTestPaper_V2
             if (e.RowIndex >= 0 && e.ColumnIndex == 5)
             {
                 var que = dgRecord.Rows[e.RowIndex].Tag as EditPaperRecord;
-                PutQuestionModel putQuestions = new PutQuestionModel();
-                putQuestions.RuleNo = que.RuleNo;
-                putQuestions.UserId = Global.Instance.LexueID;
-                putQuestions.UserName = Global.Instance.UserName;
+                PutQuestionModel putQuestions = new PutQuestionModel
+                {
+                    RuleNo = que.RuleNo,
+                    UserId = Global.Instance.LexueID,
+                    UserName = Global.Instance.UserName,
+                    Courses = new List<PutQuestionCourseModel>()
+                };
 
                 var rule = _rules.Find(r => r.RuleNo == que.RuleNo);
 
-                foreach (var item in que.DicQuestions)
+                foreach (var item_copurse in que.DicQuestions)
                 {
+                    var course = putQuestions.Courses.Find(c => c.CourseNo == item_copurse.Key);
+                    if (course == null)
+                    {
+                        course = new PutQuestionCourseModel
+                        {
+                            CourseNo = item_copurse.Key,
+                            Knows = new List<PutQuestionKnowModel>()
+                        };
+                        putQuestions.Courses.Add(course);
+                    }
 
+                    foreach (var item_know in item_copurse.Value)
+                    {
+                        var know = course.Knows.Find(k => k.KnowNo == item_know.Key);
+                        if (know == null)
+                        {
+                            know = new PutQuestionKnowModel
+                            {
+                                KnowNo = item_know.Key,
+                                Questions = new List<QuestionsInfoModel>()
+                            };
+                            course.Knows.Add(know);
+                        }
+
+                        know.Questions.AddRange(item_know.Value);
+                    }
                 }
 
-                FrmQuestion frmQuestion = new FrmQuestion(rule, putQuestions, que.PGuid);
-                frmQuestion.ShowDialog();
+                //FrmQuestion frmQuestion = new FrmQuestion(rule, putQuestions, que.PGuid);
+                //if (frmQuestion.ShowDialog() == DialogResult.OK)
+                //{
+                //    Thread.Sleep(100);
+                //    GetPaperRecord(null);
+                //}
 
             }
         }

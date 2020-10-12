@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TTLX.Controller.ResposeModel;
 
 namespace TTLX.Controller
 {
@@ -44,6 +45,36 @@ namespace TTLX.Controller
         private Dictionary<string, Dictionary<string, string>> _dicKnow =
             new Dictionary<string, Dictionary<string, string>>();
 
+        /// <summary>
+        /// 出题规则
+        /// </summary>
+        private List<QuestionRule> _rules { get; set; }
+
+        /// <summary>
+        /// 基础规则缓存
+        /// </summary>
+        private BaseRule _baseRule { get; set; }
+
+        public void SetBaseRule(BaseRule baseRule)
+        {
+            _baseRule = baseRule;
+        }
+
+        public BaseRule GetBaseRule()
+        {
+            return _baseRule;
+        }
+
+
+        public List<QuestionRule> GetRules()
+        {
+            return _rules;
+        }
+
+        public void SetRules(List<QuestionRule> rules)
+        {
+            this._rules = rules;
+        }
 
         public Dictionary<string, string> GetCourse()
         {

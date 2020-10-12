@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using TTLX.Common;
 using TTLX.Common.Expand;
 using TTLX.Controller;
+using TTLX.Controller.RequestModel;
 using TTLX.Controller.ResposeModel;
 
 namespace TTLX.MockTestPaper_V2
@@ -29,17 +30,19 @@ namespace TTLX.MockTestPaper_V2
         SubRule _know;
         string _p_guid;
 
+        EditMode _editMode;
 
-        public FrmCreateQuestion(QuestionsInfoModel question, SubRule course, SubRule know, string p_guid)
-            : this(course, know, p_guid)
+        public FrmCreateQuestion(QuestionsInfoModel question, SubRule course, SubRule know, string p_guid, EditMode editMode)
+            : this(course, know, p_guid, editMode)
         {
             this._question = question;
         }
-        public FrmCreateQuestion(SubRule course, SubRule know, string p_guid) : this()
+        public FrmCreateQuestion(SubRule course, SubRule know, string p_guid, EditMode editMode) : this()
         {
             this._course = course;
             this._know = know;
             _p_guid = p_guid;
+            this._editMode = editMode;
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -133,19 +136,43 @@ namespace TTLX.MockTestPaper_V2
                 panAnswerDanxuan.Visible = true;
                 panAnswerDuoxuan.Visible = false;
                 panAnswerPanduan.Visible = false;
+
+                EnableControl(true);
+                txtOptionA.Text = "";
+                txtOptionB.Text = "";
             }
             else if (cbQueType.SelectedIndex == 1)//多选
             {
                 panAnswerDanxuan.Visible = false;
                 panAnswerDuoxuan.Visible = true;
                 panAnswerPanduan.Visible = false;
+
+                EnableControl(true);
+                txtOptionA.Text = "";
+                txtOptionB.Text = "";
             }
             else//判断
             {
                 panAnswerDanxuan.Visible = false;
                 panAnswerDuoxuan.Visible = false;
                 panAnswerPanduan.Visible = true;
+
+                EnableControl(false);
+                txtOptionA.Text = "正确";
+                txtOptionB.Text = "错误";
             }
+        }
+
+        private void EnableControl(bool enable)
+        {
+            txtOptionA.Enabled = enable;
+            txtOptionB.Enabled = enable;
+            txtOptionC.Enabled = enable;
+            txtOptionD.Enabled = enable;
+            btnImgA.Enabled = enable;
+            btnImgB.Enabled = enable;
+            btnImgC.Enabled = enable;
+            btnImgD.Enabled = enable;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -153,9 +180,9 @@ namespace TTLX.MockTestPaper_V2
             int queType = cbQueType.SelectedIndex + 1;
             string queName = tbQueName.Text.Trim();
             string optionA = txtOptionA.Text.Trim();
-            string optionB = txtOptionA.Text.Trim();
-            string optionC = txtOptionA.Text.Trim();
-            string optionD = txtOptionA.Text.Trim();
+            string optionB = txtOptionB.Text.Trim();
+            string optionC = txtOptionC.Text.Trim();
+            string optionD = txtOptionD.Text.Trim();
             byte[] queNameImg = _question.NameImg;
             byte[] AImg = _question.Option0Img;
             byte[] BImg = _question.Option1Img;
@@ -189,16 +216,22 @@ namespace TTLX.MockTestPaper_V2
                 MessageBox.Show("请输入选项B!");
                 return;
             }
-            if (string.IsNullOrEmpty(optionC) && CImg == null)
+
+            if (queType != 3)
             {
-                MessageBox.Show("请输入选项C!");
-                return;
+                if (string.IsNullOrEmpty(optionC) && CImg == null)
+                {
+                    MessageBox.Show("请输入选项C!");
+                    return;
+                }
+                if (string.IsNullOrEmpty(optionD) && DImg == null)
+                {
+                    MessageBox.Show("请输入选项D!");
+                    return;
+                }
             }
-            if (string.IsNullOrEmpty(optionD) && DImg == null)
-            {
-                MessageBox.Show("请输入选项D!");
-                return;
-            }
+
+
             if (string.IsNullOrEmpty(jiexi))
             {
                 MessageBox.Show("请输入解析!");
@@ -257,25 +290,84 @@ namespace TTLX.MockTestPaper_V2
 
             #endregion
 
-            _question.No = Guid.NewGuid().GetGuid();
+            if (_editMode == EditMode.Create)
+                _question.No = Guid.NewGuid().GetGuid();
+
             _question.DifficultLevel = difficultLevel;
-            _question.QueType = difficultLevel;
+            _question.QueType = queType;
             _question.QueContent = queName;
             _question.Option0 = optionA;
             _question.Option1 = optionB;
             _question.Option2 = optionC;
             _question.Option3 = optionD;
             _question.NameImg = queNameImg;
-            _question.Option0Img = DImg;
-            _question.Option1Img = DImg;
-            _question.Option2Img = DImg;
+            _question.Option0Img = AImg;
+            _question.Option1Img = BImg;
+            _question.Option2Img = CImg;
             _question.Option3Img = DImg;
             _question.Answer = standardAnswer;
             _question.ResolutionTips = jiexi;
 
-            DialogResult = DialogResult.OK;
 
-            Task.Factory.StartNew(SaveQuestion);
+            if (_editMode == EditMode.Create)
+            {
+                if (!string.IsNullOrEmpty(queName))
+                {
+                    bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
+                    {
+                        SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
+                        QueContent = queName,
+                        OptionA = optionA,
+                        OptionB = optionB,
+                        OptionC = optionC,
+                        OptionD = optionD
+                    }, out string queResult, out string message);
+
+                    if (requestBool)
+                    {
+                        if (queResult != null)
+                        {
+                            MessageBox.Show("发现相似度大于60%的试题，推荐试题必须是题库中不存在相似的试题!!!" +
+                                $"[题库题目内容]：【{queResult}】", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else
+                        {
+                            Task.Factory.StartNew(SaveQuestion);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                bool resultBool = WebApiController.Instance
+                    .EditQuestion(Global.Instance.CurrentSpecialtyID.ToString(), _question, out bool success, out string message);
+
+                if (resultBool)
+                {
+                    if (success)
+                    {
+                        MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            DialogResult = DialogResult.OK;
         }
 
 
@@ -289,7 +381,7 @@ namespace TTLX.MockTestPaper_V2
         {
             var btn = sender as Button;
 
-            byte[] imgByte = null;
+            byte[] imgByte;
             switch (btn.Name)
             {
                 case "btnImgContent":
@@ -302,25 +394,25 @@ namespace TTLX.MockTestPaper_V2
                     imgByte = _question.Option0Img;
                     FrmQuestionImg frmA = new FrmQuestionImg(imgByte);
                     frmA.ShowDialog();
-                    _question.NameImg = frmA.imgBytes;
+                    _question.Option0Img = frmA.imgBytes;
                     break;
                 case "btnImgB":
                     imgByte = _question.Option1Img;
                     FrmQuestionImg frmB = new FrmQuestionImg(imgByte);
                     frmB.ShowDialog();
-                    _question.NameImg = frmB.imgBytes;
+                    _question.Option1Img = frmB.imgBytes;
                     break;
                 case "btnImgC":
                     imgByte = _question.Option2Img;
                     FrmQuestionImg frmC = new FrmQuestionImg(imgByte);
                     frmC.ShowDialog();
-                    _question.NameImg = frmC.imgBytes;
+                    _question.Option2Img = frmC.imgBytes;
                     break;
                 case "btnImgD":
                     imgByte = _question.Option3Img;
                     FrmQuestionImg frmD = new FrmQuestionImg(imgByte);
                     frmD.ShowDialog();
-                    _question.NameImg = frmD.imgBytes;
+                    _question.Option3Img = frmD.imgBytes;
                     break;
                 default:
                     break;

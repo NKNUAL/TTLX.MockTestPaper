@@ -44,11 +44,11 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("宋体", 12F);
             this.lblVersion.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblVersion.Location = new System.Drawing.Point(126, 233);
+            this.lblVersion.Location = new System.Drawing.Point(83, 236);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(320, 16);
+            this.lblVersion.Size = new System.Drawing.Size(352, 16);
             this.lblVersion.TabIndex = 27;
-            this.lblVersion.Text = "2020年湖北技能高考模拟试题出题工具 V1.2";
+            this.lblVersion.Text = "2020年湖北技能高考模拟试题出题工具 V2.0.0.0";
             // 
             // btnExit
             // 

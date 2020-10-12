@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1231
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLX.MockTestPaper_V2", "TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2.csproj", "{63D4BCE8-7F61-47CD-9198-BCB0959DEEB4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5423D42A-06A8-4D9A-9F42-CBB75201ACE6} = {5423D42A-06A8-4D9A-9F42-CBB75201ACE6}
+		{10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42} = {10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLX.Common", "TTLX.Common\TTLX.Common.csproj", "{BDDF9054-FE66-42B2-B1ED-9C02A45F18FB}"
 EndProject
@@ -17,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLX.DataBase", "TTLX.DataBase\TTLX.DataBase.csproj", "{10FB5C7F-9A7C-46B8-A0E4-2ECDE4B4BB42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLX.Version", "TTLX.Version\TTLX.Version.csproj", "{5423D42A-06A8-4D9A-9F42-CBB75201ACE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +50,10 @@ Global
 		{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C53B5C2-019B-4A9D-A7D2-EA3E59D085AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5423D42A-06A8-4D9A-9F42-CBB75201ACE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5423D42A-06A8-4D9A-9F42-CBB75201ACE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5423D42A-06A8-4D9A-9F42-CBB75201ACE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5423D42A-06A8-4D9A-9F42-CBB75201ACE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

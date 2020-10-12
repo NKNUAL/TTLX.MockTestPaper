@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +26,20 @@ namespace TTLX.MockTestPaper_V2
                     Environment.Exit(1);
                     return;
                 }
+
+                // 先启动更新程序
+                using (System.Diagnostics.Process p = new System.Diagnostics.Process())
+                {
+                    string liveUpdateExePath = Path.Combine(Application.StartupPath, "TTLX.Version.exe");
+                    if (File.Exists(liveUpdateExePath))
+                    {
+                        p.StartInfo.FileName = liveUpdateExePath;
+                        p.StartInfo.CreateNoWindow = false;
+                        p.Start();
+                        p.WaitForExit();
+                    }
+                }
+
 
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
