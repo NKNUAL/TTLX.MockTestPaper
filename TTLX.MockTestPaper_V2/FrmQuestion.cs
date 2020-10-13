@@ -93,7 +93,6 @@ namespace TTLX.MockTestPaper_V2
                 tbPaperName.Enabled = false;
             }
 
-            SetCountLabel();
 
             ruleTree.ItemHeight = 30;
             LoadRuleTree();
@@ -181,6 +180,9 @@ namespace TTLX.MockTestPaper_V2
         /// </summary>
         private void LoadRuleTree()
         {
+
+            SetCountLabel();
+
             if (_rule == null || _rule.CourseRules == null || _rule.CourseRules.Count == 0)
                 return;
 
@@ -279,18 +281,6 @@ namespace TTLX.MockTestPaper_V2
                 InitDgPaper_Know(courseRule2, knowNo);
             }
 
-            //if (e.Node == null || e.Node.Parent == null)
-            //    return;
-
-            //if (e.Node.Tag is SubRule && e.Node.Parent.Tag is SubRule)
-            //{
-
-            //    var courseRule = e.Node.Parent.Tag as SubRule;
-            //    var knowRule = e.Node.Tag as SubRule;
-
-            //    InitDgPaper(courseRule, knowRule);
-
-            //}
         }
 
         /// <summary>
@@ -561,6 +551,32 @@ namespace TTLX.MockTestPaper_V2
                 FrmCreateQuestion frmCreateQuestion;
                 if (dgvQuestions.Rows[e.RowIndex].Tag is QuestionsInfoModel que)//编辑题目
                 {
+
+                    frmCreateQuestion = new FrmCreateQuestion(que, courseRule, queType, knowNo, _p_guid, _editMode);
+                    if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadRuleTree();
+
+                        if (_currSelectEdNode != null)
+                        {
+                            if (_currSelectEdNode.Tag is CourseRule)
+                            {
+                                var nodes = ruleTree.Nodes.Find(courseRule.CourseNo, true);
+                                if (nodes != null && nodes.Length > 0)
+                                {
+                                    ruleTree.SelectedNode = nodes[0];
+                                }
+                            }
+                            else if (_currSelectEdNode.Tag is string tempKnowNo)
+                            {
+                                var nodes = ruleTree.Nodes.Find(courseRule.CourseNo + "_" + tempKnowNo, true);
+                                if (nodes != null && nodes.Length > 0)
+                                {
+                                    ruleTree.SelectedNode = nodes[0];
+                                }
+                            }
+                        }
+                    }
                     //frmCreateQuestion = new FrmCreateQuestion(courseRule, queType, knowRule, _p_guid, _editMode);
                     //if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
                     //{
@@ -616,74 +632,66 @@ namespace TTLX.MockTestPaper_V2
         /// 检查题目是否出完
         /// </summary>
         /// <returns></returns>
-        //private Tuple<string, string> CheckQuestion()
-        //{
-        //    foreach (var course in _rule.CourseRules.OrderBy(c => c.No))
-        //    {
+        private string CheckQuestion()
+        {
+            foreach (var course in _rule.CourseRules.OrderBy(c => c.CourseNo))
+            {
+                var ques = GetQuestionModel(course.CourseNo, null);
 
-        //        if (course.KnowRules != null)
-        //        {
-
-        //            foreach (var know in course.KnowRules.OrderBy(k => k.No))
-        //            {
-        //                var ques = GetQuestionModel(course.No, know.No);
-
-        //                if (ques.Count != know.QueCount)
-        //                    return new Tuple<string, string>(course.No, know.No);
-
-        //            }
-
-        //        }
-        //    }
-        //    return null;
-        //}
+                if (course.DanxuanCount + course.DuoxuanCount + course.PanduanCount != ques.Sum(q => q.Value.Count))
+                {
+                    return course.CourseNo;
+                }
+            }
+            return null;
+        }
 
 
 
         private void btnQuestion_Click(object sender, EventArgs e)
         {
 
-            //var checkResult = CheckQuestion();
+            var courseNo = CheckQuestion();
 
-            //if (checkResult != null)
-            //{
-            //    var treeNodes = ruleTree.Nodes.Find(checkResult.Item1 + "_" + checkResult.Item2, true);
+            if (courseNo != null)
+            {
+                var treeNodes = ruleTree.Nodes.Find(courseNo, false);
+                if (treeNodes != null && treeNodes.Length > 0)
+                {
+                    ruleTree.SelectedNode = treeNodes[0];
+                    MessageBox.Show("您还有题目未出完，请先出完题目再提交模拟试卷！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(tbPaperName.Text))
+                {
+                    MessageBox.Show("请您输入模拟试卷名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tbPaperName.Focus();
+                    return;
+                }
 
-            //    if (treeNodes != null && treeNodes.Length > 0)
-            //    {
-            //        ruleTree.SelectedNode = treeNodes[0];
+                _putQuestion.PaperName = tbPaperName.Text;
 
-            //        MessageBox.Show("您还有题目未出完，请先出完题目再提交模拟试卷！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        return;
-            //    }
-            //}
-            //else
-            //{
-            //    if (string.IsNullOrEmpty(tbPaperName.Text))
-            //    {
-            //        MessageBox.Show("请您输入模拟试卷名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        tbPaperName.Focus();
-            //        return;
-            //    }
+                if (WebApiController.Instance.CreatePaper(_putQuestion, out string message))
+                {
+                    MessageBox.Show("模拟试卷创建成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            //    _putQuestion.PaperName = tbPaperName.Text;
-            //    if (WebApiController.Instance.CreatePaper(_putQuestion, out string message))
-            //    {
-            //        MessageBox.Show("模拟试卷创建成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Task.Factory.StartNew(ExeDelRecord);
 
-            //        Task.Factory.StartNew(ExeDelRecord);
+                    DialogResult = DialogResult.OK;
 
-            //        DialogResult = DialogResult.OK;
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("模拟试卷创建失败！" + message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
-            //        this.Close();
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("模拟试卷创建失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        return;
-            //    }
-            //}
 
 
         }

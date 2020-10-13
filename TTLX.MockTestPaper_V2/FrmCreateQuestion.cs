@@ -332,7 +332,7 @@ namespace TTLX.MockTestPaper_V2
 
             #endregion
 
-            if (_editMode == EditMode.Create)
+            if (_editMode == EditMode.Create && string.IsNullOrEmpty(_question.No))
                 _question.No = Guid.NewGuid().GetGuid();
 
             _question.DifficultLevel = difficultLevel;
@@ -353,7 +353,14 @@ namespace TTLX.MockTestPaper_V2
 
             if (_editMode == EditMode.Create)
             {
-                if (!string.IsNullOrEmpty(queName))
+                if (CheckSimilarity(queName, optionA, optionB, optionC, optionD))
+                {
+                    Task.Factory.StartNew(SaveQuestion);
+                }
+            }
+            else
+            {
+                if (CheckSimilarity(queName, optionA, optionB, optionC, optionD))
                 {
                     bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
                     {
@@ -365,17 +372,21 @@ namespace TTLX.MockTestPaper_V2
                         OptionD = optionD
                     }, out string queResult, out string message);
 
-                    if (requestBool)
+
+
+                    bool resultBool = WebApiController.Instance
+                        .EditQuestion(Global.Instance.CurrentSpecialtyID.ToString(), _question, out bool success, out message);
+
+                    if (resultBool)
                     {
-                        if (queResult != null)
+                        if (success)
                         {
-                            MessageBox.Show("发现相似度大于60%的试题，推荐试题必须是题库中不存在相似的试题!!!" +
-                                $"[题库题目内容]：【{queResult}】", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            Task.Factory.StartNew(SaveQuestion);
+                            MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
                         }
                     }
                     else
@@ -384,40 +395,49 @@ namespace TTLX.MockTestPaper_V2
                         return;
                     }
                 }
-            }
-            else
-            {
-                bool resultBool = WebApiController.Instance
-                    .EditQuestion(Global.Instance.CurrentSpecialtyID.ToString(), _question, out bool success, out string message);
-
-                if (resultBool)
-                {
-                    if (success)
-                    {
-                        MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+               
             }
 
             DialogResult = DialogResult.OK;
         }
 
+        private bool CheckSimilarity(string queName, string optionA, string optionB, string optionC, string optionD)
+        {
+            bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
+            {
+                SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
+                QueContent = queName,
+                OptionA = optionA,
+                OptionB = optionB,
+                OptionC = optionC,
+                OptionD = optionD
+            }, out string queResult, out string message);
+
+            if (requestBool)
+            {
+                if (queResult != null)
+                {
+                    MessageBox.Show("发现相似度大于60%的试题，推荐试题必须是题库中不存在相似的试题!!!" +
+                        $"[题库题目内容]：【{queResult}】", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
 
         private void SaveQuestion()
         {
-            if (cbKnows.SelectedItem is KVModel kv)
+            if (!string.IsNullOrEmpty(_knowNo))
             {
-                _ = QuestionController.Instance.SaveQuestions(_p_guid, _courseRule.CourseNo, kv.Key, _question);
+                _ = QuestionController.Instance.SaveQuestions(_p_guid, _courseRule.CourseNo, _knowNo, _question);
             }
         }
 

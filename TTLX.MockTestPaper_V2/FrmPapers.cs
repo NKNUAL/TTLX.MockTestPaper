@@ -293,8 +293,8 @@ namespace TTLX.MockTestPaper_V2
                     }
                 }
 
-                //FrmQuestion frmQuestion = new FrmQuestion(dgPapers.Rows[e.RowIndex].Cells[3].Value.ToString(), rule, putQuestions);
-                //frmQuestion.ShowDialog();
+                FrmQuestion frmQuestion = new FrmQuestion(dgPapers.Rows[e.RowIndex].Cells[3].Value.ToString(), rule, putQuestions);
+                frmQuestion.ShowDialog();
             }
         }
 

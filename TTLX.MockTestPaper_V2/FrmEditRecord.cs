@@ -177,12 +177,12 @@ namespace TTLX.MockTestPaper_V2
                     }
                 }
 
-                //FrmQuestion frmQuestion = new FrmQuestion(rule, putQuestions, que.PGuid);
-                //if (frmQuestion.ShowDialog() == DialogResult.OK)
-                //{
-                //    Thread.Sleep(100);
-                //    GetPaperRecord(null);
-                //}
+                FrmQuestion frmQuestion = new FrmQuestion(rule, putQuestions, que.PGuid);
+                if (frmQuestion.ShowDialog() == DialogResult.OK)
+                {
+                    Thread.Sleep(100);
+                    GetPaperRecord(null);
+                }
 
             }
         }
