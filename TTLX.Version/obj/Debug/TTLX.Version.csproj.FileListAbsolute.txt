@@ -10,3 +10,15 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\obj\Debug\TTLX.Version.exe
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\obj\Debug\TTLX.Version.pdb
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\bin\Debug\version.json
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\obj\Debug\TTLX.Version.csprojAssemblyReference.cache
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\bin\Debug\version.json
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\bin\Debug\TTLX.Version.exe.config
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\bin\Debug\TTLX.Version.exe
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\bin\Debug\TTLX.Version.pdb
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\bin\Debug\Ionic.Zip.dll
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\bin\Debug\Newtonsoft.Json.dll
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\bin\Debug\Newtonsoft.Json.xml
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\obj\Debug\TTLX.Version.csprojAssemblyReference.cache
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\obj\Debug\TTLX.Version.csproj.CoreCompileInputs.cache
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\obj\Debug\TTLX.Version.csproj.CopyComplete
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\obj\Debug\TTLX.Version.exe
+E:\git_reps\TTLX.MockTestPaper\TTLX.Version\obj\Debug\TTLX.Version.pdb
