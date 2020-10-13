@@ -35,6 +35,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutLabel = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblRuleName = new System.Windows.Forms.Label();
             this.tbRuleDesc = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,7 +51,6 @@
             this.tbPaperName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnQuestion = new System.Windows.Forms.Button();
-            this.lblRuleName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -120,11 +121,12 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.groupBox2);
             this.splitContainer3.Size = new System.Drawing.Size(450, 679);
-            this.splitContainer3.SplitterDistance = 176;
+            this.splitContainer3.SplitterDistance = 214;
             this.splitContainer3.TabIndex = 0;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.flowLayoutLabel);
             this.groupBox1.Controls.Add(this.lblRuleName);
             this.groupBox1.Controls.Add(this.tbRuleDesc);
             this.groupBox1.Controls.Add(this.label5);
@@ -132,10 +134,28 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(450, 176);
+            this.groupBox1.Size = new System.Drawing.Size(450, 214);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "规则信息";
+            // 
+            // flowLayoutLabel
+            // 
+            this.flowLayoutLabel.Location = new System.Drawing.Point(12, 160);
+            this.flowLayoutLabel.Name = "flowLayoutLabel";
+            this.flowLayoutLabel.Padding = new System.Windows.Forms.Padding(3);
+            this.flowLayoutLabel.Size = new System.Drawing.Size(432, 48);
+            this.flowLayoutLabel.TabIndex = 10;
+            // 
+            // lblRuleName
+            // 
+            this.lblRuleName.AutoSize = true;
+            this.lblRuleName.Font = new System.Drawing.Font("宋体", 12F);
+            this.lblRuleName.Location = new System.Drawing.Point(100, 26);
+            this.lblRuleName.Name = "lblRuleName";
+            this.lblRuleName.Size = new System.Drawing.Size(72, 16);
+            this.lblRuleName.TabIndex = 6;
+            this.lblRuleName.Text = "测试规则";
             // 
             // tbRuleDesc
             // 
@@ -143,7 +163,7 @@
             this.tbRuleDesc.Location = new System.Drawing.Point(103, 59);
             this.tbRuleDesc.Name = "tbRuleDesc";
             this.tbRuleDesc.ReadOnly = true;
-            this.tbRuleDesc.Size = new System.Drawing.Size(341, 108);
+            this.tbRuleDesc.Size = new System.Drawing.Size(341, 82);
             this.tbRuleDesc.TabIndex = 5;
             this.tbRuleDesc.Text = "";
             // 
@@ -173,7 +193,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(450, 499);
+            this.groupBox2.Size = new System.Drawing.Size(450, 461);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "出题规则";
@@ -184,12 +204,13 @@
             this.ruleTree.Font = new System.Drawing.Font("宋体", 12F);
             this.ruleTree.Location = new System.Drawing.Point(3, 17);
             this.ruleTree.Name = "ruleTree";
-            this.ruleTree.Size = new System.Drawing.Size(444, 479);
+            this.ruleTree.Size = new System.Drawing.Size(444, 441);
             this.ruleTree.TabIndex = 0;
             this.ruleTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ruleTree_AfterSelect);
             // 
             // dgvQuestions
             // 
+            this.dgvQuestions.AllowUserToAddRows = false;
             this.dgvQuestions.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
@@ -298,16 +319,6 @@
             this.btnQuestion.UseVisualStyleBackColor = false;
             this.btnQuestion.Click += new System.EventHandler(this.btnQuestion_Click);
             // 
-            // lblRuleName
-            // 
-            this.lblRuleName.AutoSize = true;
-            this.lblRuleName.Font = new System.Drawing.Font("宋体", 12F);
-            this.lblRuleName.Location = new System.Drawing.Point(100, 26);
-            this.lblRuleName.Name = "lblRuleName";
-            this.lblRuleName.Size = new System.Drawing.Size(72, 16);
-            this.lblRuleName.TabIndex = 6;
-            this.lblRuleName.Text = "测试规则";
-            // 
             // FrmQuestion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -361,5 +372,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colQueContent;
         private System.Windows.Forms.DataGridViewLinkColumn colEdit;
         private System.Windows.Forms.Label lblRuleName;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutLabel;
     }
 }

@@ -43,7 +43,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.btnSaveModify = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.lblTotal = new System.Windows.Forms.Label();
             this.lblSetted = new System.Windows.Forms.Label();
             this.lblNotSet = new System.Windows.Forms.Label();
@@ -126,6 +126,7 @@
             this.btnDel.TabIndex = 16;
             this.btnDel.Text = "《《 移除";
             this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnAdd
             // 
@@ -135,6 +136,7 @@
             this.btnAdd.TabIndex = 15;
             this.btnAdd.Text = "添加 》》";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label5
             // 
@@ -186,20 +188,21 @@
             this.label9.TabIndex = 22;
             this.label9.Text = "未设置数量：";
             // 
-            // btnSaveModify
+            // btnClose
             // 
-            this.btnSaveModify.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveModify.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btnSaveModify.FlatAppearance.BorderSize = 0;
-            this.btnSaveModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveModify.Font = new System.Drawing.Font("宋体", 12F);
-            this.btnSaveModify.ForeColor = System.Drawing.Color.White;
-            this.btnSaveModify.Location = new System.Drawing.Point(951, 403);
-            this.btnSaveModify.Name = "btnSaveModify";
-            this.btnSaveModify.Size = new System.Drawing.Size(86, 31);
-            this.btnSaveModify.TabIndex = 23;
-            this.btnSaveModify.Text = "确定";
-            this.btnSaveModify.UseVisualStyleBackColor = false;
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnClose.FlatAppearance.BorderSize = 0;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("宋体", 12F);
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.Location = new System.Drawing.Point(951, 403);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(86, 31);
+            this.btnClose.TabIndex = 23;
+            this.btnClose.Text = "关闭";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // lblTotal
             // 
@@ -239,7 +242,7 @@
             this.Controls.Add(this.lblNotSet);
             this.Controls.Add(this.lblSetted);
             this.Controls.Add(this.lblTotal);
-            this.Controls.Add(this.btnSaveModify);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
@@ -256,6 +259,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmSetKnowPoint";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "设置知识点";
             this.Load += new System.EventHandler(this.FrmSetKnowPoint_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbCount)).EndInit();
@@ -280,7 +284,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button btnSaveModify;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Label lblSetted;
         private System.Windows.Forms.Label lblNotSet;

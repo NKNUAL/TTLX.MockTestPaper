@@ -87,7 +87,7 @@
             this.btnDelImg.Name = "btnDelImg";
             this.btnDelImg.Size = new System.Drawing.Size(84, 31);
             this.btnDelImg.TabIndex = 28;
-            this.btnDelImg.Text = "删除规则";
+            this.btnDelImg.Text = "删除图片";
             this.btnDelImg.UseVisualStyleBackColor = false;
             this.btnDelImg.Click += new System.EventHandler(this.btnDelImg_Click);
             // 

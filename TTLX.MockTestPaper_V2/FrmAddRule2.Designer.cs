@@ -31,9 +31,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAddRule2));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.tbRuleDesc = new System.Windows.Forms.RichTextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.tbRuleName = new System.Windows.Forms.RichTextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnPreview = new System.Windows.Forms.Button();
@@ -57,6 +57,7 @@
             this.科目名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.题目数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.设置知识点 = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.tbPrompt = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -72,9 +73,9 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.richTextBox2);
+            this.splitContainer1.Panel1.Controls.Add(this.tbRuleDesc);
             this.splitContainer1.Panel1.Controls.Add(this.label10);
-            this.splitContainer1.Panel1.Controls.Add(this.richTextBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.tbRuleName);
             this.splitContainer1.Panel1.Controls.Add(this.label9);
             this.splitContainer1.Panel1.Controls.Add(this.btnSave);
             this.splitContainer1.Panel1.Controls.Add(this.btnPreview);
@@ -92,6 +93,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.tbPrompt);
             this.splitContainer1.Panel2.Controls.Add(this.btnSaveModify);
             this.splitContainer1.Panel2.Controls.Add(this.lblSetCount);
             this.splitContainer1.Panel2.Controls.Add(this.lblQueTypeName);
@@ -101,13 +103,14 @@
             this.splitContainer1.SplitterDistance = 331;
             this.splitContainer1.TabIndex = 0;
             // 
-            // richTextBox2
+            // tbRuleDesc
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(26, 335);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(292, 234);
-            this.richTextBox2.TabIndex = 18;
-            this.richTextBox2.Text = "";
+            this.tbRuleDesc.Font = new System.Drawing.Font("宋体", 12F);
+            this.tbRuleDesc.Location = new System.Drawing.Point(26, 335);
+            this.tbRuleDesc.Name = "tbRuleDesc";
+            this.tbRuleDesc.Size = new System.Drawing.Size(292, 234);
+            this.tbRuleDesc.TabIndex = 18;
+            this.tbRuleDesc.Text = "";
             // 
             // label10
             // 
@@ -119,13 +122,14 @@
             this.label10.TabIndex = 17;
             this.label10.Text = "规则描述：";
             // 
-            // richTextBox1
+            // tbRuleName
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(26, 212);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(292, 90);
-            this.richTextBox1.TabIndex = 16;
-            this.richTextBox1.Text = "";
+            this.tbRuleName.Font = new System.Drawing.Font("宋体", 12F);
+            this.tbRuleName.Location = new System.Drawing.Point(26, 212);
+            this.tbRuleName.Name = "tbRuleName";
+            this.tbRuleName.Size = new System.Drawing.Size(292, 90);
+            this.tbRuleName.TabIndex = 16;
+            this.tbRuleName.Text = "";
             // 
             // label9
             // 
@@ -151,6 +155,7 @@
             this.btnSave.TabIndex = 14;
             this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnPreview
             // 
@@ -166,6 +171,7 @@
             this.btnPreview.TabIndex = 13;
             this.btnPreview.Text = "预览规则";
             this.btnPreview.UseVisualStyleBackColor = false;
+            this.btnPreview.Click += new System.EventHandler(this.btnPreview_Click);
             // 
             // btnSetDuoxuan
             // 
@@ -291,6 +297,7 @@
             this.btnSaveModify.TabIndex = 15;
             this.btnSaveModify.Text = "保存";
             this.btnSaveModify.UseVisualStyleBackColor = false;
+            this.btnSaveModify.Click += new System.EventHandler(this.btnSaveModify_Click);
             // 
             // lblSetCount
             // 
@@ -325,18 +332,19 @@
             // 
             // dgCourseView
             // 
+            this.dgCourseView.AllowUserToAddRows = false;
             this.dgCourseView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgCourseView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CourseNo,
             this.科目名称,
             this.题目数量,
             this.设置知识点});
-            this.dgCourseView.Location = new System.Drawing.Point(24, 59);
+            this.dgCourseView.Location = new System.Drawing.Point(24, 119);
             this.dgCourseView.Name = "dgCourseView";
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dgCourseView.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgCourseView.RowTemplate.Height = 23;
-            this.dgCourseView.Size = new System.Drawing.Size(846, 510);
+            this.dgCourseView.Size = new System.Drawing.Size(846, 450);
             this.dgCourseView.TabIndex = 0;
             this.dgCourseView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgCourseView_CellClick);
             this.dgCourseView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgCourseView_CellValueChanged);
@@ -364,6 +372,16 @@
             this.设置知识点.Name = "设置知识点";
             this.设置知识点.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
+            // tbPrompt
+            // 
+            this.tbPrompt.Font = new System.Drawing.Font("宋体", 12F);
+            this.tbPrompt.Location = new System.Drawing.Point(24, 58);
+            this.tbPrompt.Name = "tbPrompt";
+            this.tbPrompt.ReadOnly = true;
+            this.tbPrompt.Size = new System.Drawing.Size(846, 55);
+            this.tbPrompt.TabIndex = 16;
+            this.tbPrompt.Text = "";
+            // 
             // FrmAddRule2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -372,6 +390,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmAddRule2";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "添加规则";
             this.Load += new System.EventHandler(this.FrmAddRule2_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -402,8 +421,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnPreview;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.RichTextBox tbRuleName;
+        private System.Windows.Forms.RichTextBox tbRuleDesc;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.DataGridView dgCourseView;
@@ -414,5 +433,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 题目数量;
         private System.Windows.Forms.DataGridViewLinkColumn 设置知识点;
         private System.Windows.Forms.Button btnSaveModify;
+        private System.Windows.Forms.RichTextBox tbPrompt;
     }
 }

@@ -29,5 +29,15 @@ namespace TTLX.Common.Expand
             return guid.ToString().Replace("-", "");
         }
 
+        public static List<T> Copy<T>(this List<T> list)
+        {
+            if (list == null)
+                return null;
+
+            string obj = Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(obj);
+
+        }
+
     }
 }

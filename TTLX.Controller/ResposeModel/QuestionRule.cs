@@ -12,13 +12,21 @@ namespace TTLX.Controller.ResposeModel
         public string RuleDesc { get; set; }
         public string SpecialtyId { get; set; }
         public List<CourseRule> CourseRules { get; set; }
+
+        public override string ToString()
+        {
+            return this.RuleName;
+        }
     }
 
     public class CourseRule
     {
         public string CourseNo { get; set; }
         public string CourseName { get; set; }
-        public int QueCount { get; set; }
+        public int QueCount
+        {
+            get { return DanxuanCount + DuoxuanCount + PanduanCount; }
+        }
         public int DanxuanCount { get; set; }
         public int DuoxuanCount { get; set; }
         public int PanduanCount { get; set; }

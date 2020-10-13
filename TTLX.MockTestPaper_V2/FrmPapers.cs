@@ -218,8 +218,8 @@ namespace TTLX.MockTestPaper_V2
             {
                 if (frmSelectRule.SelectedRule != null)
                 {
-                    //FrmQuestion frmQuestion = new FrmQuestion(frmSelectRule.SelectedRule);
-                    //frmQuestion.ShowDialog();
+                    FrmQuestion frmQuestion = new FrmQuestion(frmSelectRule.SelectedRule);
+                    frmQuestion.ShowDialog();
                 }
             }
 

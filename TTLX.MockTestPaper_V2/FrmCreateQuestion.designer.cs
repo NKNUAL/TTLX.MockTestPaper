@@ -30,7 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCreateQuestion));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.cbQueType = new System.Windows.Forms.ComboBox();
+            this.cbKnows = new System.Windows.Forms.ComboBox();
+            this.lblQueType = new System.Windows.Forms.Label();
             this.btnImgContent = new System.Windows.Forms.Button();
             this.tbQueName = new System.Windows.Forms.RichTextBox();
             this.btnImgB = new System.Windows.Forms.Button();
@@ -47,7 +48,6 @@
             this.rbtnDifficultLevel3 = new System.Windows.Forms.RadioButton();
             this.rbtnDifficultLevel2 = new System.Windows.Forms.RadioButton();
             this.rbtnDifficultLevel1 = new System.Windows.Forms.RadioButton();
-            this.lblKnowName = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -82,7 +82,8 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.cbQueType);
+            this.panel1.Controls.Add(this.cbKnows);
+            this.panel1.Controls.Add(this.lblQueType);
             this.panel1.Controls.Add(this.btnImgContent);
             this.panel1.Controls.Add(this.tbQueName);
             this.panel1.Controls.Add(this.btnImgB);
@@ -95,7 +96,6 @@
             this.panel1.Controls.Add(this.rbtnDifficultLevel3);
             this.panel1.Controls.Add(this.rbtnDifficultLevel2);
             this.panel1.Controls.Add(this.rbtnDifficultLevel1);
-            this.panel1.Controls.Add(this.lblKnowName);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.label9);
@@ -122,16 +122,27 @@
             this.panel1.Size = new System.Drawing.Size(1084, 727);
             this.panel1.TabIndex = 1;
             // 
-            // cbQueType
+            // cbKnows
             // 
-            this.cbQueType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbQueType.Font = new System.Drawing.Font("宋体", 16F);
-            this.cbQueType.FormattingEnabled = true;
-            this.cbQueType.Location = new System.Drawing.Point(124, 68);
-            this.cbQueType.Name = "cbQueType";
-            this.cbQueType.Size = new System.Drawing.Size(131, 29);
-            this.cbQueType.TabIndex = 218;
-            this.cbQueType.SelectedIndexChanged += new System.EventHandler(this.cbQueType_SelectedIndexChanged);
+            this.cbKnows.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbKnows.Font = new System.Drawing.Font("宋体", 12F);
+            this.cbKnows.FormattingEnabled = true;
+            this.cbKnows.Location = new System.Drawing.Point(130, 189);
+            this.cbKnows.Name = "cbKnows";
+            this.cbKnows.Size = new System.Drawing.Size(863, 24);
+            this.cbKnows.TabIndex = 219;
+            this.cbKnows.SelectedIndexChanged += new System.EventHandler(this.cbKnows_SelectedIndexChanged);
+            // 
+            // lblQueType
+            // 
+            this.lblQueType.AutoSize = true;
+            this.lblQueType.Font = new System.Drawing.Font("宋体", 16F);
+            this.lblQueType.ForeColor = System.Drawing.Color.Blue;
+            this.lblQueType.Location = new System.Drawing.Point(127, 71);
+            this.lblQueType.Name = "lblQueType";
+            this.lblQueType.Size = new System.Drawing.Size(76, 22);
+            this.lblQueType.TabIndex = 218;
+            this.lblQueType.Text = "单选题";
             // 
             // btnImgContent
             // 
@@ -306,16 +317,6 @@
             this.rbtnDifficultLevel1.TabStop = true;
             this.rbtnDifficultLevel1.Text = "容易";
             this.rbtnDifficultLevel1.UseVisualStyleBackColor = true;
-            // 
-            // lblKnowName
-            // 
-            this.lblKnowName.Font = new System.Drawing.Font("宋体", 16F);
-            this.lblKnowName.ForeColor = System.Drawing.Color.Red;
-            this.lblKnowName.Location = new System.Drawing.Point(123, 189);
-            this.lblKnowName.Name = "lblKnowName";
-            this.lblKnowName.Size = new System.Drawing.Size(938, 46);
-            this.lblKnowName.TabIndex = 205;
-            this.lblKnowName.Text = "[所属知识点]";
             // 
             // label13
             // 
@@ -639,7 +640,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblCourseName;
-        private System.Windows.Forms.Label lblKnowName;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
@@ -654,6 +654,7 @@
         private System.Windows.Forms.Button btnImgD;
         private System.Windows.Forms.RichTextBox tbQueName;
         private System.Windows.Forms.Button btnImgContent;
-        private System.Windows.Forms.ComboBox cbQueType;
+        private System.Windows.Forms.Label lblQueType;
+        private System.Windows.Forms.ComboBox cbKnows;
     }
 }

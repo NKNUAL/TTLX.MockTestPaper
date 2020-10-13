@@ -25,40 +25,81 @@ namespace TTLX.MockTestPaper_V2
             InitializeComponent();
         }
 
-        public QuestionsInfoModel _question { get; set; }
-        SubRule _course;
-        SubRule _know;
+        public QuestionsInfoModel _question;
+        CourseRule _courseRule;
+        int _queType;
+        public string _knowNo;
         string _p_guid;
-
         EditMode _editMode;
 
-        public FrmCreateQuestion(QuestionsInfoModel question, SubRule course, SubRule know, string p_guid, EditMode editMode)
-            : this(course, know, p_guid, editMode)
+        public FrmCreateQuestion(CourseRule courseRule, int queType, string knowNo, string p_guid, EditMode editMode)
+            : this()
         {
-            this._question = question;
-        }
-        public FrmCreateQuestion(SubRule course, SubRule know, string p_guid, EditMode editMode) : this()
-        {
-            this._course = course;
-            this._know = know;
+            _courseRule = courseRule;
+            _queType = queType;
+            _knowNo = knowNo;
             _p_guid = p_guid;
-            this._editMode = editMode;
+            _editMode = editMode;
         }
+
+        public FrmCreateQuestion(QuestionsInfoModel question, CourseRule courseRule, int queType, string knowNo, string p_guid, EditMode editMode)
+            : this()
+        {
+            _question = question;
+            _courseRule = courseRule;
+            _queType = queType;
+            _knowNo = knowNo;
+            _p_guid = p_guid;
+            _editMode = editMode;
+        }
+
+
+        //public FrmCreateQuestion(QuestionsInfoModel question, SubRule course, SubRule know, string p_guid, EditMode editMode)
+        //    : this(course, know, p_guid, editMode)
+        //{
+        //    this._question = question;
+        //}
+        //public FrmCreateQuestion(SubRule course, SubRule know, string p_guid, EditMode editMode) : this()
+        //{
+        //    this._course = course;
+        //    this._know = know;
+        //    _p_guid = p_guid;
+        //    this._editMode = editMode;
+        //}
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            cbQueType.Items.AddRange(new[] { "单选题", "多选题", "判断题" });
-
             LoadQuestion();
         }
 
         private void LoadQuestion()
         {
-            lblCourseName.Text = this._course.Name;
-            lblKnowName.Text = this._know.Name;
+            lblQueType.Text = Global.Instance.QueTypeConvertToString(_queType);
+            lblCourseName.Text = this._courseRule.CourseName;
+
+            var knows = WebApiController.Instance
+                .GetKnows(Global.Instance.CurrentSpecialtyID.ToString(), _courseRule.CourseNo, out _);
+
+            if (!string.IsNullOrEmpty(_knowNo))
+            {
+                var know = knows.Find(k => k.Key == _knowNo);
+
+                cbKnows.Items.Add(know);
+
+                cbKnows.SelectedIndex = 0;
+
+                cbKnows.Enabled = false;
+            }
+            else
+            {
+                cbKnows.Items.AddRange(knows.ToArray());
+            }
+
+            InitQueType();
+
             if (_question != null)
             {
-                cbQueType.SelectedIndex = _question.QueType - 1;
+
                 tbQueName.Text = _question.QueContent;
                 txtOptionA.Text = _question.Option0;
                 txtOptionB.Text = _question.Option1;
@@ -129,9 +170,9 @@ namespace TTLX.MockTestPaper_V2
         }
 
 
-        private void cbQueType_SelectedIndexChanged(object sender, EventArgs e)
+        private void InitQueType()
         {
-            if (cbQueType.SelectedIndex == 0)//单选题
+            if (_queType == (int)QuestionsType.Danxuan)//单选题
             {
                 panAnswerDanxuan.Visible = true;
                 panAnswerDuoxuan.Visible = false;
@@ -141,7 +182,7 @@ namespace TTLX.MockTestPaper_V2
                 txtOptionA.Text = "";
                 txtOptionB.Text = "";
             }
-            else if (cbQueType.SelectedIndex == 1)//多选
+            else if (_queType == (int)QuestionsType.Danxuan)//多选
             {
                 panAnswerDanxuan.Visible = false;
                 panAnswerDuoxuan.Visible = true;
@@ -177,7 +218,7 @@ namespace TTLX.MockTestPaper_V2
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            int queType = cbQueType.SelectedIndex + 1;
+            int queType = _queType;
             string queName = tbQueName.Text.Trim();
             string optionA = txtOptionA.Text.Trim();
             string optionB = txtOptionB.Text.Trim();
@@ -194,11 +235,12 @@ namespace TTLX.MockTestPaper_V2
 
             #region 合法性判断
 
-            if (cbQueType.SelectedItem == null)
+            if (!(cbKnows.SelectedItem is KVModel))
             {
-                MessageBox.Show("请选择题目类型!");
+                MessageBox.Show("请选择知识点！");
                 return;
             }
+
 
             if (string.IsNullOrEmpty(queName) && queNameImg == null)
             {
@@ -373,7 +415,10 @@ namespace TTLX.MockTestPaper_V2
 
         private void SaveQuestion()
         {
-            _ = QuestionController.Instance.SaveQuestions(_p_guid, _course.No, _know.No, _question);
+            if (cbKnows.SelectedItem is KVModel kv)
+            {
+                _ = QuestionController.Instance.SaveQuestions(_p_guid, _courseRule.CourseNo, kv.Key, _question);
+            }
         }
 
 
@@ -418,6 +463,14 @@ namespace TTLX.MockTestPaper_V2
                     break;
             }
 
+        }
+
+        private void cbKnows_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbKnows.SelectedItem is KVModel kv)
+            {
+                _knowNo = kv.Key;
+            }
         }
     }
 }

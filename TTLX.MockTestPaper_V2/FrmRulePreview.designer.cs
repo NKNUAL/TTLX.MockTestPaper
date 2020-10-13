@@ -104,7 +104,7 @@
             this.ruleTree.Font = new System.Drawing.Font("宋体", 11F);
             this.ruleTree.Location = new System.Drawing.Point(110, 188);
             this.ruleTree.Name = "ruleTree";
-            this.ruleTree.Size = new System.Drawing.Size(678, 324);
+            this.ruleTree.Size = new System.Drawing.Size(678, 435);
             this.ruleTree.TabIndex = 6;
             // 
             // label4
@@ -125,7 +125,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.Font = new System.Drawing.Font("宋体", 12F);
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(702, 518);
+            this.btnClose.Location = new System.Drawing.Point(702, 629);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(86, 31);
             this.btnClose.TabIndex = 10;
@@ -137,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 560);
+            this.ClientSize = new System.Drawing.Size(800, 672);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ruleTree);

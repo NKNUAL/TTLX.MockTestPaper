@@ -63,9 +63,9 @@ namespace TTLX.MockTestPaper_V2
             string text = $"共{totalQueCount}道题目。";
             if (danxuanCount > 0)
                 text += $"单选题{danxuanCount}道。";
-            if (danxuanCount > 0)
+            if (duoxuanCount > 0)
                 text += $"多选题{duoxuanCount}道。";
-            if (danxuanCount > 0)
+            if (panduanCount > 0)
                 text += $"判断题{panduanCount}道。";
 
             TreeNode rootNode = new TreeNode() { Text = text };
@@ -73,7 +73,7 @@ namespace TTLX.MockTestPaper_V2
 
             foreach (var course in rule.CourseRules.OrderBy(c => c.CourseNo))
             {
-                TreeNode ccNode = new TreeNode() { Text = course.ToString() + $"({course.QueCount})" };
+                TreeNode ccNode = new TreeNode() { Text = course.CourseName + $"({course.QueCount})" };
                 rootNode.Nodes.Add(ccNode);
 
                 string courseText = "";
@@ -87,8 +87,11 @@ namespace TTLX.MockTestPaper_V2
 
                 ccNode.Nodes.Add(courseText);
 
-                if (course.KnowRules != null)
+                if (course.KnowRules != null && course.KnowRules.Count > 0)
                 {
+                    TreeNode knowDetail = new TreeNode() { Text = "知识点明细" };
+                    ccNode.Nodes.Add(knowDetail);
+
                     foreach (var know in course.KnowRules.OrderBy(k => k.KnowNo))
                     {
                         TreeNode knowNode = new TreeNode() { Tag = know };
@@ -99,8 +102,8 @@ namespace TTLX.MockTestPaper_V2
                             knowNode.Nodes.Add($"多选题{know.DuoxuanCount}道");
                         if (know.PanduanCount != null && know.PanduanCount > 0)
                             knowNode.Nodes.Add($"判断题{know.PanduanCount}道");
-
-                        ccNode.Nodes.Add(knowNode);
+                        knowNode.Text = knowText;
+                        knowDetail.Nodes.Add(knowNode);
                     }
                 }
             }

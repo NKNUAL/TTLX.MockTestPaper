@@ -1,0 +1,47 @@
+2020-10-13 11:07:43:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmAddRule2.CheckSetCount() 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmAddRule2.cs:行号 281
+   在 TTLX.MockTestPaper_V2.FrmAddRule2.dgCourseView_CellValueChanged(Object sender, DataGridViewCellEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmAddRule2.cs:行号 264
+   在 System.Windows.Forms.DataGridView.OnCellValueChanged(DataGridViewCellEventArgs e)
+   在 System.Windows.Forms.DataGridView.OnCellValueChangedInternal(DataGridViewCellEventArgs e)
+   在 System.Windows.Forms.DataGridViewCell.SetValue(Int32 rowIndex, Object value)
+   在 System.Windows.Forms.DataGridViewCell.set_Value(Object value)
+   在 TTLX.MockTestPaper_V2.FrmAddRule2.dgCourseView_CellValueChanged(Object sender, DataGridViewCellEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmAddRule2.cs:行号 250
+   在 System.Windows.Forms.DataGridView.OnCellValueChanged(DataGridViewCellEventArgs e)
+   在 System.Windows.Forms.DataGridView.OnCellValueChangedInternal(DataGridViewCellEventArgs e)
+   在 System.Windows.Forms.DataGridViewCell.SetValue(Int32 rowIndex, Object value)
+   在 System.Windows.Forms.DataGridView.PushFormattedValue(DataGridViewCell& dataGridViewCurrentCell, Object formattedValue, Exception& exception)
+   在 System.Windows.Forms.DataGridView.CommitEdit(DataGridViewCell& dataGridViewCurrentCell, DataGridViewDataErrorContexts context, DataGridViewValidateCellInternal validateCell, Boolean fireCellLeave, Boolean fireCellEnter, Boolean fireRowLeave, Boolean fireRowEnter, Boolean fireLeave)
+   在 System.Windows.Forms.DataGridView.CommitEdit(DataGridViewDataErrorContexts context, Boolean forCurrentCellChange, Boolean forCurrentRowChange)
+   在 System.Windows.Forms.DataGridView.OnCellMouseDown(HitTestInfo hti, Boolean isShiftDown, Boolean isControlDown)
+   在 System.Windows.Forms.DataGridView.OnCellMouseDown(DataGridViewCellMouseEventArgs e)
+   在 System.Windows.Forms.DataGridView.OnMouseDown(MouseEventArgs e)
+   在 System.Windows.Forms.Control.WmMouseDown(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.DataGridView.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-13 15:34:18:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmSelectRule..ctor(List`1 rules) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmSelectRule.cs:行号 27
+   在 TTLX.MockTestPaper_V2.FrmPapers.btnQuestion_Click(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmPapers.cs:行号 216
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-13 16:34:30:System.Collections.Generic.KeyNotFoundException: 给定关键字不在字典中。
+   在 System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   在 TTLX.MockTestPaper_V2.FrmQuestion.InitDgPaper_Course(CourseRule courseRule) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmQuestion.cs:行号 320
+   在 TTLX.MockTestPaper_V2.FrmQuestion.ruleTree_AfterSelect(Object sender, TreeViewEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmQuestion.cs:行号 271
+   在 System.Windows.Forms.TreeView.OnAfterSelect(TreeViewEventArgs e)
+   在 System.Windows.Forms.TreeView.TvnSelected(NMTREEVIEW* nmtv)
+   在 System.Windows.Forms.TreeView.WmNotify(Message& m)
+   在 System.Windows.Forms.TreeView.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)

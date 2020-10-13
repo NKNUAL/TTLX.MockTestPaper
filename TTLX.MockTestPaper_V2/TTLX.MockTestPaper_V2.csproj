@@ -92,6 +92,12 @@
     <Compile Include="FrmAddRule2.Designer.cs">
       <DependentUpon>FrmAddRule2.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmCreateQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCreateQuestion.designer.cs">
+      <DependentUpon>FrmCreateQuestion.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmEditRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,12 @@
     </Compile>
     <Compile Include="FrmPapers.Designer.cs">
       <DependentUpon>FrmPapers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmQuestion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmQuestion.Designer.cs">
+      <DependentUpon>FrmQuestion.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmQuestionImg.cs">
       <SubType>Form</SubType>
@@ -146,6 +158,9 @@
     <EmbeddedResource Include="FrmAddRule2.resx">
       <DependentUpon>FrmAddRule2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmCreateQuestion.resx">
+      <DependentUpon>FrmCreateQuestion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmEditRecord.resx">
       <DependentUpon>FrmEditRecord.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPapers.resx">
       <DependentUpon>FrmPapers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmQuestion.resx">
+      <DependentUpon>FrmQuestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmQuestionImg.resx">
       <DependentUpon>FrmQuestionImg.cs</DependentUpon>
