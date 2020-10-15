@@ -27,7 +27,7 @@ namespace TTLX.MockTestPaper_V2
 
         private void FrmPapers_Load(object sender, EventArgs e)
         {
-            this.Text = $"我的模拟试卷-[{Global.Instance.CurrentSpecialtyName}]";
+            //this.Text = $"我的模拟试卷-[{Global.Instance.CurrentSpecialtyName}]";
 
             lblUserName.Text = $"欢迎您：{Global.Instance.UserName}";
 

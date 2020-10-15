@@ -6,7 +6,6 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.pdb
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\bin\Debug\Newtonsoft.Json.dll
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\bin\Debug\Newtonsoft.Json.xml
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.csproj.CopyComplete
-E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.csprojAssemblyReference.cache
 E:\git_reps\TTLX.MockTestPaper\TTLX.Common\bin\Debug\TTLX.Common.dll
 E:\git_reps\TTLX.MockTestPaper\TTLX.Common\bin\Debug\TTLX.Common.pdb
 E:\git_reps\TTLX.MockTestPaper\TTLX.Common\bin\Debug\Newtonsoft.Json.dll
@@ -16,3 +15,4 @@ E:\git_reps\TTLX.MockTestPaper\TTLX.Common\obj\Debug\TTLX.Common.csproj.CoreComp
 E:\git_reps\TTLX.MockTestPaper\TTLX.Common\obj\Debug\TTLX.Common.csproj.CopyComplete
 E:\git_reps\TTLX.MockTestPaper\TTLX.Common\obj\Debug\TTLX.Common.dll
 E:\git_reps\TTLX.MockTestPaper\TTLX.Common\obj\Debug\TTLX.Common.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Debug\TTLX.Common.csprojAssemblyReference.cache

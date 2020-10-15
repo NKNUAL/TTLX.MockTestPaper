@@ -33,9 +33,9 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPap
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.csproj.CopyComplete
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.FrmRuleManager.resources
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.FrmSelectRule.resources
-E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Release\2020年模拟试卷出题工具.exe.config
-E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Release\2020年模拟试卷出题工具.exe
-E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Release\2020年模拟试卷出题工具.pdb
-E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\2020年模拟试卷出题工具.exe
-E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\2020年模拟试卷出题工具.pdb
-E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.FrmAddRule2.resources
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Release\湖北技能高考平台.exe.config
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Release\湖北技能高考平台.exe
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Release\湖北技能高考平台.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.FrmSetKnowPoint.resources
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\湖北技能高考平台.exe
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\湖北技能高考平台.pdb

@@ -35,7 +35,6 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Debug\2020年模拟试�
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Debug\2020年模拟试卷出题工具.pdb
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\2020年模拟试卷出题工具.exe
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\2020年模拟试卷出题工具.pdb
-E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.FrmAddRule2.resources
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.FrmSetKnowPoint.resources
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.FrmCreateQuestion.resources
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.FrmQuestion.resources
@@ -80,3 +79,4 @@ E:\git_reps\TTLX.MockTestPaper\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPape
 E:\git_reps\TTLX.MockTestPaper\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.csproj.CopyComplete
 E:\git_reps\TTLX.MockTestPaper\TTLX.MockTestPaper_V2\obj\Debug\2020年模拟试卷出题工具.exe
 E:\git_reps\TTLX.MockTestPaper\TTLX.MockTestPaper_V2\obj\Debug\2020年模拟试卷出题工具.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.FrmAddRule.resources

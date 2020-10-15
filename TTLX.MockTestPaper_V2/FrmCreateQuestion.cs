@@ -31,8 +31,8 @@ namespace TTLX.MockTestPaper_V2
         public string _knowNo;
         string _p_guid;
         EditMode _editMode;
-
-        public FrmCreateQuestion(CourseRule courseRule, int queType, string knowNo, string p_guid, EditMode editMode)
+        FrmQuestion _frmQuestion;
+        public FrmCreateQuestion(FrmQuestion frmQuestion, CourseRule courseRule, int queType, string knowNo, string p_guid, EditMode editMode)
             : this()
         {
             _courseRule = courseRule;
@@ -40,9 +40,10 @@ namespace TTLX.MockTestPaper_V2
             _knowNo = knowNo;
             _p_guid = p_guid;
             _editMode = editMode;
+            _frmQuestion = frmQuestion;
         }
 
-        public FrmCreateQuestion(QuestionsInfoModel question, CourseRule courseRule, int queType, string knowNo, string p_guid, EditMode editMode)
+        public FrmCreateQuestion(FrmQuestion frmQuestion, QuestionsInfoModel question, CourseRule courseRule, int queType, string knowNo, string p_guid, EditMode editMode)
             : this()
         {
             _question = question;
@@ -51,21 +52,8 @@ namespace TTLX.MockTestPaper_V2
             _knowNo = knowNo;
             _p_guid = p_guid;
             _editMode = editMode;
+            _frmQuestion = frmQuestion;
         }
-
-
-        //public FrmCreateQuestion(QuestionsInfoModel question, SubRule course, SubRule know, string p_guid, EditMode editMode)
-        //    : this(course, know, p_guid, editMode)
-        //{
-        //    this._question = question;
-        //}
-        //public FrmCreateQuestion(SubRule course, SubRule know, string p_guid, EditMode editMode) : this()
-        //{
-        //    this._course = course;
-        //    this._know = know;
-        //    _p_guid = p_guid;
-        //    this._editMode = editMode;
-        //}
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -168,7 +156,6 @@ namespace TTLX.MockTestPaper_V2
                     rbtnPanduanAnswerB.Checked = true;
             }
         }
-
 
         private void InitQueType()
         {
@@ -353,14 +340,18 @@ namespace TTLX.MockTestPaper_V2
 
             if (_editMode == EditMode.Create)
             {
-                if (CheckSimilarity(queName, optionA, optionB, optionC, optionD))
+                if (CheckSimilarity(_question.No, queName, optionA, optionB, optionC, optionD))
                 {
                     Task.Factory.StartNew(SaveQuestion);
+                }
+                else
+                {
+                    return;
                 }
             }
             else
             {
-                if (CheckSimilarity(queName, optionA, optionB, optionC, optionD))
+                if (CheckSimilarity(_question.No, queName, optionA, optionB, optionC, optionD))
                 {
                     bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
                     {
@@ -395,40 +386,52 @@ namespace TTLX.MockTestPaper_V2
                         return;
                     }
                 }
-               
+                else
+                {
+                    return;
+                }
+
             }
 
             DialogResult = DialogResult.OK;
         }
 
-        private bool CheckSimilarity(string queName, string optionA, string optionB, string optionC, string optionD)
+        private bool CheckSimilarity(string queNo, string queName, string optionA, string optionB, string optionC, string optionD)
         {
-            bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
+            if (!_frmQuestion.CheckSimilarity(queNo, queName, out string content))
             {
-                SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
-                QueContent = queName,
-                OptionA = optionA,
-                OptionB = optionB,
-                OptionC = optionC,
-                OptionD = optionD
-            }, out string queResult, out string message);
-
-            if (requestBool)
-            {
-                if (queResult != null)
+                bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
                 {
-                    MessageBox.Show("发现相似度大于60%的试题，推荐试题必须是题库中不存在相似的试题!!!" +
-                        $"[题库题目内容]：【{queResult}】", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
+                    SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
+                    QueContent = queName,
+                    OptionA = optionA,
+                    OptionB = optionB,
+                    OptionC = optionC,
+                    OptionD = optionD
+                }, out string queResult, out string message);
+
+                if (requestBool)
+                {
+                    if (queResult != null)
+                    {
+                        MessageBox.Show("发现相似度大于60%的试题，推荐试题必须是题库中不存在相似的试题!!!" +
+                            $"[题库题目内容]：【{queResult}】", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
                 else
                 {
-                    return true;
+                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
             }
             else
             {
-                MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"您已经出过了【{content}】题目，请您重新出题！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -440,7 +443,6 @@ namespace TTLX.MockTestPaper_V2
                 _ = QuestionController.Instance.SaveQuestions(_p_guid, _courseRule.CourseNo, _knowNo, _question);
             }
         }
-
 
         private void btnImg_Click(object sender, EventArgs e)
         {

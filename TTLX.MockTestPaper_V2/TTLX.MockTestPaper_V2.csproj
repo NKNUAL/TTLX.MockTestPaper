@@ -8,10 +8,10 @@
     <ProjectGuid>{63D4BCE8-7F61-47CD-9198-BCB0959DEEB4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>TTLX.MockTestPaper_V2</RootNamespace>
-    <AssemblyName>2020年模拟试卷出题工具</AssemblyName>
+    <AssemblyName>湖北技能高考平台</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -51,7 +51,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>library_64px_1221552_easyicon.net.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -86,11 +87,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EditMode.cs" />
-    <Compile Include="FrmAddRule2.cs">
+    <Compile Include="FrmAddRule.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAddRule2.Designer.cs">
-      <DependentUpon>FrmAddRule2.cs</DependentUpon>
+    <Compile Include="FrmAddRule.Designer.cs">
+      <DependentUpon>FrmAddRule.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmCreateQuestion.cs">
       <SubType>Form</SubType>
@@ -155,8 +156,8 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmAddRule2.resx">
-      <DependentUpon>FrmAddRule2.cs</DependentUpon>
+    <EmbeddedResource Include="FrmAddRule.resx">
+      <DependentUpon>FrmAddRule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCreateQuestion.resx">
       <DependentUpon>FrmCreateQuestion.cs</DependentUpon>
@@ -216,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon\library_64px_1221552_easyicon.net.ico" />
-    <Content Include="library_64px_1221552_easyicon.net.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TTLX.Common\TTLX.Common.csproj">

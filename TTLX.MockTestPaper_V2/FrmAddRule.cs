@@ -5,216 +5,448 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTLX.Common;
+using TTLX.Common.Expand;
 using TTLX.Controller;
-using TTLX.Controller.RequestModel;
+using TTLX.Controller.Model;
 using TTLX.Controller.ResposeModel;
 
 namespace TTLX.MockTestPaper_V2
 {
     public partial class FrmAddRule : Form
     {
-        /// <summary>
-        /// 当前指定的规则
-        /// </summary>
-        QuestionRule _rule;
+
+
+        QuestionRule _currRule;
+
+        BaseRule _baseRule;
+
+        RuleSetHelper _setHelper;
+
+        EditMode _editMode;
+
+
         public FrmAddRule()
         {
             InitializeComponent();
 
-            _rule = new QuestionRule
-            {
-                SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
-                //CourseRules = new List<SubRule>()
-            };
-
             _editMode = EditMode.Create;
         }
-        EditMode _editMode;
-        public FrmAddRule(QuestionRule rule)
+
+        public FrmAddRule(QuestionRule rule) : this()
         {
-            InitializeComponent();
-            _rule = rule;
+            _currRule = rule;
+
             _editMode = EditMode.Edit;
-            tbRuleName.Text = rule.RuleName;
-            tbRuleDesc.Text = rule.RuleDesc;
-
         }
 
-
-        private void cbCourse_SelectedIndexChanged(object sender, EventArgs e)
+        private void HideRightPanel()
         {
-
-            listBox_pre.Items.Clear();
-            listBox_rules.Items.Clear();
-            if (cbCourse.SelectedItem is KVModel)
-            {
-
-                var kv = cbCourse.SelectedItem as KVModel;
-
-                var knows = WebApiController.Instance
-                    .GetKnows(Global.Instance.CurrentSpecialtyID.ToString(), kv.Key, out string message);
-
-                if (knows == null)
-                {
-                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                var rules = RuleHelper.GetKnowRules(_rule, kv.Key);
-
-                knows.RemoveAll(k => rules.Select(r => r.No).Contains(k.Key));
-
-                listBox_pre.Items.AddRange(knows.ToArray());
-
-                //listBox_rules.Items.AddRange(rules.ToArray());
-
-            }
+            splitContainer1.Panel2.Hide();
         }
 
-        private void FrmAddRule_Load(object sender, EventArgs e)
+        private void ShowRightPanel()
         {
-            this.Text = $"添加出题规则-[{Global.Instance.CurrentSpecialtyName}]";
+            splitContainer1.Panel2.Show();
+        }
 
-            lblSpecialty.Text = Global.Instance.CurrentSpecialtyName;
+        private void InitLeftPanel()
+        {
+            _baseRule = WebApiController.Instance
+                .GetBaseRule(Global.Instance.CurrentSpecialtyID.ToString(), out string message);
 
-            if (string.IsNullOrEmpty(Global.Instance.LexueID))
+            if (_baseRule == null)
             {
-                MessageBox.Show("请您先登陆", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DialogResult = DialogResult.Cancel;
+                MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
                 return;
             }
 
-            LoadCourse();
-        }
+            var courses = WebApiController.Instance
+                .GetCourse(Global.Instance.CurrentSpecialtyID.ToString(), out message);
 
-
-        /// <summary>
-        /// 加载科目
-        /// </summary>
-        private void LoadCourse()
-        {
-            var course = WebApiController.Instance
-                .GetCourse(Global.Instance.CurrentSpecialtyID.ToString(), out string message);
-
-            if (course == null)
+            if (courses == null)
             {
                 MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
                 return;
             }
 
-            cbCourse.Items.AddRange(course.ToArray());
-
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            if (cbCourse.SelectedItem is KVModel)
+            if (_currRule == null)
             {
-                if (listBox_pre.SelectedItem is KVModel)
+                _currRule = new QuestionRule
                 {
-                    var course = cbCourse.SelectedItem as KVModel;
-                    var know = listBox_pre.SelectedItem as KVModel;
+                    SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
+                    CourseRules = new List<CourseRule>()
+                };
+                foreach (var item in courses)
+                {
+                    var temp_course = _baseRule.CourseRules.Find(c => c.CourseNo == item.Key);
 
-                    if (tbCount.Value == 0)
+                    int danxuanCount = (temp_course?.DanxuanCount) ?? 0;
+                    int duoxuanCount = (temp_course?.DuoxuanCount) ?? 0;
+                    int panduanCount = (temp_course?.PanduanCount) ?? 0;
+
+                    _currRule.CourseRules.Add(new CourseRule
                     {
-                        MessageBox.Show("请规定当前知识点下的题目数量！");
-                        return;
-                    }
-
-                    int queCount = decimal.ToInt32(tbCount.Value);
-
-                    RuleHelper.AddRule(_rule, course.Key, course.Value, know.Key, know.Value, queCount);
-
-                    listBox_pre.Items.Remove(know);
-
-                    //listBox_rules.Items.Add(new SubRule { No = know.Key, Name = know.Value, QueCount = queCount });
-
+                        CourseNo = item.Key,
+                        CourseName = item.Value,
+                        DanxuanCount = danxuanCount,
+                        DuoxuanCount = duoxuanCount,
+                        PanduanCount = panduanCount,
+                    });
                 }
-                else
+            }
+
+            tbRuleName.Text = _currRule.RuleName;
+            tbRuleDesc.Text = _currRule.RuleDesc;
+
+
+            lblSpecialtyName.Text = Global.Instance.CurrentSpecialtyName;
+
+
+            lbl_danxuan.Text = _baseRule.DanxuanCount + " 道";
+            lbl_duoxuan.Text = _baseRule.DuoxuanCount + " 道";
+            lbl_panduan.Text = _baseRule.PanduanCount + " 道";
+
+            btnSetDanxuan.Tag = QuestionsType.Danxuan;
+            btnSetDuoxuan.Tag = QuestionsType.Duoxuan;
+            btnSetPanduan.Tag = QuestionsType.Panduan;
+
+            if (_baseRule.DanxuanCount == 0)
+                btnSetDanxuan.Enabled = false;
+            if (_baseRule.DuoxuanCount == 0)
+                btnSetDuoxuan.Enabled = false;
+            if (_baseRule.PanduanCount == 0)
+                btnSetPanduan.Enabled = false;
+
+
+        }
+
+        private void btnSetRule_Click(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            if (btn.Tag is QuestionsType queType)
+            {
+                ShowRightPanel();
+
+                if (_setHelper == null || _setHelper.QueType != queType)
                 {
-                    MessageBox.Show("请先选择知识点！");
+                    _setHelper = new RuleSetHelper
+                    {
+                        QueType = queType,
+                        Courses = _currRule.CourseRules.ConvertAll(c =>
+                        {
+                            var temp = new RuleSetHelper_Course
+                            {
+                                CourseNo = c.CourseNo,
+                            };
+                            if (queType == QuestionsType.Danxuan)
+                                temp.SetCount = c.DanxuanCount;
+                            if (queType == QuestionsType.Duoxuan)
+                                temp.SetCount = c.DuoxuanCount;
+                            if (queType == QuestionsType.Panduan)
+                                temp.SetCount = c.PanduanCount;
+
+                            if (c.KnowRules != null)
+                            {
+                                var listTempKnow = c.KnowRules.AsQueryable();
+                                if (queType == QuestionsType.Danxuan)
+                                    listTempKnow = listTempKnow.Where(k => k.DanxuanCount != null);
+                                else if (queType == QuestionsType.Duoxuan)
+                                    listTempKnow = listTempKnow.Where(k => k.DuoxuanCount != null);
+                                else if (queType == QuestionsType.Panduan)
+                                    listTempKnow = listTempKnow.Where(k => k.PanduanCount != null);
+
+                                var list = listTempKnow.ToList();
+
+                                temp.Knows = listTempKnow.ToList().ConvertAll(k =>
+                                {
+                                    var tempKnow = new RuleSetHelper_Know
+                                    {
+                                        KnowNo = k.KnowNo,
+                                    };
+                                    if (queType == QuestionsType.Danxuan)
+                                        tempKnow.SetCount = k.DanxuanCount ?? 0;
+
+                                    if (queType == QuestionsType.Duoxuan)
+                                        tempKnow.SetCount = k.DuoxuanCount ?? 0;
+
+                                    if (queType == QuestionsType.Panduan)
+                                        tempKnow.SetCount = k.PanduanCount ?? 0;
+                                    return tempKnow;
+                                });
+                            }
+
+                            return temp;
+                        })
+                    };
+                }
+
+                int baseCount = 0;
+                if (queType == QuestionsType.Danxuan)
+                    baseCount = _baseRule.CourseRules.Sum(c => c.DanxuanCount);
+                else if (queType == QuestionsType.Duoxuan)
+                    baseCount = _baseRule.CourseRules.Sum(c => c.DuoxuanCount);
+                else if (queType == QuestionsType.Panduan)
+                    baseCount = _baseRule.CourseRules.Sum(c => c.PanduanCount);
+
+                _setHelper.MaxQueCount = baseCount;
+
+                string typeName = Global.Instance.QueTypeConvertToString((int)queType);
+                int setCount = _setHelper.Courses.Sum(c => c.SetCount);
+
+                lblQueTypeName.Text = typeName;
+                SetCountLabel();
+                tbPrompt.Text = "提示：单击下方题目数量列可以修改每个科目的题目数量，" +
+                    "但是每个科目的题目数量相加必须等于" + baseCount;
+
+                InitCourseRuleView(queType);
+            }
+        }
+
+        private void SetCountLabel()
+        {
+            string typeName = Global.Instance.QueTypeConvertToString((int)_setHelper.QueType);
+            int setCount = _setHelper.Courses.Sum(c => c.SetCount);
+            lblSetCount.Text = $"已设置{typeName} {setCount} 道";
+        }
+
+        private void InitCourseRuleView(QuestionsType queType)
+        {
+            var courses = WebApiController.Instance
+                .GetCourse(Global.Instance.CurrentSpecialtyID.ToString(), out string message);
+
+            dgCourseView.Rows.Clear();
+
+            foreach (var item in courses)
+            {
+                string[] param = new string[4];
+                param[0] = item.Key;
+                param[1] = item.Value;
+                param[3] = "设置知识点";
+
+                var course = _setHelper.Courses.Find(c => c.CourseNo == item.Key);
+                if (course == null)
+                {
+                    int setCount = 0;
+
+                    if (queType == QuestionsType.Danxuan)
+                        setCount = _baseRule.CourseRules.Find(c => c.CourseNo == item.Key).DanxuanCount;
+                    else if (queType == QuestionsType.Duoxuan)
+                        setCount = _baseRule.CourseRules.Find(c => c.CourseNo == item.Key).DuoxuanCount;
+                    else if (queType == QuestionsType.Panduan)
+                        setCount = _baseRule.CourseRules.Find(c => c.CourseNo == item.Key).PanduanCount;
+
+                    course = new RuleSetHelper_Course
+                    {
+                        SetCount = setCount,
+                        CourseNo = item.Key
+                    };
+                    _setHelper.Courses.Add(course);
+                }
+
+                param[2] = course.SetCount.ToString();
+
+
+                dgCourseView.Rows.Add(param);
+            }
+        }
+
+        private void FrmAddRule2_Load(object sender, EventArgs e)
+        {
+            InitLeftPanel();
+            HideRightPanel();
+        }
+
+        private void dgCourseView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 2 && e.RowIndex >= 0)
+            {
+                string cellValue = dgCourseView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+                var course = _setHelper.Courses
+                        .Find(c => c.CourseNo == dgCourseView.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                if (!Regex.IsMatch(cellValue, "^[0-9]*$"))
+                {
+                    MessageBox.Show("请输入数字！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    dgCourseView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = course.SetCount;
+
                     return;
                 }
-            }
-            else
-            {
-                MessageBox.Show("请先选择科目！");
-                return;
+
+                if (int.Parse(cellValue) > _setHelper.MaxQueCount)
+                {
+                    MessageBox.Show($"单个科目数不能大于{_setHelper.MaxQueCount}！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    dgCourseView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = course.SetCount;
+
+                    return;
+                }
+
+                if (CheckSetCount() > _setHelper.MaxQueCount)
+                {
+                    MessageBox.Show($"总设置题目数不能大于{_setHelper.MaxQueCount}！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    dgCourseView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = course.SetCount;
+
+                    return;
+                }
+
+                course.SetCount = int.Parse(cellValue);
+                SetCountLabel();
             }
         }
 
-        private void btnDel_Click(object sender, EventArgs e)
+        private int CheckSetCount()
         {
-            //if (listBox_rules.SelectedItem is SubRule)
-            //{
-            //    if (cbCourse.SelectedItem is KVModel)
-            //    {
-            //        var course = cbCourse.SelectedItem as KVModel;
-            //        var subRule = listBox_rules.SelectedItem as SubRule;
+            int totalCount = 0;
+            foreach (DataGridViewRow item in dgCourseView.Rows)
+            {
+                totalCount += int.Parse(item.Cells[2].Value.ToString());
+            }
+            return totalCount;
+        }
 
-            //        RuleHelper.DelRule(_rule, course.Key, subRule.No);
+        private void dgCourseView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 2 && e.RowIndex >= 0)
+            {
+                this.dgCourseView.CurrentCell = this.dgCourseView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                this.dgCourseView.BeginEdit(true);
+            }
+            else if (e.ColumnIndex == 3 && e.RowIndex >= 0)
+            {
+                string courseNo = dgCourseView.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string courseName = dgCourseView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                FrmSetKnowPoint frmSetKnowPoint = new FrmSetKnowPoint(_setHelper, courseNo, courseName);
+                frmSetKnowPoint.ShowDialog();
+            }
+        }
 
-            //        listBox_rules.Items.Remove(subRule);
+        private void btnPreview_Click(object sender, EventArgs e)
+        {
+            FrmRulePreview frmRulePreview =
+                new FrmRulePreview(Global.Instance.CurrentSpecialtyName, tbRuleName.Text, tbRuleDesc.Text, _currRule);
 
-            //        listBox_pre.Items.Add(new KVModel { Key = subRule.No, Value = subRule.Name });
-            //    }
-            //}
+            frmRulePreview.ShowDialog();
+
+        }
+
+        private void btnSaveModify_Click(object sender, EventArgs e)
+        {
+            if (_setHelper.Courses.Sum(c => c.SetCount) < _setHelper.MaxQueCount)
+            {
+                MessageBox.Show($"当前设置题目数小于" + _setHelper.MaxQueCount + "，请继续设置科目题目数。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _setHelper.Courses.AsParallel().ForAll(c =>
+            {
+                var course = _currRule.CourseRules.Find(cr => cr.CourseNo == c.CourseNo);
+
+                if (_setHelper.QueType == QuestionsType.Danxuan)
+                    course.DanxuanCount = c.SetCount;
+                else if (_setHelper.QueType == QuestionsType.Duoxuan)
+                    course.DuoxuanCount = c.SetCount;
+                else if (_setHelper.QueType == QuestionsType.Panduan)
+                    course.PanduanCount = c.SetCount;
+
+                if (c.Knows != null)
+                {
+                    if (course.KnowRules == null)
+                        course.KnowRules = new List<KnowRule>();
+
+                    c.Knows.AsParallel().ForAll(k =>
+                    {
+                        var know = course.KnowRules.Find(kr => kr.KnowNo == k.KnowNo);
+                        if (know == null)
+                        {
+                            know = new KnowRule
+                            {
+                                KnowNo = k.KnowNo,
+                                KnowName = k.KnowName
+                            };
+                            course.KnowRules.Add(know);
+                        }
+
+                        if (_setHelper.QueType == QuestionsType.Danxuan)
+                            know.DanxuanCount = k.SetCount;
+                        else if (_setHelper.QueType == QuestionsType.Duoxuan)
+                            know.DuoxuanCount = k.SetCount;
+                        else if (_setHelper.QueType == QuestionsType.Panduan)
+                            know.PanduanCount = k.SetCount;
+                    });
+
+                    course.KnowRules.RemoveAll(k => !c.Knows.Select(t => t.KnowNo).Contains(k.KnowNo));
+
+                }
+            });
+
+            MessageBox.Show($"保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (_rule.CourseRules == null || _rule.CourseRules.Count == 0
-                || _rule.CourseRules.Sum(c => c.QueCount) == 0)
-            {
-                MessageBox.Show("请还未定义任何规则，请先定义规则在保存！");
-                return;
-            }
-
 
             if (string.IsNullOrEmpty(tbRuleName.Text))
             {
-                MessageBox.Show("请输入规则名称！");
+                MessageBox.Show("请输入规则名称！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-
-            if (_editMode == EditMode.Create)
+            if (_currRule.CourseRules.Sum(c => c.DanxuanCount) != _baseRule.DanxuanCount)
             {
-                _rule.RuleName = tbRuleName.Text;
-                _rule.RuleDesc = tbRuleDesc.Text;
-                if (WebApiController.Instance.AddRule(Global.Instance.LexueID, _rule, out string message))
+                MessageBox.Show("单选题规则未设置完成！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (_currRule.CourseRules.Sum(c => c.DuoxuanCount) != _baseRule.DuoxuanCount)
+            {
+                MessageBox.Show("多选题规则未设置完成！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (_currRule.CourseRules.Sum(c => c.PanduanCount) != _baseRule.PanduanCount)
+            {
+                MessageBox.Show("判断题规则未设置完成！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _currRule.RuleName = tbRuleName.Text;
+            _currRule.RuleDesc = tbRuleDesc.Text;
+
+
+            if (_editMode == EditMode.Create)//创建规则
+            {
+                if (WebApiController.Instance.AddRule(Global.Instance.LexueID, _currRule, out string message))
                 {
                     MessageBox.Show("添加规则成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     CacheController
                         .Instance(Global.Instance.CurrentSpecialtyID.ToString()).SetRules(null);
 
-                    WebApiController.Instance.GetAllRules(Global.Instance.LexueID, out _);
+                    _ = WebApiController.Instance.GetAllRules(Global.Instance.LexueID, out _);
 
                     DialogResult = DialogResult.OK;
-                    this.Close();
+
                 }
                 else
                 {
                     MessageBox.Show("添加规则失败：" + message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
+            else if (_editMode == EditMode.Edit)//修改规则
             {
-                string sourceRuleName = _rule.RuleName;
-                string sourceRuleDesc = _rule.RuleDesc;
-                _rule.RuleName = tbRuleName.Text;
-                _rule.RuleDesc = tbRuleDesc.Text;
-                if (WebApiController.Instance.EditRule(Global.Instance.LexueID, _rule, out bool seccess, out string message))
+                string sourceRuleName = _currRule.RuleName;
+                string sourceRuleDesc = _currRule.RuleDesc;
+                _currRule.RuleName = tbRuleName.Text;
+                _currRule.RuleDesc = tbRuleDesc.Text;
+                if (WebApiController.Instance.EditRule(Global.Instance.LexueID, _currRule, out bool seccess, out string message))
                 {
                     if (seccess)
                     {
@@ -225,47 +457,21 @@ namespace TTLX.MockTestPaper_V2
                     }
                     else
                     {
-                        _rule.RuleName = sourceRuleName;
-                        _rule.RuleDesc = sourceRuleDesc;
+                        _currRule.RuleName = sourceRuleName;
+                        _currRule.RuleDesc = sourceRuleDesc;
                         MessageBox.Show("修改规则失败：" + message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
                 else
                 {
-                    _rule.RuleName = sourceRuleName;
-                    _rule.RuleDesc = sourceRuleDesc;
+                    _currRule.RuleName = sourceRuleName;
+                    _currRule.RuleDesc = sourceRuleDesc;
                     MessageBox.Show("修改规则失败：" + message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
 
-
         }
-
-        private void btnPreview_Click(object sender, EventArgs e)
-        {
-            FrmRulePreview frmRulePreview = new FrmRulePreview(Global.Instance.CurrentSpecialtyName, tbRuleName.Text, tbRuleDesc.Text, _rule);
-
-            frmRulePreview.ShowDialog();
-        }
-
-        //private void listBox_DrawItem(object sender, DrawItemEventArgs e)
-        //{
-        //    e.Graphics.FillRectangle(new SolidBrush(e.BackColor), e.Bounds);
-        //    if (e.Index >= 0)
-        //    {
-        //        StringFormat sStringFormat = new StringFormat();
-        //        sStringFormat.LineAlignment = StringAlignment.Center;
-        //        KVModel kv = (((ListBox)sender).Items[e.Index]) as KVModel;
-        //        e.Graphics.DrawString(kv.Value, e.Font, new SolidBrush(e.ForeColor), e.Bounds, sStringFormat);
-        //    }
-        //    e.DrawFocusRectangle();
-        //}
-
-        //private void listBox_MeasureItem(object sender, MeasureItemEventArgs e)
-        //{
-        //    e.ItemHeight += 4;
-        //}
     }
 }

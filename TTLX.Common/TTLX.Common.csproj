@@ -49,6 +49,7 @@
     <Compile Include="FileHelper.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="HttpHelper.cs" />
+    <Compile Include="LevenshteinDistanceHelper.cs" />
     <Compile Include="LogTool.cs" />
     <Compile Include="Model\QuetionSerializeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

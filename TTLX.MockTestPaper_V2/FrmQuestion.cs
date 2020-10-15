@@ -117,10 +117,10 @@ namespace TTLX.MockTestPaper_V2
 
                 Label lbl = new Label
                 {
-                    Text = $"单选题已出{hasCount}，剩余{danxuanTotalCount - hasCount}道。",
+                    Text = $"单选题已出{hasCount}道，剩余{danxuanTotalCount - hasCount}道。",
                     ForeColor = Color.Blue,
                     Font = new Font("宋体", 12),
-                    Width = 216,
+                    Width = 200,
                     Padding = new Padding(0, 0, 0, 3)
                 };
                 flowLayoutLabel.Controls.Add(lbl);
@@ -132,10 +132,10 @@ namespace TTLX.MockTestPaper_V2
 
                 Label lbl = new Label
                 {
-                    Text = $"多选题题已出{hasCount}，剩余{duoxuanTotalCount - hasCount}。",
+                    Text = $"多选题已出{hasCount}道，剩余{duoxuanTotalCount - hasCount}。",
                     ForeColor = Color.Blue,
                     Font = new Font("宋体", 12),
-                    Width = 216,
+                    Width = 200,
                     Padding = new Padding(0, 0, 0, 3)
                 };
                 flowLayoutLabel.Controls.Add(lbl);
@@ -147,10 +147,10 @@ namespace TTLX.MockTestPaper_V2
 
                 Label lbl = new Label
                 {
-                    Text = $"判断题已出{hasCount}，剩余{panduanTotalCount - hasCount}。",
+                    Text = $"判断题已出{hasCount}道，剩余{panduanTotalCount - hasCount}。",
                     ForeColor = Color.Blue,
                     Font = new Font("宋体", 12),
-                    Width = 216,
+                    Width = 200,
                     Padding = new Padding(0, 0, 0, 3)
                 };
                 flowLayoutLabel.Controls.Add(lbl);
@@ -552,7 +552,7 @@ namespace TTLX.MockTestPaper_V2
                 if (dgvQuestions.Rows[e.RowIndex].Tag is QuestionsInfoModel que)//编辑题目
                 {
 
-                    frmCreateQuestion = new FrmCreateQuestion(que, courseRule, queType, knowNo, _p_guid, _editMode);
+                    frmCreateQuestion = new FrmCreateQuestion(this, que, courseRule, queType, knowNo, _p_guid, _editMode);
                     if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
                     {
                         LoadRuleTree();
@@ -577,16 +577,10 @@ namespace TTLX.MockTestPaper_V2
                             }
                         }
                     }
-                    //frmCreateQuestion = new FrmCreateQuestion(courseRule, queType, knowRule, _p_guid, _editMode);
-                    //if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
-                    //{
-                    //    LoadRuleTree();
-                    //    InitDgPaper(courseRule, knowRule);
-                    //}
                 }
                 else//增加题目
                 {
-                    frmCreateQuestion = new FrmCreateQuestion(courseRule, queType, knowNo, _p_guid, _editMode);
+                    frmCreateQuestion = new FrmCreateQuestion(this, courseRule, queType, knowNo, _p_guid, _editMode);
                     if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
                     {
                         SetQuestionModel(courseRule.CourseNo, frmCreateQuestion._knowNo, frmCreateQuestion._question);
@@ -646,8 +640,6 @@ namespace TTLX.MockTestPaper_V2
             return null;
         }
 
-
-
         private void btnQuestion_Click(object sender, EventArgs e)
         {
 
@@ -696,6 +688,52 @@ namespace TTLX.MockTestPaper_V2
 
         }
 
+        /// <summary>
+        /// 检查本地题目相似度
+        /// </summary>
+        /// <param name="queContent"></param>
+        /// <returns></returns>
+        public bool CheckSimilarity(string queNo, string queContent, out string content)
+        {
+            content = string.Empty;
+
+            if (_putQuestion == null || _putQuestion.Courses == null || _putQuestion.Courses.Count == 0)
+                return true;
+
+            List<QuestionsInfoModel> totalQUes = new List<QuestionsInfoModel>();
+
+            _putQuestion.Courses.AsParallel().ForAll(c =>
+            {
+                if (c.Knows != null)
+                {
+                    c.Knows.ForEach(k =>
+                    {
+                        if (k.Questions != null)
+                            totalQUes.AddRange(k.Questions);
+                    });
+                }
+            });
+
+            if (!string.IsNullOrEmpty(queNo))
+            {
+                totalQUes.RemoveAll(q => q.No == queNo);
+            }
+
+            bool isSimilarity = false;
+            string tempContent = string.Empty;
+            Parallel.ForEach(totalQUes, (q, loopState) =>
+            {
+                if (!string.IsNullOrWhiteSpace(q.QueContent) && LevenshteinDistanceHelper.CompareStrings(q.QueContent, queContent) >= 0.9)
+                {
+                    isSimilarity = true;
+                    tempContent = q.QueContent;
+                    loopState.Stop();
+                }
+            });
+            content = tempContent;
+            return isSimilarity;
+
+        }
 
     }
 }

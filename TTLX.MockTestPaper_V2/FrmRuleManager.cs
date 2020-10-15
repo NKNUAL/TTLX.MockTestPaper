@@ -34,8 +34,11 @@ namespace TTLX.MockTestPaper_V2
             //    Reset();
             //}
 
-            FrmAddRule2 frmAddRule = new FrmAddRule2();
-            frmAddRule.ShowDialog();
+            FrmAddRule frmAddRule = new FrmAddRule();
+            if (frmAddRule.ShowDialog() == DialogResult.OK)
+            {
+                Reset();
+            }
         }
 
         private void cbRules_SelectedIndexChanged(object sender, EventArgs e)
@@ -171,11 +174,11 @@ namespace TTLX.MockTestPaper_V2
         {
             if (cbRules.SelectedItem is QuestionRule rule)
             {
-                //FrmAddRule frmAddRule = new FrmAddRule(rule);
-                //if (frmAddRule.ShowDialog() == DialogResult.OK)
-                //{
-                //    Reset();
-                //}
+                FrmAddRule frmAddRule = new FrmAddRule(rule);
+                if (frmAddRule.ShowDialog() == DialogResult.OK)
+                {
+                    Reset();
+                }
             }
 
         }

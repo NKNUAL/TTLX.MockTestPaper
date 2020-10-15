@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPapers));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblUserName = new System.Windows.Forms.Label();
             this.cbRules = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnEditRecord = new System.Windows.Forms.Button();
@@ -38,7 +39,6 @@
             this.btnQuestion = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgPapers = new System.Windows.Forms.DataGridView();
-            this.lblUserName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -71,6 +71,17 @@
             this.splitContainer1.Size = new System.Drawing.Size(1113, 664);
             this.splitContainer1.SplitterDistance = 49;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // lblUserName
+            // 
+            this.lblUserName.AutoSize = true;
+            this.lblUserName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold);
+            this.lblUserName.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblUserName.Location = new System.Drawing.Point(21, 17);
+            this.lblUserName.Name = "lblUserName";
+            this.lblUserName.Size = new System.Drawing.Size(76, 16);
+            this.lblUserName.TabIndex = 17;
+            this.lblUserName.Text = "欢迎您：";
             // 
             // cbRules
             // 
@@ -172,17 +183,6 @@
             this.dgPapers.TabIndex = 0;
             this.dgPapers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgPapers_CellContentClick);
             // 
-            // lblUserName
-            // 
-            this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold);
-            this.lblUserName.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblUserName.Location = new System.Drawing.Point(21, 17);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(76, 16);
-            this.lblUserName.TabIndex = 17;
-            this.lblUserName.Text = "欢迎您：";
-            // 
             // FrmPapers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -192,7 +192,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmPapers";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "我的模拟试卷";
+            this.Text = "2020年湖北技能高考模拟试卷+调考出题平台";
             this.Load += new System.EventHandler(this.FrmPapers_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
