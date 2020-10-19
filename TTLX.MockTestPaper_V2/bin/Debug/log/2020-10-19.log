@@ -1,0 +1,112 @@
+2020-10-19 14:03:24:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmSelectRule..ctor(List`1 rules) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmSelectRule.cs:行号 27
+   在 TTLX.MockTestPaper_V2.FrmPapers.btnQuestion_Click(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmPapers.cs:行号 235
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-19 14:03:26:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmSelectRule..ctor(List`1 rules) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmSelectRule.cs:行号 27
+   在 TTLX.MockTestPaper_V2.FrmPapers.btnQuestion_Click(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmPapers.cs:行号 235
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-19 14:03:26:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmSelectRule..ctor(List`1 rules) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmSelectRule.cs:行号 27
+   在 TTLX.MockTestPaper_V2.FrmPapers.btnQuestion_Click(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmPapers.cs:行号 235
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-19 14:03:27:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmSelectRule..ctor(List`1 rules) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmSelectRule.cs:行号 27
+   在 TTLX.MockTestPaper_V2.FrmPapers.btnQuestion_Click(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmPapers.cs:行号 235
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-19 14:03:27:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmSelectRule..ctor(List`1 rules) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmSelectRule.cs:行号 27
+   在 TTLX.MockTestPaper_V2.FrmPapers.btnQuestion_Click(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmPapers.cs:行号 235
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-19 14:03:27:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.FrmSelectRule..ctor(List`1 rules) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmSelectRule.cs:行号 27
+   在 TTLX.MockTestPaper_V2.FrmPapers.btnQuestion_Click(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\FrmPapers.cs:行号 235
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-19 17:47:21:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.GetHasCount(NurseRuleType nurseRuleType, Int32 subQueCount) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 149
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.SetCountLabel() 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 111
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.LoadRuleTree() 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 228
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.FrmQuestion2_Load(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 97
+   在 System.Windows.Forms.Form.OnLoad(EventArgs e)
+   在 System.Windows.Forms.Form.OnCreateControl()
+   在 System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
+   在 System.Windows.Forms.Control.CreateControl()
+   在 System.Windows.Forms.Control.WmShowWindow(Message& m)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ScrollableControl.WndProc(Message& m)
+   在 System.Windows.Forms.Form.WmShowWindow(Message& m)
+   在 System.Windows.Forms.Form.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-19 17:48:07:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.GetHasCount(NurseRuleType nurseRuleType, Int32 subQueCount) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 149
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.SetCountLabel() 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 111
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.LoadRuleTree() 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 228
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.FrmQuestion2_Load(Object sender, EventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 97
+   在 System.Windows.Forms.Form.OnLoad(EventArgs e)
+   在 System.Windows.Forms.Form.OnCreateControl()
+   在 System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
+   在 System.Windows.Forms.Control.CreateControl()
+   在 System.Windows.Forms.Control.WmShowWindow(Message& m)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ScrollableControl.WndProc(Message& m)
+   在 System.Windows.Forms.Form.WmShowWindow(Message& m)
+   在 System.Windows.Forms.Form.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)

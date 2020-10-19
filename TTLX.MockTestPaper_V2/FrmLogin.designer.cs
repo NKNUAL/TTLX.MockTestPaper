@@ -44,11 +44,11 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("宋体", 12F);
             this.lblVersion.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblVersion.Location = new System.Drawing.Point(83, 239);
+            this.lblVersion.Location = new System.Drawing.Point(87, 229);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(320, 16);
             this.lblVersion.TabIndex = 27;
-            this.lblVersion.Text = "2020年湖北技能高考平台   版本：V2.0.0.0";
+            this.lblVersion.Text = "2020年湖北技能高考平台   版本：V2.0.0.4";
             // 
             // btnExit
             // 
@@ -57,7 +57,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("宋体", 12F);
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(269, 177);
+            this.btnExit.Location = new System.Drawing.Point(279, 176);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(86, 31);
             this.btnExit.TabIndex = 26;
@@ -72,7 +72,7 @@
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Font = new System.Drawing.Font("宋体", 12F);
             this.btnLogin.ForeColor = System.Drawing.Color.White;
-            this.btnLogin.Location = new System.Drawing.Point(154, 177);
+            this.btnLogin.Location = new System.Drawing.Point(164, 176);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(86, 31);
             this.btnLogin.TabIndex = 25;
@@ -134,7 +134,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
-            this.ClientSize = new System.Drawing.Size(506, 280);
+            this.ClientSize = new System.Drawing.Size(506, 271);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnLogin);

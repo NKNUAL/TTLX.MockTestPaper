@@ -33,7 +33,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblUserName = new System.Windows.Forms.Label();
             this.cbRules = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCbName = new System.Windows.Forms.Label();
             this.btnEditRecord = new System.Windows.Forms.Button();
             this.btnRuleManager = new System.Windows.Forms.Button();
             this.btnQuestion = new System.Windows.Forms.Button();
@@ -60,7 +60,7 @@
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
             this.splitContainer1.Panel1.Controls.Add(this.lblUserName);
             this.splitContainer1.Panel1.Controls.Add(this.cbRules);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.lblCbName);
             this.splitContainer1.Panel1.Controls.Add(this.btnEditRecord);
             this.splitContainer1.Panel1.Controls.Add(this.btnRuleManager);
             this.splitContainer1.Panel1.Controls.Add(this.btnQuestion);
@@ -95,15 +95,15 @@
             this.cbRules.TabIndex = 16;
             this.cbRules.SelectedIndexChanged += new System.EventHandler(this.cbRules_SelectedIndexChanged);
             // 
-            // label1
+            // lblCbName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(340, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 16);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "出题规则：";
+            this.lblCbName.AutoSize = true;
+            this.lblCbName.Font = new System.Drawing.Font("宋体", 12F);
+            this.lblCbName.Location = new System.Drawing.Point(340, 19);
+            this.lblCbName.Name = "lblCbName";
+            this.lblCbName.Size = new System.Drawing.Size(88, 16);
+            this.lblCbName.TabIndex = 15;
+            this.lblCbName.Text = "出题规则：";
             // 
             // btnEditRecord
             // 
@@ -213,7 +213,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgPapers;
         private System.Windows.Forms.Button btnEditRecord;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCbName;
         private System.Windows.Forms.ComboBox cbRules;
         private System.Windows.Forms.Label lblUserName;
     }

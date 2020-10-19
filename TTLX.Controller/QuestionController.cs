@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.SQLite.Linq;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using TTLX.Common;
+using TTLX.Common.Expand;
 using TTLX.Controller.Model;
 using TTLX.Controller.ResposeModel;
 using TTLX.DataBase.Entity;
-using TTLX.Common.Expand;
 
 namespace TTLX.Controller
 {
@@ -109,6 +111,7 @@ namespace TTLX.Controller
                             QueContent = item.Question.QueContent,
                             QueType = item.Question.QueType,
                             ResolutionTips = item.Question.ResolutionTips,
+                            No = item.Question.QGuid
                         });
                 }
 
@@ -145,9 +148,9 @@ namespace TTLX.Controller
 
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    LogTool.AddLog("保存试卷：" + ex.Message);
                 }
 
 
@@ -220,8 +223,9 @@ namespace TTLX.Controller
                         await db.SaveChangesAsync();
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    LogTool.AddLog("保存试题：" + ex.Message);
                     return false;
                 }
 
@@ -272,5 +276,38 @@ namespace TTLX.Controller
             }
         }
 
+
+        /// <summary>
+        /// 上传本地记录
+        /// </summary>
+        public void UploadHistoryRecord()
+        {
+            string db_file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "record.db");
+
+            //数据库不存在就不上传
+            if (!File.Exists(db_file))
+                return;
+
+
+            var papers = GetPaperRecords(null);
+
+            if (papers != null && papers.Count > 0)
+            {
+                UploadLocalRecord upload = new UploadLocalRecord
+                {
+                    UserId = Global.Instance.LexueID,
+                    SpecialtyId = Global.Instance.CurrentSpecialtyID,
+                    Papers = papers
+                };
+
+                if (WebApiController.Instance.UploadRecord(upload, out string message))
+                {
+                    foreach (var item in upload.Papers)
+                    {
+                        _ = DeleteNormalRecord(item.PGuid);
+                    }
+                }
+            }
+        }
     }
 }

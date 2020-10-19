@@ -67,9 +67,12 @@
     <Compile Include="CacheController.cs" />
     <Compile Include="Model\EditPaperRecord.cs" />
     <Compile Include="Model\MockPaperQuestionModel.cs" />
+    <Compile Include="Model\PutQuestionNurseModel.cs" />
+    <Compile Include="Model\QuestionRule_Nurse.cs" />
     <Compile Include="Model\RuleSetHelper.cs" />
     <Compile Include="Model\RuleSimpleModel.cs" />
     <Compile Include="Model\TreeKnowModel.cs" />
+    <Compile Include="Model\UploadLocalRecord.cs" />
     <Compile Include="QuestionController.cs" />
     <Compile Include="RequestModel\LoginModel.cs" />
     <Compile Include="RequestModel\QuestionCheckModel.cs" />

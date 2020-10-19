@@ -6,4 +6,3 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Release\TTLX.Common.pdb
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\bin\Release\Newtonsoft.Json.dll
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\bin\Release\Newtonsoft.Json.xml
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Release\TTLX.Common.csproj.CopyComplete
-E:\Code\TTLX.MockTestPaper_V2\TTLX.Common\obj\Release\TTLX.Common.csprojAssemblyReference.cache

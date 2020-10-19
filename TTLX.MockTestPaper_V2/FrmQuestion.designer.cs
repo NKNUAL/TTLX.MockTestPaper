@@ -311,7 +311,7 @@
             this.btnQuestion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQuestion.Font = new System.Drawing.Font("宋体", 12F);
             this.btnQuestion.ForeColor = System.Drawing.Color.White;
-            this.btnQuestion.Location = new System.Drawing.Point(1607, 11);
+            this.btnQuestion.Location = new System.Drawing.Point(1607, 9);
             this.btnQuestion.Name = "btnQuestion";
             this.btnQuestion.Size = new System.Drawing.Size(127, 31);
             this.btnQuestion.TabIndex = 12;

@@ -34,7 +34,7 @@ namespace TTLX.MockTestPaper_V2
         {
             OpenFileDialog openFile = new OpenFileDialog
             {
-                Filter = "(.图片文件)|*.png;*/jpg"
+                Filter = "(.图片文件)|*.png;*.jpg"
             };
             if (openFile.ShowDialog() != DialogResult.OK)
                 return;

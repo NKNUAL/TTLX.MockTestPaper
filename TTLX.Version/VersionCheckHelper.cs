@@ -97,13 +97,7 @@ namespace TTLX.Version
 
         public void Update()
         {
-
-
-
-
             Console.WriteLine("正在启动出题工具……");
-
-
         }
 
         /// <summary>
@@ -121,7 +115,8 @@ namespace TTLX.Version
         /// </summary>
         public void StopExe()
         {
-            string product_name = "2020年模拟试卷出题工具";
+            string name = ConfigurationManager.AppSettings["exe_name"];
+            string product_name = name == null ? "湖北技能高考平台" : name;
 
             Process[] processes = Process.GetProcessesByName(product_name);
             foreach (Process p in processes)
@@ -135,7 +130,9 @@ namespace TTLX.Version
         /// </summary>
         public void StartExe()
         {
-            Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "2020年模拟试卷出题工具.exe"));
+            string name = ConfigurationManager.AppSettings["exe_name"];
+            string product_name = name == null ? "湖北技能高考平台" : name;
+            Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{product_name}.exe"));
         }
         /// <summary>
         /// 更新版本号

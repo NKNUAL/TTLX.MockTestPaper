@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TTLX.Common;
+using TTLX.Controller.Model;
 using TTLX.Controller.RequestModel;
 using TTLX.Controller.ResposeModel;
 
@@ -102,6 +103,38 @@ namespace TTLX.Controller
             message = "网络连接错误";
             return null;
         }
+
+        /// <summary>
+        /// 护理专业获取规则
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public QuestionRule_Nurse GetAllRules_Nurse(string userId, out string message)
+        {
+
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/rules/{userId}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    var rules = JsonConvert.DeserializeObject<QuestionRule_Nurse>(resultData.data.ToString());
+                    return rules;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return null;
+                }
+            }
+            message = "网络连接错误";
+            return null;
+        }
+
 
         /// <summary>
         /// 获取科目
@@ -453,6 +486,87 @@ namespace TTLX.Controller
             message = "网络连接错误";
             return null;
 
+        }
+
+
+        /// <summary>
+        /// 上传本地记录
+        /// </summary>
+        /// <param name="upload"></param>
+        /// <returns></returns>
+        public bool UploadRecord(UploadLocalRecord upload, out string message)
+        {
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/upload/record", upload));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    return resultData.success;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return resultData.success;
+                }
+            }
+            message = "网络连接错误";
+            return false;
+        }
+
+        /// <summary>
+        /// 获取本地编辑记录
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public List<EditPaperRecord> GetLocalPaperRecord(string userId, int specialtyId, out string message)
+        {
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/record/{userId}/{specialtyId}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    var records = JsonConvert.DeserializeObject<List<EditPaperRecord>>(resultData.data.ToString());
+
+                    return records;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return null;
+                }
+            }
+            message = "网络连接错误";
+            return null;
+        }
+
+        /// <summary>
+        /// 保存记录
+        /// </summary>
+        public void SaveLocalPaper(string userId, string pGuid, string ruleNo)
+        {
+            new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/save/record/{userId}?pGuid={pGuid}&ruleNo={ruleNo}"));
+        }
+
+
+        /// <summary>
+        /// 保存记录
+        /// </summary>
+        public void SaveLocalQuestion(string pGuid, int specialtyId, string courseNo, string knowNo, QuestionsInfoModel info)
+        {
+            new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/save/question/{pGuid}/{specialtyId}/{courseNo}/{knowNo}", info));
+        }
+
+        public void DeleteLocalRecord(string pGuid)
+        {
+            new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/del/record/{pGuid}"));
         }
 
         private HttpItem GetHttpItem(string method, string url, object data = null)

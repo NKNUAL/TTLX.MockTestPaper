@@ -154,6 +154,12 @@
       <DependentUpon>FrmSetKnowPoint.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Nurse\FrmQuestion_Nurse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Nurse\FrmQuestion_Nurse.Designer.cs">
+      <DependentUpon>FrmQuestion_Nurse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAddRule.resx">
@@ -188,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSetKnowPoint.resx">
       <DependentUpon>FrmSetKnowPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Nurse\FrmQuestion_Nurse.resx">
+      <DependentUpon>FrmQuestion_Nurse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -240,6 +249,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

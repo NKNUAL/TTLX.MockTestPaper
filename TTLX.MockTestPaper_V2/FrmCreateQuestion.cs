@@ -101,14 +101,13 @@ namespace TTLX.MockTestPaper_V2
                 else if (_question.DifficultLevel == 3)
                     this.rbtnDifficultLevel3.Checked = true;
 
-                InitAnswer(_question.QueType, _question.Answer);//加载答案
-
                 txtAnswerJiexi.Text = _question.ResolutionTips;
             }
             else
             {
                 _question = new QuestionsInfoModel();
             }
+            InitAnswer(_question.QueType, _question.Answer);//加载答案
         }
 
         private void InitAnswer(int queType, string standAnswer)
@@ -169,7 +168,7 @@ namespace TTLX.MockTestPaper_V2
                 txtOptionA.Text = "";
                 txtOptionB.Text = "";
             }
-            else if (_queType == (int)QuestionsType.Danxuan)//多选
+            else if (_queType == (int)QuestionsType.Duoxuan)//多选
             {
                 panAnswerDanxuan.Visible = false;
                 panAnswerDuoxuan.Visible = true;
@@ -440,7 +439,7 @@ namespace TTLX.MockTestPaper_V2
         {
             if (!string.IsNullOrEmpty(_knowNo))
             {
-                _ = QuestionController.Instance.SaveQuestions(_p_guid, _courseRule.CourseNo, _knowNo, _question);
+                WebApiController.Instance.SaveLocalQuestion(_p_guid, Global.Instance.CurrentSpecialtyID, _courseRule.CourseNo, _knowNo, _question);
             }
         }
 

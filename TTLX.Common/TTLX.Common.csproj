@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\NurseRuleType.cs" />
+    <Compile Include="Enum\SpecialtyType.cs" />
     <Compile Include="Expand\ExpandCls.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="Global.cs" />

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTLX.Common;
+using TTLX.Controller;
 
 namespace TTLX.MockTestPaper_V2
 {
@@ -51,6 +52,8 @@ namespace TTLX.MockTestPaper_V2
                 FrmLogin login = new FrmLogin();
                 if (login.ShowDialog() == DialogResult.OK)
                 {
+                    Task.Factory.StartNew(QuestionController.Instance.UploadHistoryRecord);
+
                     Application.Run(new FrmPapers());
                 }
 

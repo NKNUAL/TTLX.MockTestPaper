@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTLX.Common;
+using TTLX.Common.Enum;
 using TTLX.Controller;
 using TTLX.Controller.Model;
 using TTLX.Controller.RequestModel;
 using TTLX.Controller.ResposeModel;
+using TTLX.MockTestPaper_V2.Nurse;
 
 namespace TTLX.MockTestPaper_V2
 {
@@ -31,11 +33,32 @@ namespace TTLX.MockTestPaper_V2
 
             lblUserName.Text = $"欢迎您：{Global.Instance.UserName}";
 
-            cbRules.ItemHeight = 40;
+            if (Global.Instance.CurrentSpecialtyID == (int)SpecialtyType.SU)//护理专业
+            {
+                ControlsHide();
+            }
+            else
+            {
+                ControlsShow();
 
-            LoadRule();
+                LoadRule();
+            }
 
             LoadPapers();
+        }
+
+        private void ControlsHide()
+        {
+            lblCbName.Visible = false;
+            cbRules.Visible = false;
+            btnRuleManager.Visible = false;
+        }
+
+        private void ControlsShow()
+        {
+            lblCbName.Visible = true;
+            cbRules.Visible = true;
+            btnRuleManager.Visible = true;
         }
 
 
@@ -89,8 +112,6 @@ namespace TTLX.MockTestPaper_V2
             LoadRule();
 
         }
-
-
 
         private void BindPapers(IAsyncResult asyncResult)
         {
@@ -212,17 +233,26 @@ namespace TTLX.MockTestPaper_V2
 
         private void btnQuestion_Click(object sender, EventArgs e)
         {
-
-            FrmSelectRule frmSelectRule = new FrmSelectRule(rules);
-            if (frmSelectRule.ShowDialog() == DialogResult.OK)
+            if (Global.Instance.CurrentSpecialtyID == (int)SpecialtyType.SU)//护理专业
             {
-                if (frmSelectRule.SelectedRule != null)
+                //获取护理出题专业规则
+                var rule_nurse = WebApiController.Instance.GetAllRules_Nurse(Global.Instance.LexueID, out string message);
+
+                FrmQuestion_Nurse frmQuestion_Nurse = new FrmQuestion_Nurse(rule_nurse);
+                frmQuestion_Nurse.ShowDialog();
+            }
+            else
+            {
+                FrmSelectRule frmSelectRule = new FrmSelectRule(rules);
+                if (frmSelectRule.ShowDialog() == DialogResult.OK)
                 {
-                    FrmQuestion frmQuestion = new FrmQuestion(frmSelectRule.SelectedRule);
-                    frmQuestion.ShowDialog();
+                    if (frmSelectRule.SelectedRule != null)
+                    {
+                        FrmQuestion frmQuestion = new FrmQuestion(frmSelectRule.SelectedRule);
+                        frmQuestion.ShowDialog();
+                    }
                 }
             }
-
         }
 
         private void btnEditRecord_Click(object sender, EventArgs e)

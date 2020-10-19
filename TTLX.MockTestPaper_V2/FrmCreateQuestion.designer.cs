@@ -596,7 +596,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmCreateQuestion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "2020年湖北技能高考模拟试题出题工具 - 试题创建";
+            this.Text = "2020年湖北技能高考模拟试卷+调考出题平台 - 试题创建";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

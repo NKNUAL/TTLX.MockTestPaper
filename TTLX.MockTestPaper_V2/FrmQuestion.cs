@@ -163,7 +163,7 @@ namespace TTLX.MockTestPaper_V2
         private void ExeSaveRecord()
         {
             if (!string.IsNullOrEmpty(_p_guid))
-                QuestionController.Instance.SavePaper(_p_guid, _rule.RuleNo);
+                WebApiController.Instance.SaveLocalPaper(Global.Instance.LexueID, _p_guid, _rule.RuleNo);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace TTLX.MockTestPaper_V2
         private void ExeDelRecord()
         {
             if (_editMode == EditMode.Create)
-                _ = QuestionController.Instance.DeleteNormalRecord(_p_guid);
+                WebApiController.Instance.DeleteLocalRecord(_p_guid);
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace TTLX.MockTestPaper_V2
                 dgvQuestions.Rows[index].Cells[1].Value = "";
                 dgvQuestions.Rows[index].Cells[1].Tag = null;
                 dgvQuestions.Rows[index].Cells[2].Value = "多选题";
-                dgvQuestions.Rows[index].Cells[2].Tag = (int)QuestionsType.Danxuan;
+                dgvQuestions.Rows[index].Cells[2].Tag = (int)QuestionsType.Duoxuan;
                 dgvQuestions.Rows[index].Cells[3].Value = "";
                 dgvQuestions.Rows[index].Cells[4].Value = "出题";
             }
@@ -351,7 +351,7 @@ namespace TTLX.MockTestPaper_V2
                 dgvQuestions.Rows[index].Cells[1].Value = "";
                 dgvQuestions.Rows[index].Cells[1].Tag = null;
                 dgvQuestions.Rows[index].Cells[2].Value = "判断题";
-                dgvQuestions.Rows[index].Cells[2].Tag = (int)QuestionsType.Danxuan;
+                dgvQuestions.Rows[index].Cells[2].Tag = (int)QuestionsType.Panduan;
                 dgvQuestions.Rows[index].Cells[3].Value = "";
                 dgvQuestions.Rows[index].Cells[4].Value = "出题";
             }
@@ -409,8 +409,8 @@ namespace TTLX.MockTestPaper_V2
                     if (ques.ContainsKey(item.KnowNo))
                     {
                         danxuanHasCount = ques[item.KnowNo].Count(q => q.QueType == (int)QuestionsType.Danxuan);
-                        duoxuanHasCount = ques[item.KnowNo].Count(q => q.QueType == (int)QuestionsType.Danxuan);
-                        panduanHasCount = ques[item.KnowNo].Count(q => q.QueType == (int)QuestionsType.Danxuan);
+                        duoxuanHasCount = ques[item.KnowNo].Count(q => q.QueType == (int)QuestionsType.Duoxuan);
+                        panduanHasCount = ques[item.KnowNo].Count(q => q.QueType == (int)QuestionsType.Panduan);
                     }
 
                     for (int i = 0; i < item.DanxuanCount - danxuanHasCount; i++)
@@ -642,7 +642,6 @@ namespace TTLX.MockTestPaper_V2
 
         private void btnQuestion_Click(object sender, EventArgs e)
         {
-
             var courseNo = CheckQuestion();
 
             if (courseNo != null)
@@ -698,7 +697,7 @@ namespace TTLX.MockTestPaper_V2
             content = string.Empty;
 
             if (_putQuestion == null || _putQuestion.Courses == null || _putQuestion.Courses.Count == 0)
-                return true;
+                return false;
 
             List<QuestionsInfoModel> totalQUes = new List<QuestionsInfoModel>();
 
@@ -734,6 +733,58 @@ namespace TTLX.MockTestPaper_V2
             return isSimilarity;
 
         }
+
+
+        //public void Get()
+        //{
+        //    _putQuestion = new PutQuestionModel
+        //    {
+        //        PaperName = "测试",
+        //        RuleNo = _rule.RuleNo,
+        //        UserId = Global.Instance.LexueID,
+        //        UserName = Global.Instance.UserName,
+        //        Courses = new List<PutQuestionCourseModel>()
+        //    };
+
+        //    foreach (var item in _rule.CourseRules)
+        //    {
+
+        //        var tempCourse = new PutQuestionCourseModel
+        //        {
+        //            CourseNo = item.CourseNo,
+        //            Knows = new List<PutQuestionKnowModel>()
+        //        };
+
+        //        _putQuestion.Courses.Add(tempCourse);
+
+        //        var knows = WebApiController.Instance.GetKnows(Global.Instance.CurrentSpecialtyID.ToString(), item.CourseNo, out _);
+
+        //        var ques = new PutQuestionKnowModel
+        //        {
+        //            KnowNo = knows[0].Key,
+        //            Questions = new List<QuestionsInfoModel>()
+        //        };
+
+        //        for (int i = 0; i < item.DanxuanCount; i++)
+        //        {
+        //            string s = "1";
+        //            ques.Questions.Add(new QuestionsInfoModel
+        //            {
+        //                Answer = s,
+        //                DifficultLevel = 1,
+        //                Option0 = s,
+        //                Option1 = s,
+        //                Option2 = s,
+        //                Option3 = s,
+        //                QueContent = s,
+        //                QueType = 1,
+        //                ResolutionTips = s,
+        //            });
+        //        }
+        //        tempCourse.Knows.Add(ques);
+        //    }
+
+        //}
 
     }
 }

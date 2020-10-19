@@ -15,4 +15,3 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.DataBase\obj\Release\TTLX.DataBase.csproj.Cor
 E:\Code\TTLX.MockTestPaper_V2\TTLX.DataBase\obj\Release\TTLX.DataBase.csproj.CopyComplete
 E:\Code\TTLX.MockTestPaper_V2\TTLX.DataBase\obj\Release\TTLX.DataBase.dll
 E:\Code\TTLX.MockTestPaper_V2\TTLX.DataBase\obj\Release\TTLX.DataBase.pdb
-E:\Code\TTLX.MockTestPaper_V2\TTLX.DataBase\obj\Release\TTLX.DataBase.csprojAssemblyReference.cache
