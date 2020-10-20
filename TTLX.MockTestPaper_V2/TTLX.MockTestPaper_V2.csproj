@@ -154,6 +154,18 @@
       <DependentUpon>FrmSetKnowPoint.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Nurse\FrmCreateQuestion_Nurse_A3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Nurse\FrmCreateQuestion_Nurse_A3.designer.cs">
+      <DependentUpon>FrmCreateQuestion_Nurse_A3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Nurse\FrmCreateQuestion_Nurse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Nurse\FrmCreateQuestion_Nurse.designer.cs">
+      <DependentUpon>FrmCreateQuestion_Nurse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Nurse\FrmQuestion_Nurse.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +206,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSetKnowPoint.resx">
       <DependentUpon>FrmSetKnowPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Nurse\FrmCreateQuestion_Nurse_A3.resx">
+      <DependentUpon>FrmCreateQuestion_Nurse_A3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Nurse\FrmCreateQuestion_Nurse.resx">
+      <DependentUpon>FrmCreateQuestion_Nurse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Nurse\FrmQuestion_Nurse.resx">
       <DependentUpon>FrmQuestion_Nurse.cs</DependentUpon>

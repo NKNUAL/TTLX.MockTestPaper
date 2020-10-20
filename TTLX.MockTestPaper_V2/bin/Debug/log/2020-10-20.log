@@ -1,0 +1,45 @@
+2020-10-20 11:47:28:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.ruleTree_AfterSelect(Object sender, TreeViewEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 308
+   在 System.Windows.Forms.TreeView.OnAfterSelect(TreeViewEventArgs e)
+   在 System.Windows.Forms.TreeView.TvnSelected(NMTREEVIEW* nmtv)
+   在 System.Windows.Forms.TreeView.WmNotify(Message& m)
+   在 System.Windows.Forms.TreeView.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-20 11:47:30:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.ruleTree_AfterSelect(Object sender, TreeViewEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 308
+   在 System.Windows.Forms.TreeView.OnAfterSelect(TreeViewEventArgs e)
+   在 System.Windows.Forms.TreeView.TvnSelected(NMTREEVIEW* nmtv)
+   在 System.Windows.Forms.TreeView.WmNotify(Message& m)
+   在 System.Windows.Forms.TreeView.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-20 11:47:33:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.ruleTree_AfterSelect(Object sender, TreeViewEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 308
+   在 System.Windows.Forms.TreeView.OnAfterSelect(TreeViewEventArgs e)
+   在 System.Windows.Forms.TreeView.TvnSelected(NMTREEVIEW* nmtv)
+   在 System.Windows.Forms.TreeView.WmNotify(Message& m)
+   在 System.Windows.Forms.TreeView.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-20 11:49:45:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.ruleTree_AfterSelect(Object sender, TreeViewEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 308
+   在 System.Windows.Forms.TreeView.OnAfterSelect(TreeViewEventArgs e)
+   在 System.Windows.Forms.TreeView.TvnSelected(NMTREEVIEW* nmtv)
+   在 System.Windows.Forms.TreeView.WmNotify(Message& m)
+   在 System.Windows.Forms.TreeView.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2020-10-20 11:50:35:System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.ruleTree_AfterSelect(Object sender, TreeViewEventArgs e) 位置 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\Nurse\FrmQuestion_Nurse.cs:行号 308
+   在 System.Windows.Forms.TreeView.OnAfterSelect(TreeViewEventArgs e)
+   在 System.Windows.Forms.TreeView.TvnSelected(NMTREEVIEW* nmtv)
+   在 System.Windows.Forms.TreeView.WmNotify(Message& m)
+   在 System.Windows.Forms.TreeView.WndProc(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   在 System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)

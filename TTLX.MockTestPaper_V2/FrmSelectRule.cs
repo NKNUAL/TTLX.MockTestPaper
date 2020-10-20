@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TTLX.Common;
+using TTLX.Controller;
 using TTLX.Controller.ResposeModel;
 
 namespace TTLX.MockTestPaper_V2
@@ -37,5 +39,17 @@ namespace TTLX.MockTestPaper_V2
             }
         }
 
+        private void btnNewRule_Click(object sender, EventArgs e)
+        {
+            FrmRuleManager frmRuleManager = new FrmRuleManager();
+
+            frmRuleManager.ShowDialog();
+
+            cbRules.Items.Clear();
+
+            var rules = WebApiController.Instance.GetAllRules(Global.Instance.LexueID, out _);
+
+            cbRules.Items.AddRange(rules.ToArray());
+        }
     }
 }

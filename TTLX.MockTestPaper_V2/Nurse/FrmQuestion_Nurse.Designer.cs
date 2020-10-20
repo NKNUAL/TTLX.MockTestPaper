@@ -186,6 +186,7 @@
             // queTree
             // 
             this.queTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.queTree.Font = new System.Drawing.Font("宋体", 12F);
             this.queTree.Location = new System.Drawing.Point(3, 17);
             this.queTree.Name = "queTree";
             this.queTree.Size = new System.Drawing.Size(444, 255);
@@ -205,6 +206,7 @@
             // ruleTree
             // 
             this.ruleTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ruleTree.Font = new System.Drawing.Font("宋体", 12F);
             this.ruleTree.Location = new System.Drawing.Point(3, 17);
             this.ruleTree.Name = "ruleTree";
             this.ruleTree.Size = new System.Drawing.Size(444, 264);
@@ -251,6 +253,7 @@
             this.dgvQuestions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvQuestions.Size = new System.Drawing.Size(1292, 679);
             this.dgvQuestions.TabIndex = 7;
+            this.dgvQuestions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvQuestions_CellContentClick);
             // 
             // colCourse
             // 

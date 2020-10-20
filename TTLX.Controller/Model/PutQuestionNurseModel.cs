@@ -19,6 +19,7 @@ namespace TTLX.Controller.Model
     }
     public class PutQuestionA_Model
     {
+        public string GeneralNo { get; set; }
         public int TypeId { get; set; }
         public string TypeName { get; set; }
         public string GeneralName { get; set; }

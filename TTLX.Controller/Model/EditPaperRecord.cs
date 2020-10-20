@@ -14,4 +14,12 @@ namespace TTLX.Controller.Model
         public string EditDate { get; set; }
         public Dictionary<string, Dictionary<string, List<QuestionsInfoModel>>> DicQuestions { get; set; }
     }
+
+    public class EditPaperRecord_Nurse
+    {
+        public string RuleNo { get; set; }
+        public string PGuid { get; set; }
+        public string EditDate { get; set; }
+        public List<PutQuestionA_Model> A_ { get; set; }
+    }
 }

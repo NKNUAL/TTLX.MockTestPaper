@@ -257,13 +257,24 @@ namespace TTLX.MockTestPaper_V2
 
         private void btnEditRecord_Click(object sender, EventArgs e)
         {
-            if (rules != null)
+            if (Global.Instance.CurrentSpecialtyID == (int)SpecialtyType.SU)
             {
-
-                FrmEditRecord frmEditRecord = new FrmEditRecord(rules);
+                FrmEditRecord frmEditRecord = new FrmEditRecord();
 
                 frmEditRecord.ShowDialog();
             }
+            else
+            {
+                if (rules != null)
+                {
+
+                    FrmEditRecord frmEditRecord = new FrmEditRecord(rules);
+
+                    frmEditRecord.ShowDialog();
+                }
+            }
+
+
 
 
         }

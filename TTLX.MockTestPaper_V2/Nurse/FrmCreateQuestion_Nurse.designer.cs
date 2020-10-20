@@ -1,6 +1,6 @@
-﻿namespace TTLX.MockTestPaper_V2
+﻿namespace TTLX.MockTestPaper_V2.Nurse
 {
-    partial class FrmCreateQuestion
+    partial class FrmCreateQuestion_Nurse
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCreateQuestion));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCreateQuestion_Nurse));
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbKnows = new System.Windows.Forms.ComboBox();
             this.lblQueType = new System.Windows.Forms.Label();
@@ -62,7 +62,6 @@
             this.txtOptionA = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.lblCourseName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panAnswerDanxuan = new System.Windows.Forms.Panel();
@@ -74,6 +73,7 @@
             this.rbtnPanduanAnswerA = new System.Windows.Forms.RadioButton();
             this.rbtnPanduanAnswerB = new System.Windows.Forms.RadioButton();
             this.label10 = new System.Windows.Forms.Label();
+            this.cbCourses = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panAnswerDuoxuan.SuspendLayout();
             this.panAnswerDanxuan.SuspendLayout();
@@ -82,6 +82,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cbCourses);
             this.panel1.Controls.Add(this.cbKnows);
             this.panel1.Controls.Add(this.lblQueType);
             this.panel1.Controls.Add(this.btnImgContent);
@@ -110,14 +111,12 @@
             this.panel1.Controls.Add(this.txtOptionA);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.lblCourseName);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panAnswerDanxuan);
             this.panel1.Controls.Add(this.panAnswerPanduan);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Font = new System.Drawing.Font("宋体", 12F);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1084, 727);
@@ -139,7 +138,7 @@
             this.lblQueType.AutoSize = true;
             this.lblQueType.Font = new System.Drawing.Font("宋体", 16F);
             this.lblQueType.ForeColor = System.Drawing.Color.Blue;
-            this.lblQueType.Location = new System.Drawing.Point(127, 71);
+            this.lblQueType.Location = new System.Drawing.Point(127, 76);
             this.lblQueType.Name = "lblQueType";
             this.lblQueType.Size = new System.Drawing.Size(76, 22);
             this.lblQueType.TabIndex = 218;
@@ -157,6 +156,7 @@
             // 
             // tbQueName
             // 
+            this.tbQueName.Font = new System.Drawing.Font("宋体", 12F);
             this.tbQueName.Location = new System.Drawing.Point(130, 245);
             this.tbQueName.Name = "tbQueName";
             this.tbQueName.Size = new System.Drawing.Size(863, 125);
@@ -454,22 +454,12 @@
             this.label3.TabIndex = 188;
             this.label3.Text = "题干内容：";
             // 
-            // lblCourseName
-            // 
-            this.lblCourseName.Font = new System.Drawing.Font("宋体", 16F);
-            this.lblCourseName.ForeColor = System.Drawing.Color.Blue;
-            this.lblCourseName.Location = new System.Drawing.Point(120, 130);
-            this.lblCourseName.Name = "lblCourseName";
-            this.lblCourseName.Size = new System.Drawing.Size(938, 46);
-            this.lblCourseName.TabIndex = 187;
-            this.lblCourseName.Text = "[所属科目]";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 16F);
             this.label2.ForeColor = System.Drawing.Color.Blue;
-            this.label2.Location = new System.Drawing.Point(25, 71);
+            this.label2.Location = new System.Drawing.Point(25, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 22);
             this.label2.TabIndex = 187;
@@ -588,14 +578,25 @@
             this.label10.TabIndex = 194;
             this.label10.Text = "答案解析：";
             // 
-            // FrmCreateQuestion
+            // cbCourses
+            // 
+            this.cbCourses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCourses.Font = new System.Drawing.Font("宋体", 12F);
+            this.cbCourses.FormattingEnabled = true;
+            this.cbCourses.Location = new System.Drawing.Point(130, 130);
+            this.cbCourses.Name = "cbCourses";
+            this.cbCourses.Size = new System.Drawing.Size(863, 24);
+            this.cbCourses.TabIndex = 220;
+            this.cbCourses.SelectedIndexChanged += new System.EventHandler(this.cbCourses_SelectedIndexChanged);
+            // 
+            // FrmCreateQuestion_Nurse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 727);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FrmCreateQuestion";
+            this.Name = "FrmCreateQuestion_Nurse";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "2020年湖北技能高考模拟试卷+调考出题平台 - 试题创建";
             this.Load += new System.EventHandler(this.FrmMain_Load);
@@ -640,7 +641,6 @@
         private System.Windows.Forms.RadioButton rbtnPanduanAnswerB;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblCourseName;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
@@ -657,5 +657,6 @@
         private System.Windows.Forms.Button btnImgContent;
         private System.Windows.Forms.Label lblQueType;
         private System.Windows.Forms.ComboBox cbKnows;
+        private System.Windows.Forms.ComboBox cbCourses;
     }
 }

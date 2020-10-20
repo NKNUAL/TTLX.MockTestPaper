@@ -32,6 +32,7 @@
             this.cbRules = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnConfirm = new System.Windows.Forms.Button();
+            this.btnNewRule = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cbRules
@@ -70,11 +71,28 @@
             this.btnConfirm.UseVisualStyleBackColor = false;
             this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
+            // btnNewRule
+            // 
+            this.btnNewRule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNewRule.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(158)))), ((int)(((byte)(216)))));
+            this.btnNewRule.FlatAppearance.BorderSize = 0;
+            this.btnNewRule.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewRule.Font = new System.Drawing.Font("宋体", 12F);
+            this.btnNewRule.ForeColor = System.Drawing.Color.White;
+            this.btnNewRule.Location = new System.Drawing.Point(21, 63);
+            this.btnNewRule.Name = "btnNewRule";
+            this.btnNewRule.Size = new System.Drawing.Size(86, 31);
+            this.btnNewRule.TabIndex = 14;
+            this.btnNewRule.Text = "新建规则";
+            this.btnNewRule.UseVisualStyleBackColor = false;
+            this.btnNewRule.Click += new System.EventHandler(this.btnNewRule_Click);
+            // 
             // FrmSelectRule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(367, 104);
+            this.Controls.Add(this.btnNewRule);
             this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.cbRules);
             this.Controls.Add(this.label1);
@@ -92,5 +110,6 @@
         private System.Windows.Forms.ComboBox cbRules;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnConfirm;
+        private System.Windows.Forms.Button btnNewRule;
     }
 }

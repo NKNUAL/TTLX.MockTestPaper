@@ -81,3 +81,4 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Debug\湖北技能高考
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\湖北技能高考平台.exe
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\湖北技能高考平台.pdb
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.resources
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Debug\TTLX.MockTestPaper_V2.Nurse.FrmCreateQuestion_Nurse.resources

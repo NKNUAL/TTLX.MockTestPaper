@@ -33,7 +33,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblCount = new System.Windows.Forms.Label();
             this.cbRules = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCbRule = new System.Windows.Forms.Label();
             this.dgRecord = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -54,7 +54,7 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.lblCount);
             this.splitContainer1.Panel1.Controls.Add(this.cbRules);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.lblCbRule);
             // 
             // splitContainer1.Panel2
             // 
@@ -85,15 +85,15 @@
             this.cbRules.TabIndex = 1;
             this.cbRules.SelectedIndexChanged += new System.EventHandler(this.cbRules_SelectedIndexChanged);
             // 
-            // label1
+            // lblCbRule
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(21, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "出题规则：";
+            this.lblCbRule.AutoSize = true;
+            this.lblCbRule.Font = new System.Drawing.Font("宋体", 12F);
+            this.lblCbRule.Location = new System.Drawing.Point(21, 20);
+            this.lblCbRule.Name = "lblCbRule";
+            this.lblCbRule.Size = new System.Drawing.Size(88, 16);
+            this.lblCbRule.TabIndex = 0;
+            this.lblCbRule.Text = "出题规则：";
             // 
             // dgRecord
             // 
@@ -138,7 +138,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCbRule;
         private System.Windows.Forms.ComboBox cbRules;
         private System.Windows.Forms.DataGridView dgRecord;
         private System.Windows.Forms.Label lblCount;

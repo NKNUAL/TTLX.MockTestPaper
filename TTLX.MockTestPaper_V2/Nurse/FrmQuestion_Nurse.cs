@@ -51,20 +51,19 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
             _editMode = EditMode.Create;
         }
-
         /// <summary>
         /// 继续出未完成的试卷
         /// </summary>
         /// <param name="rule"></param>
         /// <param name="putQuestion"></param>
         /// <param name="pGuid"></param>
-        //public FrmQuestion_Nurse(QuestionRule rule, PutQuestionModel putQuestion, string pGuid) : this()
-        //{
-        //    this._rule = rule;
-        //    this._putQuestion = putQuestion;
-        //    _p_guid = pGuid;
-        //    _editMode = EditMode.Create;
-        //}
+        public FrmQuestion_Nurse(QuestionRule_Nurse rule, PutQuestionNurseModel putQuestion, string pGuid) : this()
+        {
+            _rule = rule;
+            _putQuestion = putQuestion;
+            _p_guid = pGuid;
+            _editMode = EditMode.Create;
+        }
 
         /// <summary>
         /// 编辑已经入库的试卷
@@ -80,8 +79,6 @@ namespace TTLX.MockTestPaper_V2.Nurse
         //    _editMode = EditMode.Edit;
         //}
 
-
-
         private void FrmQuestion2_Load(object sender, EventArgs e)
         {
             this.Text = $"模拟试卷出题-{Global.Instance.CurrentSpecialtyName}";
@@ -96,7 +93,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
             ruleTree.ItemHeight = 30;
             LoadRuleTree();
 
-            //Task.Factory.StartNew(ExeSaveRecord);
+            Task.Factory.StartNew(ExeSaveRecord);
         }
 
         /// <summary>
@@ -183,6 +180,8 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
             var courses = WebApiController.Instance.GetCourse(Global.Instance.CurrentSpecialtyID.ToString(), out _);
 
+            queTree.Nodes.Clear();
+
             foreach (var item in dicTree)
             {
                 TreeNode node = new TreeNode
@@ -204,7 +203,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
         }
 
         /// <summary>
-        /// 保存题目到Sqlite
+        /// 保存题目到
         /// </summary>
         private void ExeSaveRecord()
         {
@@ -237,7 +236,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
                 TreeNode ccNode = new TreeNode()
                 {
                     Tag = item.TypeId,
-                    Name = item.TypeName
+                    Name = item.TypeId.ToString()
                 };
                 ruleTree.Nodes.Add(ccNode);
 
@@ -275,18 +274,20 @@ namespace TTLX.MockTestPaper_V2.Nurse
                     {
                         int index = dgvQuestions.Rows.Add();
                         dgvQuestions.Rows[index].Cells[0].Value = $"第{index + 1}题";
+                        dgvQuestions.Rows[index].Cells[0].Tag = typeId;
                         dgvQuestions.Rows[index].Cells[1].Value = model.GeneralName;
                         dgvQuestions.Rows[index].Cells[2].Value = "修改";
+                        dgvQuestions.Rows[index].Cells[2].Tag = model;
                     }
 
                     for (int i = 0; i < typeRule.QueCount - models.Count; i++)
                     {
                         int index = dgvQuestions.Rows.Add();
                         dgvQuestions.Rows[index].Cells[0].Value = $"第{index + 1}题";
+                        dgvQuestions.Rows[index].Cells[0].Tag = typeId;
                         dgvQuestions.Rows[index].Cells[1].Value = "";
                         dgvQuestions.Rows[index].Cells[2].Value = "出题";
                     }
-
                 }
                 else
                 {
@@ -300,12 +301,15 @@ namespace TTLX.MockTestPaper_V2.Nurse
                             {
                                 var knows = WebApiController.Instance.GetKnows(Global.Instance.CurrentSpecialtyID.ToString(), que.CourseNo, out _);
                                 int index = dgvQuestions.Rows.Add();
-                                dgvQuestions.Rows[index].Cells[0].Value = courses.Find(c => c.Key == que.CourseNo).Value;
-                                dgvQuestions.Rows[index].Cells[1].Value = knows.Find(k => k.Key == que.KnowNo).Value;
-                                dgvQuestions.Rows[index].Cells[2].Value = "单选题";
-                                dgvQuestions.Rows[index].Cells[2].Tag = (int)QuestionsType.Danxuan;
-                                dgvQuestions.Rows[index].Cells[3].Value = que.QueContent;
-                                dgvQuestions.Rows[index].Cells[4].Value = "修改";
+                                dgvQuestions.Rows[index].Cells[0].Value = $"第{index + 1}题";
+                                dgvQuestions.Rows[index].Cells[0].Tag = typeId;
+                                dgvQuestions.Rows[index].Cells[1].Value = courses.Find(c => c.Key == que.CourseNo).Value;
+                                dgvQuestions.Rows[index].Cells[2].Value = knows.Find(k => k.Key == que.KnowNo).Value;
+                                dgvQuestions.Rows[index].Cells[3].Value = "单选题";
+                                dgvQuestions.Rows[index].Cells[3].Tag = (int)QuestionsType.Danxuan;
+                                dgvQuestions.Rows[index].Cells[4].Value = que.QueContent;
+                                dgvQuestions.Rows[index].Cells[5].Value = "修改";
+                                dgvQuestions.Rows[index].Cells[5].Tag = que;
                             }
                         }
                     }
@@ -313,12 +317,14 @@ namespace TTLX.MockTestPaper_V2.Nurse
                     for (int i = 0; i < typeRule.QueCount - models.Sum(m => m.Questions.Count); i++)
                     {
                         int index = dgvQuestions.Rows.Add();
-                        dgvQuestions.Rows[index].Cells[0].Value = "";
+                        dgvQuestions.Rows[index].Cells[0].Value = $"第{index + 1}题";
+                        dgvQuestions.Rows[index].Cells[0].Tag = typeId;
                         dgvQuestions.Rows[index].Cells[1].Value = "";
-                        dgvQuestions.Rows[index].Cells[2].Value = "单选题";
-                        dgvQuestions.Rows[index].Cells[2].Tag = (int)QuestionsType.Danxuan;
-                        dgvQuestions.Rows[index].Cells[3].Value = "";
-                        dgvQuestions.Rows[index].Cells[4].Value = "出题";
+                        dgvQuestions.Rows[index].Cells[2].Value = "";
+                        dgvQuestions.Rows[index].Cells[3].Value = "单选题";
+                        dgvQuestions.Rows[index].Cells[3].Tag = (int)QuestionsType.Danxuan;
+                        dgvQuestions.Rows[index].Cells[4].Value = "";
+                        dgvQuestions.Rows[index].Cells[5].Value = "出题";
                     }
 
                 }
@@ -333,8 +339,13 @@ namespace TTLX.MockTestPaper_V2.Nurse
             {
                 dgvQuestions.Columns.Add(new DataGridViewTextBoxColumn
                 {
+                    HeaderText = "序号",
+                    FillWeight = 10
+                });
+                dgvQuestions.Columns.Add(new DataGridViewTextBoxColumn
+                {
                     HeaderText = "科目",
-                    FillWeight = 20
+                    FillWeight = 15
                 });
                 dgvQuestions.Columns.Add(new DataGridViewTextBoxColumn
                 {
@@ -344,7 +355,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
                 dgvQuestions.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "题型",
-                    FillWeight = 10
+                    FillWeight = 15
                 });
                 dgvQuestions.Columns.Add(new DataGridViewTextBoxColumn
                 {
@@ -379,7 +390,58 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
         }
 
+        private void dgvQuestions_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == dgvQuestions.Columns.Count - 1)
+            {
+                int typeId = (dgvQuestions.Rows[e.RowIndex].Cells[0].Tag as int?) ?? 0;
 
+                if (typeId == (int)NurseRuleType.A1 || typeId == (int)NurseRuleType.A2)
+                {
+                    if (dgvQuestions.Rows[e.RowIndex].Cells[5].Tag is QuestionsInfoModel2 que)//修改
+                    {
+                        FrmCreateQuestion_Nurse frmCreateQuestion_Nurse = new FrmCreateQuestion_Nurse(this, que, typeId, _p_guid, _editMode);
+                        if (frmCreateQuestion_Nurse.ShowDialog() == DialogResult.OK)
+                        {
+                            LoadRuleTree();
+                            var nodes = ruleTree.Nodes.Find(typeId.ToString(), false);
+                            if (nodes != null && nodes.Length > 0)
+                            {
+                                ruleTree.SelectedNode = nodes[0];
+                            }
+                        }
+                    }
+                    else//出题
+                    {
+                        FrmCreateQuestion_Nurse frmCreateQuestion_Nurse = new FrmCreateQuestion_Nurse(this, typeId, _p_guid, _editMode);
+                        if (frmCreateQuestion_Nurse.ShowDialog() == DialogResult.OK)
+                        {
+                            SetQuestionModel(typeId, frmCreateQuestion_Nurse._question);
+
+                            LoadRuleTree();
+                            var nodes = ruleTree.Nodes.Find(typeId.ToString(), false);
+                            if (nodes != null && nodes.Length > 0)
+                            {
+                                ruleTree.SelectedNode = nodes[0];
+                            }
+                        }
+                    }
+                }
+
+                if (typeId == (int)NurseRuleType.A3)
+                {
+                    if (dgvQuestions.Rows[e.RowIndex].Cells[2].Tag is PutQuestionA_Model putModel)//修改
+                    {
+
+                    }
+                    else//出题
+                    {
+
+                    }
+                }
+
+            }
+        }
 
         /// <summary>
         /// 从缓存获取题目
@@ -414,7 +476,6 @@ namespace TTLX.MockTestPaper_V2.Nurse
         //    }
         //}
 
-
         /// <summary>
         /// 获取出题数量
         /// </summary>
@@ -435,119 +496,46 @@ namespace TTLX.MockTestPaper_V2.Nurse
         //}
 
         /// <summary>
-        /// 保存题目到缓存
+        /// 保存题目到缓存--A1 A2题型
         /// </summary>
         /// <param name="courseNo"></param>
         /// <param name="knowNo"></param>
         /// <param name="que"></param>
-        //public void SetQuestionModel(string courseNo, string knowNo, QuestionsInfoModel que)
-        //{
-        //    var putCourse = _putQuestion.Courses.Find(c => c.CourseNo == courseNo);
-        //    if (putCourse == null)
-        //    {
-        //        putCourse = new PutQuestionCourseModel
-        //        {
-        //            CourseNo = courseNo,
-        //            Knows = new List<PutQuestionKnowModel>()
-        //        };
-        //        _putQuestion.Courses.Add(putCourse);
-        //    }
-        //    var putKnow = putCourse.Knows.Find(k => k.KnowNo == knowNo);
-        //    if (putKnow == null)
-        //    {
-        //        putKnow = new PutQuestionKnowModel
-        //        {
-        //            KnowNo = knowNo,
-        //            Questions = new List<QuestionsInfoModel>()
-        //        };
-        //        putCourse.Knows.Add(putKnow);
-        //    }
-        //    putKnow.Questions.Add(que);
-        //}
+        public void SetQuestionModel(int typeId, QuestionsInfoModel2 que)
+        {
+            var model = _putQuestion.A_.Find(c => c.TypeId == typeId);
 
-        //private void dgvQuestions_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.RowIndex >= 0 && e.ColumnIndex == 4)
-        //    {
+            var rule = _rule.A_.Find(c => c.TypeId == typeId);
 
+            if (model == null)
+            {
+                model = new PutQuestionA_Model
+                {
+                    TypeId = typeId,
+                    Questions = new List<QuestionsInfoModel2>(),
+                    TypeName = rule.TypeName
+                };
+                _putQuestion.A_.Add(model);
+            }
 
-        //        var courseRule = dgvQuestions.Rows[e.RowIndex].Cells[0].Tag as CourseRule;
-        //        int queType = (dgvQuestions.Rows[e.RowIndex].Cells[2].Tag as int?) ?? 0;
-        //        string knowNo = dgvQuestions.Rows[e.RowIndex].Cells[1].Tag as string;
+            model.Questions.Add(que);
+        }
 
-        //        FrmCreateQuestion frmCreateQuestion;
-        //        if (dgvQuestions.Rows[e.RowIndex].Tag is QuestionsInfoModel que)//编辑题目
-        //        {
+        /// <summary>
+        /// 保存题目道缓存--A3题型
+        /// </summary>
+        /// <param name="typeId"></param>
+        /// <param name="que"></param>
+        public void SetQuestionModel(int typeId, PutQuestionA_Model que)
+        {
+            var model = _putQuestion.A_.Find(c => c.GeneralNo == que.GeneralNo);
 
-        //            frmCreateQuestion = new FrmCreateQuestion(this, que, courseRule, queType, knowNo, _p_guid, _editMode);
-        //            if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
-        //            {
-        //                LoadRuleTree();
+            if (model == null)
+            {
+                _putQuestion.A_.Add(model);
+            }
+        }
 
-        //                if (_currSelectEdNode != null)
-        //                {
-        //                    if (_currSelectEdNode.Tag is CourseRule)
-        //                    {
-        //                        var nodes = ruleTree.Nodes.Find(courseRule.CourseNo, true);
-        //                        if (nodes != null && nodes.Length > 0)
-        //                        {
-        //                            ruleTree.SelectedNode = nodes[0];
-        //                        }
-        //                    }
-        //                    else if (_currSelectEdNode.Tag is string tempKnowNo)
-        //                    {
-        //                        var nodes = ruleTree.Nodes.Find(courseRule.CourseNo + "_" + tempKnowNo, true);
-        //                        if (nodes != null && nodes.Length > 0)
-        //                        {
-        //                            ruleTree.SelectedNode = nodes[0];
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        else//增加题目
-        //        {
-        //            frmCreateQuestion = new FrmCreateQuestion(this, courseRule, queType, knowNo, _p_guid, _editMode);
-        //            if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
-        //            {
-        //                SetQuestionModel(courseRule.CourseNo, frmCreateQuestion._knowNo, frmCreateQuestion._question);
-        //                LoadRuleTree();
-
-        //                if (_currSelectEdNode != null)
-        //                {
-        //                    if (_currSelectEdNode.Tag is CourseRule)
-        //                    {
-        //                        var nodes = ruleTree.Nodes.Find(courseRule.CourseNo, true);
-        //                        if (nodes != null && nodes.Length > 0)
-        //                        {
-        //                            ruleTree.SelectedNode = nodes[0];
-        //                        }
-        //                    }
-        //                    else if (_currSelectEdNode.Tag is string tempKnowNo)
-        //                    {
-        //                        var nodes = ruleTree.Nodes.Find(courseRule.CourseNo + "_" + tempKnowNo, true);
-        //                        if (nodes != null && nodes.Length > 0)
-        //                        {
-        //                            ruleTree.SelectedNode = nodes[0];
-        //                        }
-        //                    }
-        //                }
-
-
-        //            }
-
-        //            //frmCreateQuestion = new FrmCreateQuestion(courseRule, knowRule, _p_guid, _editMode);
-        //            //if (frmCreateQuestion.ShowDialog() == DialogResult.OK)
-        //            //{
-        //            //    SetQuestionModel(courseRule.No, knowRule.No, frmCreateQuestion._question);
-        //            //    LoadRuleTree();
-        //            //    InitDgPaper(courseRule, knowRule);
-        //            //}
-
-        //        }
-
-        //    }
-        //}
 
         /// <summary>
         /// 检查题目是否出完
@@ -619,99 +607,43 @@ namespace TTLX.MockTestPaper_V2.Nurse
         /// </summary>
         /// <param name="queContent"></param>
         /// <returns></returns>
-        //public bool CheckSimilarity(string queNo, string queContent, out string content)
-        //{
-        //    content = string.Empty;
+        public bool CheckSimilarity(string queNo, string queContent, out string content)
+        {
+            content = string.Empty;
 
-        //    if (_putQuestion == null || _putQuestion.Courses == null || _putQuestion.Courses.Count == 0)
-        //        return false;
+            if (_putQuestion == null || _putQuestion.A_ == null || _putQuestion.A_.Count == 0)
+                return false;
 
-        //    List<QuestionsInfoModel> totalQUes = new List<QuestionsInfoModel>();
+            List<QuestionsInfoModel2> totalQUes = new List<QuestionsInfoModel2>();
 
-        //    _putQuestion.Courses.AsParallel().ForAll(c =>
-        //    {
-        //        if (c.Knows != null)
-        //        {
-        //            c.Knows.ForEach(k =>
-        //            {
-        //                if (k.Questions != null)
-        //                    totalQUes.AddRange(k.Questions);
-        //            });
-        //        }
-        //    });
+            _putQuestion.A_.AsParallel().ForAll(c =>
+            {
+                if (c.Questions != null)
+                {
+                    totalQUes.AddRange(c.Questions);
+                }
+            });
 
-        //    if (!string.IsNullOrEmpty(queNo))
-        //    {
-        //        totalQUes.RemoveAll(q => q.No == queNo);
-        //    }
+            if (!string.IsNullOrEmpty(queNo))
+            {
+                totalQUes.RemoveAll(q => q.No == queNo);
+            }
 
-        //    bool isSimilarity = false;
-        //    string tempContent = string.Empty;
-        //    Parallel.ForEach(totalQUes, (q, loopState) =>
-        //    {
-        //        if (!string.IsNullOrWhiteSpace(q.QueContent) && LevenshteinDistanceHelper.CompareStrings(q.QueContent, queContent) >= 0.9)
-        //        {
-        //            isSimilarity = true;
-        //            tempContent = q.QueContent;
-        //            loopState.Stop();
-        //        }
-        //    });
-        //    content = tempContent;
-        //    return isSimilarity;
+            bool isSimilarity = false;
+            string tempContent = string.Empty;
+            Parallel.ForEach(totalQUes, (q, loopState) =>
+            {
+                if (!string.IsNullOrWhiteSpace(q.QueContent) && LevenshteinDistanceHelper.CompareStrings(q.QueContent, queContent) >= 0.9)
+                {
+                    isSimilarity = true;
+                    tempContent = q.QueContent;
+                    loopState.Stop();
+                }
+            });
+            content = tempContent;
+            return isSimilarity;
 
-        //}
-
-
-        //public void Get()
-        //{
-        //    _putQuestion = new PutQuestionModel
-        //    {
-        //        PaperName = "测试",
-        //        RuleNo = _rule.RuleNo,
-        //        UserId = Global.Instance.LexueID,
-        //        UserName = Global.Instance.UserName,
-        //        Courses = new List<PutQuestionCourseModel>()
-        //    };
-
-        //    foreach (var item in _rule.CourseRules)
-        //    {
-
-        //        var tempCourse = new PutQuestionCourseModel
-        //        {
-        //            CourseNo = item.CourseNo,
-        //            Knows = new List<PutQuestionKnowModel>()
-        //        };
-
-        //        _putQuestion.Courses.Add(tempCourse);
-
-        //        var knows = WebApiController.Instance.GetKnows(Global.Instance.CurrentSpecialtyID.ToString(), item.CourseNo, out _);
-
-        //        var ques = new PutQuestionKnowModel
-        //        {
-        //            KnowNo = knows[0].Key,
-        //            Questions = new List<QuestionsInfoModel>()
-        //        };
-
-        //        for (int i = 0; i < item.DanxuanCount; i++)
-        //        {
-        //            string s = "1";
-        //            ques.Questions.Add(new QuestionsInfoModel
-        //            {
-        //                Answer = s,
-        //                DifficultLevel = 1,
-        //                Option0 = s,
-        //                Option1 = s,
-        //                Option2 = s,
-        //                Option3 = s,
-        //                QueContent = s,
-        //                QueType = 1,
-        //                ResolutionTips = s,
-        //            });
-        //        }
-        //        tempCourse.Knows.Add(ques);
-        //    }
-
-        //}
+        }
 
     }
 }

@@ -489,6 +489,7 @@ namespace TTLX.Controller
         }
 
 
+        #region 本地记录
         /// <summary>
         /// 上传本地记录
         /// </summary>
@@ -548,13 +549,42 @@ namespace TTLX.Controller
         }
 
         /// <summary>
+        /// 获取本地编辑记录
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public List<EditPaperRecord_Nurse> GetLocalPaperRecord_Nurse(string userId, int specialtyId, out string message)
+        {
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/record/{userId}/{specialtyId}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    var records = JsonConvert.DeserializeObject<List<EditPaperRecord_Nurse>>(resultData.data.ToString());
+
+                    return records;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return null;
+                }
+            }
+            message = "网络连接错误";
+            return null;
+        }
+
+        /// <summary>
         /// 保存记录
         /// </summary>
         public void SaveLocalPaper(string userId, string pGuid, string ruleNo)
         {
             new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/save/record/{userId}?pGuid={pGuid}&ruleNo={ruleNo}"));
         }
-
 
         /// <summary>
         /// 保存记录
@@ -564,10 +594,25 @@ namespace TTLX.Controller
             new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/save/question/{pGuid}/{specialtyId}/{courseNo}/{knowNo}", info));
         }
 
+
+        /// <summary>
+        /// 保存记录--护理专业
+        /// </summary>
+        public void SaveLocalQuestion_Nrese(string pGuid, int specialtyId, int editType, PutQuestionA_Model info)
+        {
+            new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/save/question/{pGuid}/{specialtyId}/{editType}", info));
+        }
+
+
+        /// <summary>
+        /// 删除本地编辑记录
+        /// </summary>
+        /// <param name="pGuid"></param>
         public void DeleteLocalRecord(string pGuid)
         {
             new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/del/record/{pGuid}"));
         }
+        #endregion
 
         private HttpItem GetHttpItem(string method, string url, object data = null)
         {
