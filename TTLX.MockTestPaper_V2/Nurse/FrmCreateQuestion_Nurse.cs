@@ -110,7 +110,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
             InitCbCourse(_question.CourseNo);
 
-            InitCbKnow(_question.KnowNo);
+            InitCbKnow(_question.CourseNo, _question.KnowNo);
 
             InitAnswer(_question.QueType, _question.Answer);//加载答案
         }
@@ -126,8 +126,13 @@ namespace TTLX.MockTestPaper_V2.Nurse
             cbCourses.SelectedItem = courses.Find(x => x.Key == courseNo);
         }
 
-        private void InitCbKnow(string knowNo)
+        private void InitCbKnow(string courseNo, string knowNo)
         {
+            if (string.IsNullOrEmpty(courseNo))
+            {
+                cbKnows.Items.Clear();
+            }
+
             foreach (var item in cbKnows.Items)
             {
                 if (item is KVModel kv)
@@ -406,26 +411,30 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
 
 
-                    //bool resultBool = WebApiController.Instance
-                    //    .EditQuestion(Global.Instance.CurrentSpecialtyID.ToString(), _question, out bool success, out message);
+                    bool resultBool = WebApiController.Instance
+                        .EditQuestion_Nurse(Global.Instance.CurrentSpecialtyID.ToString(), new PutQuestionA_Model
+                        {
+                            TypeId = _typeId,
+                            Questions = new List<QuestionsInfoModel2> { _question }
+                        }, out bool success, out message);
 
-                    //if (resultBool)
-                    //{
-                    //    if (success)
-                    //    {
-                    //        MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //        return;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
+                    if (resultBool)
+                    {
+                        if (success)
+                        {
+                            MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else
                 {
@@ -539,7 +548,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
             {
                 var knows = WebApiController.Instance
                     .GetKnows(Global.Instance.CurrentSpecialtyID.ToString(), kv.Key, out _);
-
+                cbKnows.Items.Clear();
                 cbKnows.Items.AddRange(knows.ToArray());
             }
         }

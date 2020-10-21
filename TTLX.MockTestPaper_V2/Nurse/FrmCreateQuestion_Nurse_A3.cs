@@ -28,27 +28,29 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
         public PutQuestionA_Model _queModel;
         FrmQuestion_Nurse _frmQuestion;
+
+        NurseQuestionRule _rule;
+
         string _p_guid;
         EditMode _editMode;
-        int _typeId;
 
         int queType = 1;//默认单选题
 
         int editType;
+
 
         /// <summary>
         /// 新增题目
         /// </summary>
         /// <param name="p_guid"></param>
         /// <param name="editMode"></param>
-        public FrmCreateQuestion_Nurse_A3(FrmQuestion_Nurse frmQuestion, int typeId, string p_guid, EditMode editMode)
+        public FrmCreateQuestion_Nurse_A3(FrmQuestion_Nurse frmQuestion, NurseQuestionRule rule, string p_guid, EditMode editMode)
             : this()
         {
             _p_guid = p_guid;
             _editMode = editMode;
             _frmQuestion = frmQuestion;
-
-            _typeId = typeId;
+            _rule = rule;
 
             editType = 1;
         }
@@ -58,18 +60,18 @@ namespace TTLX.MockTestPaper_V2.Nurse
         /// <param name="question"></param>
         /// <param name="p_guid"></param>
         /// <param name="editMode"></param>
-        public FrmCreateQuestion_Nurse_A3(FrmQuestion_Nurse frmQuestion, PutQuestionA_Model queModel, int typeId, string p_guid, EditMode editMode)
+        public FrmCreateQuestion_Nurse_A3(FrmQuestion_Nurse frmQuestion, PutQuestionA_Model queModel, NurseQuestionRule rule, string p_guid, EditMode editMode)
             : this()
         {
             _queModel = queModel;
             _p_guid = p_guid;
             _editMode = editMode;
             _frmQuestion = frmQuestion;
-
-            _typeId = typeId;
+            _rule = rule;
 
             editType = 2;
         }
+
 
         private void InitQueView()
         {
@@ -79,61 +81,96 @@ namespace TTLX.MockTestPaper_V2.Nurse
                 {
                     GeneralNo = Guid.NewGuid().GetGuid(),
                     Questions = new List<QuestionsInfoModel2>(),
-                    TypeId = _typeId,
+                    TypeId = _rule.TypeId,
                 };
             }
 
-            
-
-
-        }
-
-
-
-
-        private void FrmMain_Load(object sender, EventArgs e)
-        {
-
-            InitQueType();
-
-            if (_question != null)
+            if (dgvQuestions.Columns.Count == 0)
             {
-                tbQueName.Text = _question.QueContent;
-                txtOptionA.Text = _question.Option0;
-                txtOptionB.Text = _question.Option1;
-                txtOptionC.Text = _question.Option2;
-                txtOptionD.Text = _question.Option3;
+                dgvQuestions.Columns.Add(new DataGridViewColumn
+                {
+                    HeaderText = "序号",
+                    CellTemplate = new DataGridViewTextBoxCell(),
+                    FillWeight = 10,
+                    ReadOnly = true
+                });
+                dgvQuestions.Columns.Add(new DataGridViewColumn
+                {
+                    HeaderText = "题目内容",
+                    CellTemplate = new DataGridViewTextBoxCell(),
+                    FillWeight = 80,
+                    ReadOnly = true
+                });
+                dgvQuestions.Columns.Add(new DataGridViewLinkColumn
+                {
+                    HeaderText = "操作",
+                    FillWeight = 10,
+                    ReadOnly = true
+                });
+                dgvQuestions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvQuestions.EnableHeadersVisualStyles = false;
+                dgvQuestions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+                dgvQuestions.RowTemplate.Height = 26;
+                dgvQuestions.AllowUserToAddRows = false;
+                dgvQuestions.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
 
-                if (_question.DifficultLevel == 1)
-                    this.rbtnDifficultLevel1.Checked = true;
-                else if (_question.DifficultLevel == 2)
-                    this.rbtnDifficultLevel2.Checked = true;
-                else if (_question.DifficultLevel == 3)
-                    this.rbtnDifficultLevel3.Checked = true;
+            dgvQuestions.Rows.Clear();
 
-                txtAnswerJiexi.Text = _question.ResolutionTips;
+            int index = dgvQuestions.Rows.Add();
+            dgvQuestions.Rows[index].Cells[0].Value = $"总题干";
+            dgvQuestions.Rows[index].Cells[0].Tag = true;
+            if (!string.IsNullOrEmpty(_queModel.GeneralName) || _queModel.NameImg != null)
+            {
+                dgvQuestions.Rows[index].Cells[1].Value = _queModel.GeneralName;
+                dgvQuestions.Rows[index].Cells[2].Value = "修改";
             }
             else
             {
-                _question = new QuestionsInfoModel2
-                {
-                    QueType = queType
-                };
+                dgvQuestions.Rows[index].Cells[1].Value = "";
+                dgvQuestions.Rows[index].Cells[2].Value = "出题";
             }
 
-            LoadQuestion();
+            foreach (var que in _queModel.Questions)
+            {
+                index = dgvQuestions.Rows.Add();
+                dgvQuestions.Rows[index].Cells[0].Value = $"第{index}题";
+                dgvQuestions.Rows[index].Cells[0].Tag = false;
+                dgvQuestions.Rows[index].Cells[1].Value = que.QueContent;
+                dgvQuestions.Rows[index].Cells[2].Value = "修改";
+                dgvQuestions.Rows[index].Cells[2].Tag = que;
+            }
+
+
+            for (int i = 0; i < _rule.SubQueCount - _queModel.Questions.Count; i++)
+            {
+                index = dgvQuestions.Rows.Add();
+                dgvQuestions.Rows[index].Cells[0].Value = $"第{index}题";
+                dgvQuestions.Rows[index].Cells[0].Tag = false;
+                dgvQuestions.Rows[index].Cells[1].Value = "";
+                dgvQuestions.Rows[index].Cells[2].Value = "出题";
+            }
         }
 
-        private void LoadQuestion()
+        private void FrmMain_Load(object sender, EventArgs e)
         {
-            lblQueType.Text = Global.Instance.QueTypeConvertToString(queType);
+            InitQueView();
 
-            InitCbCourse(_question.CourseNo);
+            ClickDGCell(0);
 
-            InitCbKnow(_question.KnowNo);
-
-            InitAnswer(_question.QueType, _question.Answer);//加载答案
         }
+
+        private void ClickDGCell(int queIndex)
+        {
+            lblIndex.Text = dgvQuestions.Rows[queIndex].Cells[0].Value.ToString();
+
+            _currIsGerenalQue = (dgvQuestions.Rows[queIndex].Cells[0].Tag as bool?) ?? false;
+
+            _currQue = dgvQuestions.Rows[queIndex].Cells[2].Tag as QuestionsInfoModel2;
+
+            InitQuestionPanel();
+        }
+
 
 
         private void InitCbCourse(string courseNo)
@@ -146,8 +183,13 @@ namespace TTLX.MockTestPaper_V2.Nurse
             cbCourses.SelectedItem = courses.Find(x => x.Key == courseNo);
         }
 
-        private void InitCbKnow(string knowNo)
+        private void InitCbKnow(string courseNo, string knowNo)
         {
+            if (string.IsNullOrEmpty(courseNo))
+            {
+                cbKnows.Items.Clear();
+            }
+
             foreach (var item in cbKnows.Items)
             {
                 if (item is KVModel kv)
@@ -260,14 +302,17 @@ namespace TTLX.MockTestPaper_V2.Nurse
             string optionB = txtOptionB.Text.Trim();
             string optionC = txtOptionC.Text.Trim();
             string optionD = txtOptionD.Text.Trim();
-            byte[] queNameImg = _question.NameImg;
-            byte[] AImg = _question.Option0Img;
-            byte[] BImg = _question.Option1Img;
-            byte[] CImg = _question.Option2Img;
-            byte[] DImg = _question.Option3Img;
+            byte[] queNameImg = _currQue.NameImg;
+            byte[] AImg = _currQue.Option0Img;
+            byte[] BImg = _currQue.Option1Img;
+            byte[] CImg = _currQue.Option2Img;
+            byte[] DImg = _currQue.Option3Img;
             string jiexi = txtAnswerJiexi.Text.Trim();
             string standardAnswer = string.Empty;
             int difficultLevel = 1;
+
+            string courseNo = string.Empty;
+            string knowNo = string.Empty;
 
             #region 合法性判断
 
@@ -278,7 +323,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
             }
             else
             {
-                _question.CourseNo = kvCourse.Key;
+                courseNo = kvCourse.Key;
             }
 
             if (!(cbKnows.SelectedItem is KVModel kvKnow))
@@ -288,7 +333,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
             }
             else
             {
-                _question.KnowNo = kvKnow.Key;
+                knowNo = kvKnow.Key;
             }
 
             if (string.IsNullOrEmpty(queName) && queNameImg == null)
@@ -381,74 +426,71 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
             #endregion
 
-            if (_editMode == EditMode.Create && string.IsNullOrEmpty(_question.No))
-                _question.No = Guid.NewGuid().GetGuid();
+            if (_editMode == EditMode.Create && string.IsNullOrEmpty(_currQue.No))
+                _currQue.No = Guid.NewGuid().GetGuid();
 
-            _question.DifficultLevel = difficultLevel;
-            _question.QueType = queType;
-            _question.QueContent = queName;
-            _question.Option0 = optionA;
-            _question.Option1 = optionB;
-            _question.Option2 = optionC;
-            _question.Option3 = optionD;
-            _question.NameImg = queNameImg;
-            _question.Option0Img = AImg;
-            _question.Option1Img = BImg;
-            _question.Option2Img = CImg;
-            _question.Option3Img = DImg;
-            _question.Answer = standardAnswer;
-            _question.ResolutionTips = jiexi;
+            _currQue.DifficultLevel = difficultLevel;
+            _currQue.QueType = queType;
+            _currQue.QueContent = queName;
+            _currQue.Option0 = optionA;
+            _currQue.Option1 = optionB;
+            _currQue.Option2 = optionC;
+            _currQue.Option3 = optionD;
+            _currQue.NameImg = queNameImg;
+            _currQue.Option0Img = AImg;
+            _currQue.Option1Img = BImg;
+            _currQue.Option2Img = CImg;
+            _currQue.Option3Img = DImg;
+            _currQue.Answer = standardAnswer;
+            _currQue.ResolutionTips = jiexi;
+            _currQue.CourseNo = courseNo;
+            _currQue.KnowNo = knowNo;
 
             if (_editMode == EditMode.Create)
             {
-                if (CheckSimilarity(_question.No, queName, optionA, optionB, optionC, optionD))
+                if (_queModel.Questions.Find(q => q.No == _currQue.No) == null)
+                {
+                    _queModel.Questions.Add(_currQue);
+                }
+                int queIndex = CheckIsFinish();
+                if (queIndex == -1)
                 {
                     Task.Factory.StartNew(SaveQuestion);
                 }
                 else
                 {
+                    InitQueView();
+                    ClickDGCell(queIndex);
+                    MessageBox.Show("保存成功！请继续出题", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
             }
             else
             {
-                if (CheckSimilarity(_question.No, queName, optionA, optionB, optionC, optionD))
-                {
-                    bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
+
+                bool resultBool = WebApiController.Instance
+                    .EditQuestion_Nurse(Global.Instance.CurrentSpecialtyID.ToString(), new PutQuestionA_Model
                     {
-                        SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
-                        QueContent = queName,
-                        OptionA = optionA,
-                        OptionB = optionB,
-                        OptionC = optionC,
-                        OptionD = optionD
-                    }, out string queResult, out string message);
+                        TypeId = _rule.TypeId,
+                        Questions = new List<QuestionsInfoModel2> { _currQue }
+                    }, out bool success, out string message);
 
-
-
-                    //bool resultBool = WebApiController.Instance
-                    //    .EditQuestion(Global.Instance.CurrentSpecialtyID.ToString(), _question, out bool success, out message);
-
-                    //if (resultBool)
-                    //{
-                    //    if (success)
-                    //    {
-                    //        MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //        return;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
+                if (resultBool)
+                {
+                    if (success)
+                    {
+                        InitQueView();
+                        MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else
                 {
+                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -457,49 +499,11 @@ namespace TTLX.MockTestPaper_V2.Nurse
             DialogResult = DialogResult.OK;
         }
 
-        private bool CheckSimilarity(string queNo, string queName, string optionA, string optionB, string optionC, string optionD)
-        {
-            if (!_frmQuestion.CheckSimilarity(queNo, queName, out string content))
-            {
-                bool requestBool = WebApiController.Instance.CheckRepeatQuestions(new QuestionCheckModel
-                {
-                    SpecialtyId = Global.Instance.CurrentSpecialtyID.ToString(),
-                    QueContent = queName,
-                    OptionA = optionA,
-                    OptionB = optionB,
-                    OptionC = optionC,
-                    OptionD = optionD
-                }, out string queResult, out string message);
-
-                if (requestBool)
-                {
-                    if (queResult != null)
-                    {
-                        MessageBox.Show("发现相似度大于60%的试题，推荐试题必须是题库中不存在相似的试题!!!" +
-                            $"[题库题目内容]：【{queResult}】", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-            }
-            else
-            {
-                MessageBox.Show($"您已经出过了【{content}】题目，请您重新出题！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
 
         private void SaveQuestion()
         {
-            WebApiController.Instance.SaveLocalQuestion_Nrese(_p_guid, Global.Instance.CurrentSpecialtyID, editType, new PutQuestionA_Model { TypeId = _typeId, Questions = new List<QuestionsInfoModel2> { _question } });
+            WebApiController.Instance
+                .SaveLocalQuestion_Nrese(_p_guid, Global.Instance.CurrentSpecialtyID, editType, _queModel);
         }
 
         private void btnImg_Click(object sender, EventArgs e)
@@ -510,34 +514,40 @@ namespace TTLX.MockTestPaper_V2.Nurse
             switch (btn.Name)
             {
                 case "btnImgContent":
-                    imgByte = _question.NameImg;
+                    imgByte = _currQue.NameImg;
                     FrmQuestionImg frmContent = new FrmQuestionImg(imgByte);
                     frmContent.ShowDialog();
-                    _question.NameImg = frmContent.imgBytes;
+                    _currQue.NameImg = frmContent.imgBytes;
                     break;
                 case "btnImgA":
-                    imgByte = _question.Option0Img;
+                    imgByte = _currQue.Option0Img;
                     FrmQuestionImg frmA = new FrmQuestionImg(imgByte);
                     frmA.ShowDialog();
-                    _question.Option0Img = frmA.imgBytes;
+                    _currQue.Option0Img = frmA.imgBytes;
                     break;
                 case "btnImgB":
-                    imgByte = _question.Option1Img;
+                    imgByte = _currQue.Option1Img;
                     FrmQuestionImg frmB = new FrmQuestionImg(imgByte);
                     frmB.ShowDialog();
-                    _question.Option1Img = frmB.imgBytes;
+                    _currQue.Option1Img = frmB.imgBytes;
                     break;
                 case "btnImgC":
-                    imgByte = _question.Option2Img;
+                    imgByte = _currQue.Option2Img;
                     FrmQuestionImg frmC = new FrmQuestionImg(imgByte);
                     frmC.ShowDialog();
-                    _question.Option2Img = frmC.imgBytes;
+                    _currQue.Option2Img = frmC.imgBytes;
                     break;
                 case "btnImgD":
-                    imgByte = _question.Option3Img;
+                    imgByte = _currQue.Option3Img;
                     FrmQuestionImg frmD = new FrmQuestionImg(imgByte);
                     frmD.ShowDialog();
-                    _question.Option3Img = frmD.imgBytes;
+                    _currQue.Option3Img = frmD.imgBytes;
+                    break;
+                case "btnGerenalImg":
+                    imgByte = _queModel.NameImg;
+                    FrmQuestionImg frmGerenal = new FrmQuestionImg(imgByte);
+                    frmGerenal.ShowDialog();
+                    _queModel.NameImg = frmGerenal.imgBytes;
                     break;
                 default:
                     break;
@@ -545,13 +555,6 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
         }
 
-        private void cbKnows_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbKnows.SelectedItem is KVModel kv)
-            {
-                _question.KnowNo = kv.Key;
-            }
-        }
 
         private void cbCourses_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -559,9 +562,159 @@ namespace TTLX.MockTestPaper_V2.Nurse
             {
                 var knows = WebApiController.Instance
                     .GetKnows(Global.Instance.CurrentSpecialtyID.ToString(), kv.Key, out _);
-
+                cbKnows.Items.Clear();
                 cbKnows.Items.AddRange(knows.ToArray());
             }
         }
+
+
+        QuestionsInfoModel2 _currQue;
+        bool _currIsGerenalQue;
+        private void dgvQuestions_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == 2)
+            {
+                ClickDGCell(e.RowIndex);
+            }
+        }
+        /// <summary>
+        /// 加载出题界面
+        /// </summary>
+        private void InitQuestionPanel()
+        {
+            if (_currIsGerenalQue)
+            {
+                panel_General.Show();
+
+                tbGerenalName.Text = _queModel.GeneralName;
+            }
+            else
+            {
+                panel_General.Hide();
+
+                InitQueType();
+
+                if (_currQue == null)
+                {
+                    _currQue = new QuestionsInfoModel2
+                    {
+                        QueType = queType
+                    };
+                }
+
+                tbQueName.Text = _currQue.QueContent;
+                txtOptionA.Text = _currQue.Option0;
+                txtOptionB.Text = _currQue.Option1;
+                txtOptionC.Text = _currQue.Option2;
+                txtOptionD.Text = _currQue.Option3;
+
+                if (_currQue.DifficultLevel == 1)
+                    this.rbtnDifficultLevel1.Checked = true;
+                else if (_currQue.DifficultLevel == 2)
+                    this.rbtnDifficultLevel2.Checked = true;
+                else if (_currQue.DifficultLevel == 3)
+                    this.rbtnDifficultLevel3.Checked = true;
+
+                txtAnswerJiexi.Text = _currQue.ResolutionTips;
+
+                InitAnswer(_currQue.QueType, _currQue.Answer);//加载答案
+
+                InitCbCourse(_currQue.CourseNo);
+
+                InitCbKnow(_currQue.CourseNo, _currQue.KnowNo);
+
+            }
+        }
+
+        private void btnSaveFeneral_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbGerenalName.Text) && _queModel.NameImg == null)
+            {
+                MessageBox.Show("请输入题目内容在保存！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _queModel.GeneralName = tbGerenalName.Text;
+
+
+
+            if (_editMode == EditMode.Create)
+            {
+                int queIndex = CheckIsFinish();
+                if (queIndex == -1)
+                {
+                    Task.Factory.StartNew(SaveQuestion);
+
+                    
+                }
+                else
+                {
+                    InitQueView();
+                    ClickDGCell(queIndex);
+                    MessageBox.Show("保存成功！请继续出题", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            else
+            {
+                bool resultBool = WebApiController.Instance
+                    .EditQuestion_Nurse(Global.Instance.CurrentSpecialtyID.ToString(), new PutQuestionA_Model
+                    {
+                        TypeId = _rule.TypeId,
+                        GeneralName = _queModel.GeneralName,
+                        NameImg = _queModel.NameImg,
+                        GeneralNo = _queModel.GeneralNo,
+                    }, out bool success, out string message);
+
+                if (resultBool)
+                {
+                    if (success)
+                    {
+                        InitQueView();
+                        MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            DialogResult = DialogResult.OK;
+        }
+
+
+        /// <summary>
+        /// 检查题目是否出完
+        /// </summary>
+        /// <returns></returns>
+        private int CheckIsFinish()
+        {
+            if (string.IsNullOrEmpty(_queModel.GeneralName) && _queModel.NameImg == null)
+            {
+                return 0;
+            }
+            if (_queModel.Questions == null)
+            {
+                return 1;
+            }
+            else
+            {
+                if (_rule.SubQueCount == _queModel.Questions.Count)
+                    return -1;
+
+                return _queModel.Questions.Count + 1;
+
+            }
+        }
+
+
+
     }
 }

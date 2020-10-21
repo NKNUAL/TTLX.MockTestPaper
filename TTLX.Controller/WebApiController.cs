@@ -213,11 +213,11 @@ namespace TTLX.Controller
         /// <param name="userId"></param>
         /// <param name="ruleNo"></param>
         /// <returns></returns>
-        public List<MockPaperInfo> GetPapers(string userId, string ruleNo, out string message)
+        public List<MockPaperInfo> GetPapers(string userId, int specialtyId, string ruleNo, out string message)
         {
             message = string.Empty;
 
-            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/paper/{userId}?ruleNo={ruleNo}"));
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/paper/{userId}/{specialtyId}?ruleNo={ruleNo}"));
 
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -238,6 +238,37 @@ namespace TTLX.Controller
         }
 
         /// <summary>
+        /// 获取试卷--护理专业
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="ruleNo"></param>
+        /// <returns></returns>
+        public List<MockPaperNurseInfo> GetPapers_Nurse(string userId, int specialtyId, string ruleNo, out string message)
+        {
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/paper/{userId}/{specialtyId}?ruleNo={ruleNo}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    var papers = JsonConvert.DeserializeObject<List<MockPaperNurseInfo>>(resultData.data.ToString());
+                    return papers;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return null;
+                }
+            }
+            message = "网络连接错误";
+            return null;
+        }
+
+
+        /// <summary>
         /// 创建模拟试卷
         /// </summary>
         /// <param name="paper"></param>
@@ -247,6 +278,34 @@ namespace TTLX.Controller
             message = string.Empty;
 
             var result = new HttpHelper().GetData(GetHttpItem("put", $"/api/mock/put/paper", paper));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    return resultData.success;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return resultData.success;
+                }
+            }
+            message = "网络连接错误";
+            return false;
+        }
+
+        /// <summary>
+        /// 创建模拟试卷
+        /// </summary>
+        /// <param name="paper"></param>
+        /// <returns></returns>
+        public bool CreatePaper_Nurse(PutQuestionNurseModel paper, out string message)
+        {
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("put", $"/api/mock/put/paper_nurse", paper));
 
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -420,6 +479,39 @@ namespace TTLX.Controller
             return false;
         }
 
+
+        /// <summary>
+        /// 修改试题
+        /// </summary>
+        /// <param name="specialtyId"></param>
+        /// <param name="queModel"></param>
+        /// <returns></returns>
+        public bool EditQuestion_Nurse(string specialtyId, PutQuestionA_Model queModel, out bool success, out string message)
+        {
+            success = false;
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("post", $"/api/mock/edit/question_nurse/{specialtyId}", queModel));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    success = true;
+                    return resultData.success;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return resultData.success;
+                }
+            }
+            message = "网络连接错误";
+            return false;
+        }
+
+
         /// <summary>
         /// 获取试卷题目
         /// </summary>
@@ -438,6 +530,36 @@ namespace TTLX.Controller
                 if (resultData.success)
                 {
                     var ques = JsonConvert.DeserializeObject<List<MockPaperCourseTreeModel>>(resultData.data.ToString());
+                    return ques;
+                }
+                else
+                {
+                    message = resultData.message;
+                    return null;
+                }
+            }
+            message = "网络连接错误";
+            return null;
+        }
+
+        /// <summary>
+        /// 获取试卷题目--护理专业
+        /// </summary>
+        /// <param name="paperId"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public List<PutQuestionA_Model> GetPaperDetails_Nurse(int paperId, out string message)
+        {
+            message = string.Empty;
+
+            var result = new HttpHelper().GetData(GetHttpItem("get", $"/api/mock/get/paperdetail/{paperId}"));
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var resultData = JsonConvert.DeserializeObject<HttpResultModel>(result.Data);
+                if (resultData.success)
+                {
+                    var ques = JsonConvert.DeserializeObject<List<PutQuestionA_Model>>(resultData.data.ToString());
                     return ques;
                 }
                 else

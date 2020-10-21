@@ -39,3 +39,6 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\bin\Release\湖北技能高�
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.FrmSetKnowPoint.resources
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\湖北技能高考平台.exe
 E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\湖北技能高考平台.pdb
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.Nurse.FrmCreateQuestion_Nurse_A3.resources
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.Nurse.FrmCreateQuestion_Nurse.resources
+E:\Code\TTLX.MockTestPaper_V2\TTLX.MockTestPaper_V2\obj\Release\TTLX.MockTestPaper_V2.Nurse.FrmQuestion_Nurse.resources

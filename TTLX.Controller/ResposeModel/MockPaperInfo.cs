@@ -21,6 +21,20 @@ namespace TTLX.Controller.ResposeModel
         public int PanduanNum { get; set; }
     }
 
+    public class MockPaperNurseInfo
+    {
+        public int PaperId { get; set; }
+        public string PaperName { get; set; }
+        public string PaperCreateDate { get; set; }
+        public string CreateUserId { get; set; }
+        public string CreateUserName { get; set; }
+        public string SpecialtyId { get; set; }
+        public string SpecialtyName { get; set; }
+        public int A1Num { get; set; }
+        public int A2Num { get; set; }
+        public int A3Num { get; set; }
+    }
+
 
     public class MockPaperCourseTreeModel
     {

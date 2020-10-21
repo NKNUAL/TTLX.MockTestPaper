@@ -48,7 +48,7 @@
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(320, 16);
             this.lblVersion.TabIndex = 27;
-            this.lblVersion.Text = "2020年湖北技能高考平台   版本：V2.0.0.4";
+            this.lblVersion.Text = "2020年湖北技能高考平台   版本：V2.0.0.5";
             // 
             // btnExit
             // 

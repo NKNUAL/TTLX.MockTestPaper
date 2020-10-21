@@ -9,3 +9,4 @@ E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\obj\Release\TTLX.Version.exe
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\obj\Release\TTLX.Version.pdb
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\bin\Release\Ionic.Zip.dll
 E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\bin\Release\version.json
+E:\Code\TTLX.MockTestPaper_V2\TTLX.Version\obj\Release\TTLX.Version.csprojAssemblyReference.cache

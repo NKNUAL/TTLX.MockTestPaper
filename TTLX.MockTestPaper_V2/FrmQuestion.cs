@@ -696,6 +696,9 @@ namespace TTLX.MockTestPaper_V2
         {
             content = string.Empty;
 
+            if (string.IsNullOrEmpty(queContent))
+                return false;
+
             if (_putQuestion == null || _putQuestion.Courses == null || _putQuestion.Courses.Count == 0)
                 return false;
 

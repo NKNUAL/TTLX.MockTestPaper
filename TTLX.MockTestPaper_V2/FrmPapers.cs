@@ -25,7 +25,8 @@ namespace TTLX.MockTestPaper_V2
         }
 
         public delegate List<QuestionRule> FuncRules(string userId, out string message);
-        public delegate List<MockPaperInfo> FuncPapers(string userId, string ruleNo, out string message);
+        public delegate List<MockPaperInfo> FuncPapers(string userId, int specialtyId, string ruleNo, out string message);
+        public delegate List<MockPaperNurseInfo> FuncPapers_Nurse(string userId, int specialtyId, string ruleNo, out string message);
 
         private void FrmPapers_Load(object sender, EventArgs e)
         {
@@ -73,9 +74,20 @@ namespace TTLX.MockTestPaper_V2
 
         private void LoadPapers()
         {
-            FuncPapers func = WebApiController.Instance.GetPapers;
+            if (Global.Instance.CurrentSpecialtyID == (int)SpecialtyType.SU)
+            {
+                FuncPapers_Nurse func = WebApiController.Instance.GetPapers_Nurse;
 
-            func.BeginInvoke(Global.Instance.LexueID, null, out string message, BindPapers, func);
+                func.BeginInvoke(Global.Instance.LexueID, Global.Instance.CurrentSpecialtyID, null, out string message, BindPapers_Nurse, func);
+            }
+            else
+            {
+                FuncPapers func = WebApiController.Instance.GetPapers;
+
+                func.BeginInvoke(Global.Instance.LexueID, Global.Instance.CurrentSpecialtyID, null, out string message, BindPapers, func);
+            }
+
+
         }
 
 
@@ -231,6 +243,120 @@ namespace TTLX.MockTestPaper_V2
             dgPapers.Invoke(action);
         }
 
+
+        private void BindPapers_Nurse(IAsyncResult asyncResult)
+        {
+            var func = asyncResult.AsyncState as FuncPapers_Nurse;
+
+            var papers = func.EndInvoke(out string message, asyncResult);
+
+            if (papers == null)
+            {
+                MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            Action action = delegate ()
+            {
+
+                #region 添加表头
+                if (dgPapers.Columns.Count == 0)
+                {
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "试卷ID",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 1
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "序号",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 5
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "专业",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "试卷名称",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "A1题数量",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "A2题数量",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "A3题数量",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "创建人",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "创建时间",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns.Add(new DataGridViewColumn
+                    {
+                        HeaderText = "操作",
+                        CellTemplate = new DataGridViewTextBoxCell(),
+                        FillWeight = 15
+                    });
+                    dgPapers.Columns[0].Visible = false;
+                    dgPapers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    dgPapers.EnableHeadersVisualStyles = false;
+                    dgPapers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+                    dgPapers.RowTemplate.Height = 30;
+                    dgPapers.AllowUserToAddRows = false;
+                    dgPapers.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dgPapers.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+                #endregion
+
+                dgPapers.Rows.Clear();
+                foreach (var paper in papers)
+                {
+                    int index = dgPapers.Rows.Add();
+                    dgPapers.Rows[index].Cells[0].Value = paper.PaperId;
+                    dgPapers.Rows[index].Cells[1].Value = index + 1;
+                    dgPapers.Rows[index].Cells[2].Value = paper.SpecialtyName;
+                    dgPapers.Rows[index].Cells[3].Value = paper.PaperName;
+                    dgPapers.Rows[index].Cells[4].Value = paper.A1Num;
+                    dgPapers.Rows[index].Cells[5].Value = paper.A2Num;
+                    dgPapers.Rows[index].Cells[6].Value = paper.A3Num;
+                    dgPapers.Rows[index].Cells[7].Value = paper.CreateUserName;
+                    dgPapers.Rows[index].Cells[8].Value = paper.PaperCreateDate;
+                    dgPapers.Rows[index].Cells[9].Value = "查看试卷";
+                    dgPapers.Rows[index].Cells[9].Style.ForeColor = Color.Blue;
+                }
+            };
+            dgPapers.Invoke(action);
+        }
+
+
+
+
         private void btnQuestion_Click(object sender, EventArgs e)
         {
             if (Global.Instance.CurrentSpecialtyID == (int)SpecialtyType.SU)//护理专业
@@ -281,61 +407,84 @@ namespace TTLX.MockTestPaper_V2
 
         private void dgPapers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == 10)//查看试卷
+            if (e.RowIndex >= 0)
             {
-                string ruleNo = dgPapers.Rows[e.RowIndex].Cells[8].Tag.ToString();
-
-                var rule = rules.Find(r => r.RuleNo == ruleNo);
-
-                PutQuestionModel putQuestions = new PutQuestionModel
+                if (Global.Instance.CurrentSpecialtyID == (int)SpecialtyType.SU && e.ColumnIndex == 9)
                 {
-                    RuleNo = ruleNo,
-                    UserId = Global.Instance.LexueID,
-                    UserName = Global.Instance.UserName,
-                    Courses = new List<PutQuestionCourseModel>()
-                };
+                    int paperId = int.Parse(dgPapers.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    var ques = WebApiController.Instance.GetPaperDetails_Nurse(paperId, out string message);
+                    PutQuestionNurseModel putQuestions = new PutQuestionNurseModel
+                    {
+                        A_ = ques,
+                        PaperName = dgPapers.Rows[e.RowIndex].Cells[3].Value.ToString(),
+                        UserId = Global.Instance.LexueID,
+                        UserName = Global.Instance.UserName,
+                        RuleNo = WebApiController.Instance.GetAllRules_Nurse(Global.Instance.LexueID, out _).RuleNo
+                    };
 
-                int paperId = int.Parse(dgPapers.Rows[e.RowIndex].Cells[0].Value.ToString());
-                var ques = WebApiController.Instance.GetPaperDetails(paperId, out string message);
+                    FrmQuestion_Nurse frmQuestion_Nurse =
+                        new FrmQuestion_Nurse(putQuestions.PaperName, WebApiController.Instance.GetAllRules_Nurse(Global.Instance.LexueID, out _), putQuestions);
 
-                if (ques == null)
-                {
-                    MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    frmQuestion_Nurse.ShowDialog();
+
                     return;
                 }
-
-                foreach (var item_copurse in ques)
+                else if (Global.Instance.CurrentSpecialtyID != (int)SpecialtyType.SU && e.ColumnIndex == 10)
                 {
-                    var course = putQuestions.Courses.Find(c => c.CourseNo == item_copurse.CourseNo);
-                    if (course == null)
+                    string ruleNo = dgPapers.Rows[e.RowIndex].Cells[8].Tag.ToString();
+
+                    var rule = rules.Find(r => r.RuleNo == ruleNo);
+
+                    PutQuestionModel putQuestions = new PutQuestionModel
                     {
-                        course = new PutQuestionCourseModel
-                        {
-                            CourseNo = item_copurse.CourseNo,
-                            Knows = new List<PutQuestionKnowModel>()
-                        };
-                        putQuestions.Courses.Add(course);
+                        RuleNo = ruleNo,
+                        UserId = Global.Instance.LexueID,
+                        UserName = Global.Instance.UserName,
+                        Courses = new List<PutQuestionCourseModel>()
+                    };
+
+                    int paperId = int.Parse(dgPapers.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    var ques = WebApiController.Instance.GetPaperDetails(paperId, out string message);
+
+                    if (ques == null)
+                    {
+                        MessageBox.Show(message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
 
-                    foreach (var item_know in item_copurse.Knows)
+                    foreach (var item_copurse in ques)
                     {
-                        var know = course.Knows.Find(k => k.KnowNo == item_know.KnowNo);
-                        if (know == null)
+                        var course = putQuestions.Courses.Find(c => c.CourseNo == item_copurse.CourseNo);
+                        if (course == null)
                         {
-                            know = new PutQuestionKnowModel
+                            course = new PutQuestionCourseModel
                             {
-                                KnowNo = item_know.KnowNo,
-                                Questions = new List<QuestionsInfoModel>()
+                                CourseNo = item_copurse.CourseNo,
+                                Knows = new List<PutQuestionKnowModel>()
                             };
-                            course.Knows.Add(know);
+                            putQuestions.Courses.Add(course);
                         }
 
-                        know.Questions.AddRange(item_know.Questions);
-                    }
-                }
+                        foreach (var item_know in item_copurse.Knows)
+                        {
+                            var know = course.Knows.Find(k => k.KnowNo == item_know.KnowNo);
+                            if (know == null)
+                            {
+                                know = new PutQuestionKnowModel
+                                {
+                                    KnowNo = item_know.KnowNo,
+                                    Questions = new List<QuestionsInfoModel>()
+                                };
+                                course.Knows.Add(know);
+                            }
 
-                FrmQuestion frmQuestion = new FrmQuestion(dgPapers.Rows[e.RowIndex].Cells[3].Value.ToString(), rule, putQuestions);
-                frmQuestion.ShowDialog();
+                            know.Questions.AddRange(item_know.Questions);
+                        }
+                    }
+
+                    FrmQuestion frmQuestion = new FrmQuestion(dgPapers.Rows[e.RowIndex].Cells[3].Value.ToString(), rule, putQuestions);
+                    frmQuestion.ShowDialog();
+                }
             }
         }
 

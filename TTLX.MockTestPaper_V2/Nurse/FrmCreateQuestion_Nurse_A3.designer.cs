@@ -29,9 +29,13 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCreateQuestion_Nurse_A3));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel_General = new System.Windows.Forms.Panel();
+            this.btnGerenalImg = new System.Windows.Forms.Button();
+            this.btnSaveFeneral = new System.Windows.Forms.Button();
+            this.tbGerenalName = new System.Windows.Forms.RichTextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.cbCourses = new System.Windows.Forms.ComboBox();
             this.cbKnows = new System.Windows.Forms.ComboBox();
             this.lblQueType = new System.Windows.Forms.Label();
@@ -78,10 +82,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvQuestions = new System.Windows.Forms.DataGridView();
-            this.colCourse = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKnow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEdit = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.lblIndex = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            this.panel_General.SuspendLayout();
             this.panAnswerDuoxuan.SuspendLayout();
             this.panAnswerDanxuan.SuspendLayout();
             this.panAnswerPanduan.SuspendLayout();
@@ -91,6 +94,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblIndex);
+            this.panel1.Controls.Add(this.panel_General);
             this.panel1.Controls.Add(this.cbCourses);
             this.panel1.Controls.Add(this.cbKnows);
             this.panel1.Controls.Add(this.lblQueType);
@@ -131,6 +136,63 @@
             this.panel1.Size = new System.Drawing.Size(1084, 658);
             this.panel1.TabIndex = 1;
             // 
+            // panel_General
+            // 
+            this.panel_General.Controls.Add(this.btnGerenalImg);
+            this.panel_General.Controls.Add(this.btnSaveFeneral);
+            this.panel_General.Controls.Add(this.tbGerenalName);
+            this.panel_General.Controls.Add(this.label4);
+            this.panel_General.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_General.Location = new System.Drawing.Point(0, 0);
+            this.panel_General.Name = "panel_General";
+            this.panel_General.Size = new System.Drawing.Size(1084, 658);
+            this.panel_General.TabIndex = 221;
+            // 
+            // btnGerenalImg
+            // 
+            this.btnGerenalImg.Location = new System.Drawing.Point(1000, 51);
+            this.btnGerenalImg.Name = "btnGerenalImg";
+            this.btnGerenalImg.Size = new System.Drawing.Size(59, 26);
+            this.btnGerenalImg.TabIndex = 218;
+            this.btnGerenalImg.Text = "图片";
+            this.btnGerenalImg.UseVisualStyleBackColor = true;
+            this.btnGerenalImg.Click += new System.EventHandler(this.btnImg_Click);
+            // 
+            // btnSaveFeneral
+            // 
+            this.btnSaveFeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveFeneral.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnSaveFeneral.FlatAppearance.BorderSize = 0;
+            this.btnSaveFeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveFeneral.Font = new System.Drawing.Font("宋体", 12F);
+            this.btnSaveFeneral.ForeColor = System.Drawing.Color.White;
+            this.btnSaveFeneral.Location = new System.Drawing.Point(986, 598);
+            this.btnSaveFeneral.Name = "btnSaveFeneral";
+            this.btnSaveFeneral.Size = new System.Drawing.Size(86, 31);
+            this.btnSaveFeneral.TabIndex = 5;
+            this.btnSaveFeneral.Text = "保存";
+            this.btnSaveFeneral.UseVisualStyleBackColor = false;
+            this.btnSaveFeneral.Click += new System.EventHandler(this.btnSaveFeneral_Click);
+            // 
+            // tbGerenalName
+            // 
+            this.tbGerenalName.Font = new System.Drawing.Font("宋体", 12F);
+            this.tbGerenalName.Location = new System.Drawing.Point(117, 51);
+            this.tbGerenalName.Name = "tbGerenalName";
+            this.tbGerenalName.Size = new System.Drawing.Size(877, 520);
+            this.tbGerenalName.TabIndex = 1;
+            this.tbGerenalName.Text = "";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F);
+            this.label4.Location = new System.Drawing.Point(23, 51);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 16);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "总题干：";
+            // 
             // cbCourses
             // 
             this.cbCourses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -151,7 +213,6 @@
             this.cbKnows.Name = "cbKnows";
             this.cbKnows.Size = new System.Drawing.Size(863, 24);
             this.cbKnows.TabIndex = 219;
-            this.cbKnows.SelectedIndexChanged += new System.EventHandler(this.cbKnows_SelectedIndexChanged);
             // 
             // lblQueType
             // 
@@ -609,62 +670,33 @@
             // 
             // dgvQuestions
             // 
-            this.dgvQuestions.AllowUserToAddRows = false;
-            this.dgvQuestions.AllowUserToDeleteRows = false;
-            this.dgvQuestions.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 12F);
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvQuestions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvQuestions.ColumnHeadersHeight = 32;
-            this.dgvQuestions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvQuestions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colCourse,
-            this.colKnow,
-            this.colEdit});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 12F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvQuestions.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvQuestions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvQuestions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvQuestions.EnableHeadersVisualStyles = false;
             this.dgvQuestions.Location = new System.Drawing.Point(0, 0);
             this.dgvQuestions.Name = "dgvQuestions";
-            this.dgvQuestions.ReadOnly = true;
-            this.dgvQuestions.RowHeadersVisible = false;
-            this.dgvQuestions.RowHeadersWidth = 40;
-            this.dgvQuestions.RowTemplate.Height = 32;
-            this.dgvQuestions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvQuestions.RowTemplate.Height = 23;
             this.dgvQuestions.Size = new System.Drawing.Size(1084, 141);
-            this.dgvQuestions.TabIndex = 8;
+            this.dgvQuestions.TabIndex = 1;
+            this.dgvQuestions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvQuestions_CellContentClick);
             // 
-            // colCourse
+            // lblIndex
             // 
-            this.colCourse.HeaderText = "序号";
-            this.colCourse.Name = "colCourse";
-            this.colCourse.ReadOnly = true;
-            this.colCourse.Width = 150;
-            // 
-            // colKnow
-            // 
-            this.colKnow.HeaderText = "题目内容";
-            this.colKnow.Name = "colKnow";
-            this.colKnow.ReadOnly = true;
-            this.colKnow.Width = 800;
-            // 
-            // colEdit
-            // 
-            this.colEdit.HeaderText = "";
-            this.colEdit.Name = "colEdit";
-            this.colEdit.ReadOnly = true;
+            this.lblIndex.AutoSize = true;
+            this.lblIndex.Font = new System.Drawing.Font("宋体", 16F);
+            this.lblIndex.ForeColor = System.Drawing.Color.Blue;
+            this.lblIndex.Location = new System.Drawing.Point(1007, 14);
+            this.lblIndex.Name = "lblIndex";
+            this.lblIndex.Size = new System.Drawing.Size(76, 22);
+            this.lblIndex.TabIndex = 222;
+            this.lblIndex.Text = "总题干";
             // 
             // FrmCreateQuestion_Nurse_A3
             // 
@@ -680,6 +712,8 @@
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel_General.ResumeLayout(false);
+            this.panel_General.PerformLayout();
             this.panAnswerDuoxuan.ResumeLayout(false);
             this.panAnswerDuoxuan.PerformLayout();
             this.panAnswerDanxuan.ResumeLayout(false);
@@ -739,9 +773,12 @@
         private System.Windows.Forms.ComboBox cbKnows;
         private System.Windows.Forms.ComboBox cbCourses;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel_General;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RichTextBox tbGerenalName;
+        private System.Windows.Forms.Button btnSaveFeneral;
+        private System.Windows.Forms.Button btnGerenalImg;
         private System.Windows.Forms.DataGridView dgvQuestions;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCourse;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colKnow;
-        private System.Windows.Forms.DataGridViewLinkColumn colEdit;
+        private System.Windows.Forms.Label lblIndex;
     }
 }

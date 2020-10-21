@@ -71,13 +71,13 @@ namespace TTLX.MockTestPaper_V2.Nurse
         /// <param name="paperName"></param>
         /// <param name="rule"></param>
         /// <param name="putQuestion"></param>
-        //public FrmQuestion_Nurse(string paperName, QuestionRule rule, PutQuestionModel putQuestion) : this()
-        //{
-        //    this._rule = rule;
-        //    this._putQuestion = putQuestion;
-        //    this.tbPaperName.Text = paperName;
-        //    _editMode = EditMode.Edit;
-        //}
+        public FrmQuestion_Nurse(string paperName, QuestionRule_Nurse rule, PutQuestionNurseModel putQuestion) : this()
+        {
+            this._rule = rule;
+            this._putQuestion = putQuestion;
+            this.tbPaperName.Text = paperName;
+            _editMode = EditMode.Edit;
+        }
 
         private void FrmQuestion2_Load(object sender, EventArgs e)
         {
@@ -138,7 +138,7 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
                 foreach (var A3 in models)
                 {
-                    if (((A3.Questions?.Count) ?? 0) == subQueCount)
+                    if (A3.Questions.Count == subQueCount)
                         hasCount++;
                 }
             }
@@ -430,70 +430,43 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
                 if (typeId == (int)NurseRuleType.A3)
                 {
+                    var rule = _rule.A_.Find(x => x.TypeId == typeId);
+
                     if (dgvQuestions.Rows[e.RowIndex].Cells[2].Tag is PutQuestionA_Model putModel)//修改
                     {
 
+                        FrmCreateQuestion_Nurse_A3 frmCreateQuestion_Nurse_A3 = new FrmCreateQuestion_Nurse_A3(this, putModel, rule, _p_guid, _editMode);
+
+                        if (frmCreateQuestion_Nurse_A3.ShowDialog() == DialogResult.OK)
+                        {
+                            LoadRuleTree();
+                            var nodes = ruleTree.Nodes.Find(typeId.ToString(), false);
+                            if (nodes != null && nodes.Length > 0)
+                            {
+                                ruleTree.SelectedNode = nodes[0];
+                            }
+                        }
                     }
                     else//出题
                     {
+                        FrmCreateQuestion_Nurse_A3 frmCreateQuestion_Nurse_A3 = new FrmCreateQuestion_Nurse_A3(this, rule, _p_guid, _editMode);
 
+                        if (frmCreateQuestion_Nurse_A3.ShowDialog() == DialogResult.OK)
+                        {
+                            SetQuestionModel(typeId, frmCreateQuestion_Nurse_A3._queModel);
+
+                            LoadRuleTree();
+                            var nodes = ruleTree.Nodes.Find(typeId.ToString(), false);
+                            if (nodes != null && nodes.Length > 0)
+                            {
+                                ruleTree.SelectedNode = nodes[0];
+                            }
+                        }
                     }
                 }
 
             }
         }
-
-        /// <summary>
-        /// 从缓存获取题目
-        /// </summary>
-        /// <param name="courseNo"></param>
-        /// <param name="knowNo"></param>
-        /// <returns></returns>
-        //private Dictionary<string, List<QuestionsInfoModel>> GetQuestionModel(string courseNo, string knowNo)
-        //{
-        //    var putCourse = _putQuestion.Courses.Find(c => c.CourseNo == courseNo);
-        //    if (putCourse == null)
-        //        return new Dictionary<string, List<QuestionsInfoModel>>();
-
-        //    Dictionary<string, List<QuestionsInfoModel>> que = new Dictionary<string, List<QuestionsInfoModel>>();
-        //    if (knowNo == null)
-        //    {
-        //        foreach (var item in putCourse.Knows.OrderBy(k => k.KnowNo))
-        //        {
-        //            que.Add(item.KnowNo, item.Questions.OrderBy(q => q.QueType).ToList());
-        //        }
-        //        return que;
-        //    }
-        //    else
-        //    {
-        //        var putKnow = putCourse.Knows.Find(k => k.KnowNo == knowNo);
-        //        if (putKnow == null || putKnow.Questions == null)
-        //            return new Dictionary<string, List<QuestionsInfoModel>>();
-
-        //        que.Add(putKnow.KnowNo, putKnow.Questions.OrderBy(q => q.QueType).ToList());
-
-        //        return que;
-        //    }
-        //}
-
-        /// <summary>
-        /// 获取出题数量
-        /// </summary>
-        /// <param name="courseNo"></param>
-        /// <param name="queType"></param>
-        /// <returns></returns>
-        //private int GetQuestionCount(string courseNo, QuestionsType queType)
-        //{
-        //    if (courseNo == null)
-        //    {
-        //        return _putQuestion.Courses
-        //            .Sum(c => c.Knows.Sum(k => k.Questions.Count(q => q.QueType == (int)queType)));
-        //    }
-
-        //    return _putQuestion.Courses
-        //        .Where(c => c.CourseNo == courseNo)
-        //        .Sum(c => c.Knows.Sum(k => k.Questions.Count(q => q.QueType == (int)queType)));
-        //}
 
         /// <summary>
         /// 保存题目到缓存--A1 A2题型
@@ -532,75 +505,24 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
             if (model == null)
             {
-                _putQuestion.A_.Add(model);
+                _putQuestion.A_.Add(que);
             }
         }
-
 
         /// <summary>
         /// 检查题目是否出完
         /// </summary>
         /// <returns></returns>
-        //private string CheckQuestion()
-        //{
-        //    foreach (var course in _rule.CourseRules.OrderBy(c => c.CourseNo))
-        //    {
-        //        var ques = GetQuestionModel(course.CourseNo, null);
-
-        //        if (course.DanxuanCount + course.DuoxuanCount + course.PanduanCount != ques.Sum(q => q.Value.Count))
-        //        {
-        //            return course.CourseNo;
-        //        }
-        //    }
-        //    return null;
-        //}
-
-        //private void btnQuestion_Click(object sender, EventArgs e)
-        //{
-        //    var courseNo = CheckQuestion();
-
-        //    if (courseNo != null)
-        //    {
-        //        var treeNodes = ruleTree.Nodes.Find(courseNo, false);
-        //        if (treeNodes != null && treeNodes.Length > 0)
-        //        {
-        //            ruleTree.SelectedNode = treeNodes[0];
-        //            MessageBox.Show("您还有题目未出完，请先出完题目再提交模拟试卷！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //            return;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (string.IsNullOrEmpty(tbPaperName.Text))
-        //        {
-        //            MessageBox.Show("请您输入模拟试卷名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //            tbPaperName.Focus();
-        //            return;
-        //        }
-
-        //        _putQuestion.PaperName = tbPaperName.Text;
-
-        //        if (WebApiController.Instance.CreatePaper(_putQuestion, out string message))
-        //        {
-        //            MessageBox.Show("模拟试卷创建成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-        //            Task.Factory.StartNew(ExeDelRecord);
-
-        //            DialogResult = DialogResult.OK;
-
-        //            this.Close();
-        //            return;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("模拟试卷创建失败！" + message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //            return;
-        //        }
-        //    }
-
-
-
-        //}
+        private string CheckQuestion()
+        {
+            foreach (var rule in _rule.A_)
+            {
+                int hasCount = GetHasCount((NurseRuleType)rule.TypeId, rule.SubQueCount);
+                if (hasCount != rule.QueCount)
+                    return rule.TypeId.ToString();
+            }
+            return null;
+        }
 
         /// <summary>
         /// 检查本地题目相似度
@@ -610,6 +532,9 @@ namespace TTLX.MockTestPaper_V2.Nurse
         public bool CheckSimilarity(string queNo, string queContent, out string content)
         {
             content = string.Empty;
+
+            if (string.IsNullOrEmpty(queContent))
+                return false;
 
             if (_putQuestion == null || _putQuestion.A_ == null || _putQuestion.A_.Count == 0)
                 return false;
@@ -645,5 +570,52 @@ namespace TTLX.MockTestPaper_V2.Nurse
 
         }
 
+        /// <summary>
+        /// 保存试卷
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnQuestion_Click(object sender, EventArgs e)
+        {
+            string typeId = CheckQuestion();
+            if (typeId != null)
+            {
+                var treeNodes = ruleTree.Nodes.Find(typeId, false);
+                if (treeNodes != null && treeNodes.Length > 0)
+                {
+                    ruleTree.SelectedNode = treeNodes[0];
+                    MessageBox.Show("您还有题目未出完，请先出完题目再提交模拟试卷！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(tbPaperName.Text))
+                {
+                    MessageBox.Show("请您输入模拟试卷名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tbPaperName.Focus();
+                    return;
+                }
+
+                _putQuestion.PaperName = tbPaperName.Text;
+
+                if (WebApiController.Instance.CreatePaper_Nurse(_putQuestion, out string message))
+                {
+                    MessageBox.Show("模拟试卷创建成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Task.Factory.StartNew(ExeDelRecord);
+
+                    DialogResult = DialogResult.OK;
+
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("模拟试卷创建失败！" + message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+        }
     }
 }

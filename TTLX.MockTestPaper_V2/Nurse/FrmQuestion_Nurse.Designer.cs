@@ -323,6 +323,7 @@
             this.btnQuestion.TabIndex = 12;
             this.btnQuestion.Text = "生成模拟试卷";
             this.btnQuestion.UseVisualStyleBackColor = false;
+            this.btnQuestion.Click += new System.EventHandler(this.btnQuestion_Click);
             // 
             // FrmQuestion_Nurse
             // 
